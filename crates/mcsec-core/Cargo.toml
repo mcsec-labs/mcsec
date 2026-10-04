@@ -1,0 +1,20 @@
+[package]
+name = "mcsec-core"
+description = "Static analysis of Minecraft mod jars for vulnerabilities and malware"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[dependencies]
+zip.workspace = true
+sha1.workspace = true
+sha2.workspace = true
+hex.workspace = true
+serde.workspace = true
+thiserror.workspace = true
+
+[dev-dependencies]
+zip.workspace = true
+serde_json.workspace = true

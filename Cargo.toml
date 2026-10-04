@@ -1,0 +1,34 @@
+[workspace]
+resolver = "3"
+members = ["crates/*"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.88"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/mcsec-labs/mcsec"
+
+[workspace.dependencies]
+mcsec-core = { path = "crates/mcsec-core" }
+
+# Jar reading. Mods use stored and deflate entries, so the other codecs stay
+# off. zlib-rs keeps decompression in Rust instead of linking C zlib.
+zip = { version = "8.6", default-features = false, features = [
+    "deflate-flate2-zlib-rs",
+] }
+
+# File hashes. SHA-1 and SHA-512 match what Modrinth publishes per file.
+sha1 = "0.11"
+sha2 = "0.11"
+hex = "0.4"
+
+# Report output
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# Errors
+thiserror = "2.0"
+
+# CLI
+clap = { version = "4.6", features = ["derive"] }
