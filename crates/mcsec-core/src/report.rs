@@ -3,7 +3,7 @@
 use serde::Serialize;
 
 use crate::SCANNER_VERSION;
-use crate::archive::{Archive, EntryKind, UnreadableEntry};
+use crate::archive::{Anomaly, Archive, EntryKind, UnreadableEntry};
 use crate::finding::Finding;
 use crate::hash::FileHashes;
 
@@ -35,9 +35,8 @@ pub struct ArchiveSummary {
     pub size: u64,
     pub class_count: usize,
     pub resource_count: usize,
-    /// Entries whose name disagrees with their content about being a class.
     #[serde(skip_serializing_if = "Vec::is_empty")]
-    pub mismatched_names: Vec<String>,
+    pub anomalies: Vec<Anomaly>,
     #[serde(skip_serializing_if = "Vec::is_empty")]
     pub unreadable: Vec<UnreadableEntry>,
     #[serde(skip_serializing_if = "Vec::is_empty")]
@@ -53,12 +52,7 @@ impl From<&Archive> for ArchiveSummary {
             size: archive.size,
             class_count: count(EntryKind::Class),
             resource_count: count(EntryKind::Resource),
-            mismatched_names: archive
-                .entries
-                .iter()
-                .filter(|e| !e.name_matches_content())
-                .map(|e| e.name.clone())
-                .collect(),
+            anomalies: archive.anomalies.clone(),
             unreadable: archive.unreadable.clone(),
             nested: archive.nested.iter().map(ArchiveSummary::from).collect(),
         }

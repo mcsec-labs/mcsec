@@ -32,9 +32,6 @@ pub enum ScanError {
         limit: u32,
     },
 
-    #[error("input is not a readable zip archive: {source}")]
-    InvalidArchive {
-        #[source]
-        source: zip::result::ZipError,
-    },
+    #[error("input is not a readable zip archive: {reason}")]
+    InvalidArchive { reason: String },
 }

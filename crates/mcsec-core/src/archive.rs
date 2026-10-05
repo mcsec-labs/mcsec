@@ -3,14 +3,14 @@
 //! Entries are read into memory and never written to disk, so entry names
 //! are only labels. Path traversal names and symlink entries have no effect.
 
-use std::io::{Cursor, Read};
+use std::collections::HashMap;
 
 use serde::Serialize;
-use zip::ZipArchive;
 
 use crate::error::ScanError;
 use crate::hash::FileHashes;
 use crate::limits::ScanLimits;
+use crate::zip_reader::{OpenError, ZipReader};
 
 /// Magic bytes at the start of a zip local file header.
 const ZIP_MAGIC: [u8; 4] = *b"PK\x03\x04";
@@ -32,19 +32,10 @@ pub enum EntryKind {
     Resource,
 }
 
-impl EntryKind {
-    fn detect(data: &[u8]) -> Self {
-        if data.starts_with(&CLASS_MAGIC) && data.len() >= 8 {
-            let major_version = u16::from_be_bytes([data[6], data[7]]);
-            if major_version >= MIN_CLASS_MAJOR_VERSION {
-                return Self::Class;
-            }
-        }
-        if data.starts_with(&ZIP_MAGIC) {
-            return Self::Archive;
-        }
-        Self::Resource
-    }
+fn is_class(data: &[u8]) -> bool {
+    data.len() >= 8
+        && data.starts_with(&CLASS_MAGIC)
+        && u16::from_be_bytes([data[6], data[7]]) >= MIN_CLASS_MAJOR_VERSION
 }
 
 /// One file entry from an archive, with its uncompressed bytes.
@@ -74,6 +65,26 @@ pub struct UnreadableEntry {
     pub reason: String,
 }
 
+/// Structural oddities that legitimate build tools do not produce. Each is a
+/// signal for rules, not a finding on its own.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize)]
+#[serde(
+    tag = "kind",
+    rename_all = "camelCase",
+    rename_all_fields = "camelCase"
+)]
+pub enum Anomaly {
+    /// More than one entry has this name. Every copy is read and analyzed.
+    DuplicateName { name: String },
+    /// The entry's bytes do not match its stored CRC. The JVM loads such
+    /// entries anyway, so they are analyzed like any other.
+    ChecksumMismatch { name: String },
+    /// Class content under another name, or a `.class` name over other content.
+    MisnamedEntry { name: String },
+    /// Bytes before the start of the archive, which zip readers skip.
+    PrependedData { size: u64 },
+}
+
 /// A jar or nested archive with all of its entries read.
 #[derive(Debug, Clone)]
 pub struct Archive {
@@ -87,6 +98,7 @@ pub struct Archive {
     /// Nested archives that opened successfully, in entry order.
     pub nested: Vec<Archive>,
     pub unreadable: Vec<UnreadableEntry>,
+    pub anomalies: Vec<Anomaly>,
 }
 
 impl Archive {
@@ -117,10 +129,17 @@ pub fn read_archive(bytes: &[u8], limits: &ScanLimits) -> Result<Archive, ScanEr
         });
     }
 
-    let zip = ZipArchive::new(Cursor::new(bytes))
-        .map_err(|source| ScanError::InvalidArchive { source })?;
+    let reader = match ZipReader::open(bytes, limits.max_entries) {
+        Ok(reader) => reader,
+        Err(OpenError::TooManyEntries) => {
+            return Err(ScanError::TooManyEntries {
+                limit: limits.max_entries,
+            });
+        }
+        Err(OpenError::Invalid(reason)) => return Err(ScanError::InvalidArchive { reason }),
+    };
     let mut budget = Budget::new(limits);
-    read_opened(zip, bytes, Vec::new(), 0, &mut budget)
+    read_opened(&reader, bytes, Vec::new(), 0, &mut budget)
 }
 
 /// Running totals checked against the limits across every nesting level.
@@ -142,73 +161,79 @@ impl<'a> Budget<'a> {
     fn remaining_bytes(&self) -> u64 {
         self.limits.max_total_size.saturating_sub(self.total_bytes)
     }
+
+    fn remaining_entries(&self) -> u64 {
+        self.limits.max_entries.saturating_sub(self.entries)
+    }
+
+    fn too_many_entries(&self) -> ScanError {
+        ScanError::TooManyEntries {
+            limit: self.limits.max_entries,
+        }
+    }
 }
 
 fn read_opened(
-    mut zip: ZipArchive<Cursor<&[u8]>>,
+    reader: &ZipReader,
     bytes: &[u8],
     path: Vec<String>,
     depth: u32,
     budget: &mut Budget,
 ) -> Result<Archive, ScanError> {
-    // Counted from the central directory before reading anything, so an
-    // archive with a huge entry count is rejected without iterating it.
-    budget.entries += zip.len() as u64;
+    budget.entries += reader.records.len() as u64;
     if budget.entries > budget.limits.max_entries {
-        return Err(ScanError::TooManyEntries {
-            limit: budget.limits.max_entries,
-        });
+        return Err(budget.too_many_entries());
     }
 
     let mut entries = Vec::new();
     let mut unreadable = Vec::new();
+    let mut anomalies = Vec::new();
+    if reader.base_offset > 0 {
+        anomalies.push(Anomaly::PrependedData {
+            size: reader.base_offset,
+        });
+    }
 
-    for index in 0..zip.len() {
-        let indexed_name = zip.name_for_index(index).unwrap_or_default().to_owned();
-        let mut file = match zip.by_index(index) {
-            Ok(file) => file,
-            Err(error) => {
-                unreadable.push(UnreadableEntry {
-                    name: indexed_name,
-                    reason: error.to_string(),
-                });
-                continue;
-            }
-        };
-        if file.is_dir() {
-            continue;
-        }
-
-        let name = file.name().to_owned();
-        let entry_limit = budget.limits.max_entry_size;
-        if file.size() > entry_limit {
-            return Err(ScanError::EntryTooLarge {
-                archive_path: path,
-                entry: name,
-                limit: entry_limit,
+    let mut name_counts: HashMap<&str, u32> = HashMap::new();
+    for record in &reader.records {
+        let count = name_counts.entry(record.name.as_str()).or_default();
+        *count += 1;
+        if *count == 2 {
+            anomalies.push(Anomaly::DuplicateName {
+                name: record.name.clone(),
             });
+        }
+    }
+
+    for record in reader.records.iter().filter(|r| !r.is_dir()) {
+        let entry_limit = budget.limits.max_entry_size;
+        let too_large = || ScanError::EntryTooLarge {
+            archive_path: path.clone(),
+            entry: record.name.clone(),
+            limit: entry_limit,
+        };
+        if record.uncompressed_size > entry_limit {
+            return Err(too_large());
         }
 
         // The declared size can be forged, so the read itself is capped one
         // byte past whichever limit is closer. Reaching that extra byte
         // proves the limit was exceeded.
         let read_cap = entry_limit.min(budget.remaining_bytes());
-        let mut data = Vec::with_capacity(file.size().min(read_cap) as usize);
-        if let Err(error) = (&mut file).take(read_cap + 1).read_to_end(&mut data) {
-            unreadable.push(UnreadableEntry {
-                name,
-                reason: error.to_string(),
-            });
-            continue;
-        }
+        let data = match reader.read(record, read_cap) {
+            Ok(data) => data,
+            Err(reason) => {
+                unreadable.push(UnreadableEntry {
+                    name: record.name.clone(),
+                    reason,
+                });
+                continue;
+            }
+        };
 
         let read_size = data.len() as u64;
         if read_size > entry_limit {
-            return Err(ScanError::EntryTooLarge {
-                archive_path: path,
-                entry: name,
-                limit: entry_limit,
-            });
+            return Err(too_large());
         }
         budget.total_bytes += read_size;
         if budget.total_bytes > budget.limits.max_total_size {
@@ -217,15 +242,48 @@ fn read_opened(
             });
         }
 
-        let kind = EntryKind::detect(&data);
-        entries.push(Entry { name, kind, data });
+        if crc32fast::hash(&data) != record.crc32 {
+            anomalies.push(Anomaly::ChecksumMismatch {
+                name: record.name.clone(),
+            });
+        }
+        let kind = if is_class(&data) {
+            EntryKind::Class
+        } else {
+            EntryKind::Resource
+        };
+        entries.push(Entry {
+            name: record.name.clone(),
+            kind,
+            data,
+        });
     }
 
+    // Every non-class entry is tried as an archive, because a nested jar can
+    // be renamed or have bytes prepended to hide its zip header.
     let mut nested = Vec::new();
-    for entry in entries.iter().filter(|e| e.kind == EntryKind::Archive) {
+    for entry in &mut entries {
+        if entry.kind == EntryKind::Class {
+            continue;
+        }
+        let inner = match ZipReader::open(&entry.data, budget.remaining_entries()) {
+            Ok(inner) => inner,
+            Err(OpenError::TooManyEntries) => return Err(budget.too_many_entries()),
+            Err(OpenError::Invalid(reason)) => {
+                // Only entries that claim to be zips are worth noting. Other
+                // resources fail here as expected.
+                if entry.data.starts_with(&ZIP_MAGIC) {
+                    unreadable.push(UnreadableEntry {
+                        name: entry.name.clone(),
+                        reason: format!("not a readable zip archive: {reason}"),
+                    });
+                }
+                continue;
+            }
+        };
+
         let mut nested_path = path.clone();
         nested_path.push(entry.name.clone());
-
         if depth + 1 > budget.limits.max_nesting_depth {
             return Err(ScanError::NestingTooDeep {
                 archive_path: nested_path,
@@ -233,24 +291,19 @@ fn read_opened(
             });
         }
 
-        // Zip magic alone does not make a valid archive. Data files that
-        // happen to start with it are kept as entries and noted here.
-        match ZipArchive::new(Cursor::new(entry.data.as_slice())) {
-            Ok(inner) => {
-                nested.push(read_opened(
-                    inner,
-                    &entry.data,
-                    nested_path,
-                    depth + 1,
-                    budget,
-                )?);
-            }
-            Err(error) => unreadable.push(UnreadableEntry {
-                name: entry.name.clone(),
-                reason: format!("not a readable zip archive: {error}"),
-            }),
-        }
+        let archive = read_opened(&inner, &entry.data, nested_path, depth + 1, budget)?;
+        nested.push(archive);
+        entry.kind = EntryKind::Archive;
     }
+
+    anomalies.extend(
+        entries
+            .iter()
+            .filter(|e| !e.name_matches_content())
+            .map(|e| Anomaly::MisnamedEntry {
+                name: e.name.clone(),
+            }),
+    );
 
     Ok(Archive {
         path,
@@ -259,5 +312,6 @@ fn read_opened(
         entries,
         nested,
         unreadable,
+        anomalies,
     })
 }

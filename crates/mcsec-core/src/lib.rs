@@ -12,8 +12,9 @@ pub mod finding;
 pub mod hash;
 pub mod limits;
 pub mod report;
+mod zip_reader;
 
-pub use archive::{Archive, Entry, EntryKind, read_archive};
+pub use archive::{Anomaly, Archive, Entry, EntryKind, UnreadableEntry, read_archive};
 pub use error::ScanError;
 pub use finding::{EvidenceStep, Finding, Location, MethodRef, Severity};
 pub use hash::FileHashes;

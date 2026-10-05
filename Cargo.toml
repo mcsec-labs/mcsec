@@ -12,8 +12,15 @@ repository = "https://github.com/mcsec-labs/mcsec"
 [workspace.dependencies]
 mcsec-core = { path = "crates/mcsec-core" }
 
-# Jar reading. Mods use stored and deflate entries, so the other codecs stay
-# off. zlib-rs keeps decompression in Rust instead of linking C zlib.
+# Jar reading. The zip container is parsed in mcsec-core to match the JVM's
+# rules, and only entry decompression is delegated. The miniz_oxide backend
+# is pure Rust without unsafe code. Mods only use stored and deflate entries.
+flate2 = { version = "1.1", default-features = false, features = [
+    "rust_backend",
+] }
+crc32fast = "1.5"
+
+# Writes the zip fixtures built in tests.
 zip = { version = "8.6", default-features = false, features = [
     "deflate-flate2-zlib-rs",
 ] }
