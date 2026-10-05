@@ -7,6 +7,7 @@
 #![forbid(unsafe_code)]
 
 pub mod archive;
+pub mod class_file;
 pub mod error;
 pub mod finding;
 pub mod hash;
@@ -15,6 +16,7 @@ pub mod report;
 mod zip_reader;
 
 pub use archive::{Anomaly, Archive, Entry, EntryKind, UnreadableEntry, read_archive};
+pub use class_file::{ClassFile, ClassParseError};
 pub use error::ScanError;
 pub use finding::{EvidenceStep, Finding, Location, MethodRef, Severity};
 pub use hash::FileHashes;

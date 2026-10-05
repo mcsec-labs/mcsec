@@ -4,6 +4,7 @@ use serde::Serialize;
 
 use crate::SCANNER_VERSION;
 use crate::archive::{Anomaly, Archive, EntryKind, UnreadableEntry};
+use crate::class_file::ClassFile;
 use crate::finding::Finding;
 use crate::hash::FileHashes;
 
@@ -39,6 +40,11 @@ pub struct ArchiveSummary {
     pub anomalies: Vec<Anomaly>,
     #[serde(skip_serializing_if = "Vec::is_empty")]
     pub unreadable: Vec<UnreadableEntry>,
+    /// Class entries that failed to parse or decode. The JVM would also
+    /// refuse to load most of these, so they point to a scanner gap or to a
+    /// class built to break analysis tools.
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    pub unparsed_classes: Vec<UnreadableEntry>,
     #[serde(skip_serializing_if = "Vec::is_empty")]
     pub nested: Vec<ArchiveSummary>,
 }
@@ -54,6 +60,18 @@ impl From<&Archive> for ArchiveSummary {
             resource_count: count(EntryKind::Resource),
             anomalies: archive.anomalies.clone(),
             unreadable: archive.unreadable.clone(),
+            unparsed_classes: archive
+                .classes()
+                .filter_map(|entry| {
+                    let error = ClassFile::parse(&entry.data)
+                        .and_then(|class| class.check_code())
+                        .err()?;
+                    Some(UnreadableEntry {
+                        name: entry.name.clone(),
+                        reason: error.to_string(),
+                    })
+                })
+                .collect(),
             nested: archive.nested.iter().map(ArchiveSummary::from).collect(),
         }
     }
