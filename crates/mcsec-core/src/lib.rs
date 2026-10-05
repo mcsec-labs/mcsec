@@ -6,6 +6,7 @@
 
 #![forbid(unsafe_code)]
 
+pub mod analysis;
 pub mod archive;
 pub mod class_file;
 pub mod error;
@@ -13,8 +14,10 @@ pub mod finding;
 pub mod hash;
 pub mod limits;
 pub mod report;
+pub mod rules;
 mod zip_reader;
 
+pub use analysis::{Hierarchy, ParsedArchive, ParsedClass};
 pub use archive::{Anomaly, Archive, Entry, EntryKind, UnreadableEntry, read_archive};
 pub use class_file::{ClassFile, ClassParseError};
 pub use error::ScanError;
@@ -27,8 +30,10 @@ pub use report::{ArchiveSummary, ScanReport};
 /// to the code that produced them.
 pub const SCANNER_VERSION: &str = env!("CARGO_PKG_VERSION");
 
-/// Reads a jar from memory and produces its report.
+/// Reads a jar from memory, runs every rule, and produces its report.
 pub fn scan_bytes(bytes: &[u8], limits: &ScanLimits) -> Result<ScanReport, ScanError> {
     let archive = read_archive(bytes, limits)?;
-    Ok(ScanReport::new(&archive, Vec::new()))
+    let parsed = ParsedArchive::parse(&archive);
+    let findings = rules::run(&parsed);
+    Ok(ScanReport::new(&parsed, findings))
 }

@@ -1,0 +1,44 @@
+//! Detection rules. Each rule reads parsed classes and reports findings with
+//! the exact location and evidence behind them.
+
+mod deserialization;
+
+use crate::analysis::{Hierarchy, ParsedArchive, ParsedClass};
+use crate::finding::{Finding, Location, MethodRef};
+
+/// Runs every rule over a jar and the archives nested in it.
+pub fn run(root: &ParsedArchive) -> Vec<Finding> {
+    let hierarchy = Hierarchy::build(root);
+    let mut findings = Vec::new();
+    for archive in root.walk() {
+        for parsed in &archive.classes {
+            let context = Context {
+                archive,
+                parsed,
+                hierarchy: &hierarchy,
+            };
+            deserialization::check(&context, &mut findings);
+        }
+    }
+    findings
+}
+
+/// What a rule sees while checking one class.
+pub(crate) struct Context<'r, 'a> {
+    pub archive: &'r ParsedArchive<'a>,
+    pub parsed: &'r ParsedClass<'a>,
+    pub hierarchy: &'r Hierarchy,
+}
+
+impl Context<'_, '_> {
+    /// A location in the current class, narrowed to a method and offset.
+    pub fn location(&self, method: &MethodRef, offset: u32) -> Location {
+        Location {
+            archive_path: self.archive.archive.path.clone(),
+            entry: Some(self.parsed.entry.name.clone()),
+            class_name: Some(self.parsed.name.clone()),
+            method: Some(method.clone()),
+            bytecode_offset: Some(offset),
+        }
+    }
+}

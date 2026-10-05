@@ -3,8 +3,8 @@
 use serde::Serialize;
 
 use crate::SCANNER_VERSION;
-use crate::archive::{Anomaly, Archive, EntryKind, UnreadableEntry};
-use crate::class_file::ClassFile;
+use crate::analysis::ParsedArchive;
+use crate::archive::{Anomaly, EntryKind, UnreadableEntry};
 use crate::finding::Finding;
 use crate::hash::FileHashes;
 
@@ -17,10 +17,10 @@ pub struct ScanReport {
 }
 
 impl ScanReport {
-    pub fn new(archive: &Archive, findings: Vec<Finding>) -> Self {
+    pub fn new(parsed: &ParsedArchive, findings: Vec<Finding>) -> Self {
         Self {
             scanner_version: SCANNER_VERSION.to_owned(),
-            archive: ArchiveSummary::from(archive),
+            archive: ArchiveSummary::from(parsed),
             findings,
         }
     }
@@ -49,8 +49,9 @@ pub struct ArchiveSummary {
     pub nested: Vec<ArchiveSummary>,
 }
 
-impl From<&Archive> for ArchiveSummary {
-    fn from(archive: &Archive) -> Self {
+impl From<&ParsedArchive<'_>> for ArchiveSummary {
+    fn from(parsed: &ParsedArchive) -> Self {
+        let archive = parsed.archive;
         let count = |kind| archive.entries.iter().filter(|e| e.kind == kind).count();
         Self {
             path: archive.path.clone(),
@@ -60,19 +61,8 @@ impl From<&Archive> for ArchiveSummary {
             resource_count: count(EntryKind::Resource),
             anomalies: archive.anomalies.clone(),
             unreadable: archive.unreadable.clone(),
-            unparsed_classes: archive
-                .classes()
-                .filter_map(|entry| {
-                    let error = ClassFile::parse(&entry.data)
-                        .and_then(|class| class.check_code())
-                        .err()?;
-                    Some(UnreadableEntry {
-                        name: entry.name.clone(),
-                        reason: error.to_string(),
-                    })
-                })
-                .collect(),
-            nested: archive.nested.iter().map(ArchiveSummary::from).collect(),
+            unparsed_classes: parsed.unparsed.clone(),
+            nested: parsed.nested.iter().map(ArchiveSummary::from).collect(),
         }
     }
 }

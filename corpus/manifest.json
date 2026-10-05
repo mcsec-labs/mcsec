@@ -1,0 +1,433 @@
+{
+	"description": "Ground truth jars for detection rules. Jars are never committed. scripts/fetch-corpus.py downloads them into corpus/cache and checks each SHA-1. Each entry lists the exact findings the scanner must report, nothing more and nothing less.",
+	"entries": [
+		{
+			"name": "EnderCore 1.12.2 0.5.76",
+			"role": "vulnerable",
+			"note": "BleedingPipe. Config sync packet deserializes with a plain ObjectInputStream.",
+			"file": "curseforge-2972849-EnderCore-1.12.2-0.5.76.jar",
+			"sha1": "a61fda64cfb0e3852690678fbd7375a1ea982884",
+			"source": { "curseforge": { "modId": 231868, "fileId": 2972849 } },
+			"expect": [
+				{
+					"rule": "unsafe-deserialization",
+					"class": "com/enderio/core/common/config/PacketConfigSync",
+					"method": "fromBytes",
+					"severity": "critical"
+				}
+			]
+		},
+		{
+			"name": "EnderCore 1.12.2 0.5.77",
+			"role": "fixed",
+			"note": "Fix swaps in ValidatingObjectInputStream, which only resolves HashMap, Integer, Number, and Boolean.",
+			"file": "curseforge-4671295-EnderCore-1.12.2-0.5.77.jar",
+			"sha1": "af15bef3f4a810ee348dcdf0b52551ad009fdc87",
+			"source": { "curseforge": { "modId": 231868, "fileId": 4671295 } },
+			"expect": [
+				{
+					"rule": "unsafe-deserialization",
+					"class": "com/enderio/core/common/config/PacketConfigSync",
+					"method": "fromBytes",
+					"severity": "notice"
+				}
+			]
+		},
+		{
+			"name": "EnderCore 1.10.2 0.4.1.66",
+			"role": "vulnerable",
+			"note": "BleedingPipe, same packet as 1.12.2.",
+			"file": "curseforge-2415996-EnderCore-1.10.2-0.4.1.66-beta.jar",
+			"sha1": "fb96af079497f26693904f2e29f316b97b0b8789",
+			"source": { "curseforge": { "modId": 231868, "fileId": 2415996 } },
+			"expect": [
+				{
+					"rule": "unsafe-deserialization",
+					"class": "com/enderio/core/common/config/PacketConfigSync",
+					"method": "fromBytes",
+					"severity": "critical"
+				}
+			]
+		},
+		{
+			"name": "EnderCore 1.10.2 0.4.1.67",
+			"role": "fixed",
+			"note": "Same allowlisting fix as 1.12.2.",
+			"file": "curseforge-4671313-EnderCore-1.10.2-0.4.1.67-beta.jar",
+			"sha1": "fa0b2d01244666d474946617f0f2d72622d5f782",
+			"source": { "curseforge": { "modId": 231868, "fileId": 4671313 } },
+			"expect": [
+				{
+					"rule": "unsafe-deserialization",
+					"class": "com/enderio/core/common/config/PacketConfigSync",
+					"method": "fromBytes",
+					"severity": "notice"
+				}
+			]
+		},
+		{
+			"name": "EnderCore 1.7.10 0.2.0.39",
+			"role": "vulnerable",
+			"note": "BleedingPipe, same packet as 1.12.2.",
+			"file": "curseforge-2331048-EnderCore-1.7.10-0.2.0.39_beta.jar",
+			"sha1": "ee6e69efdf487e02aeca400e3aedd132159c623b",
+			"source": { "curseforge": { "modId": 231868, "fileId": 2331048 } },
+			"expect": [
+				{
+					"rule": "unsafe-deserialization",
+					"class": "com/enderio/core/common/config/PacketConfigSync",
+					"method": "fromBytes",
+					"severity": "critical"
+				}
+			]
+		},
+		{
+			"name": "EnderCore 1.7.10 0.2.0.40",
+			"role": "fixed",
+			"note": "Same allowlisting fix as 1.12.2.",
+			"file": "curseforge-4671288-EnderCore-1.7.10-0.2.0.40_beta.jar",
+			"sha1": "f8fd9953d5dacc7ec684221157e8a4066d1960af",
+			"source": { "curseforge": { "modId": 231868, "fileId": 4671288 } },
+			"expect": [
+				{
+					"rule": "unsafe-deserialization",
+					"class": "com/enderio/core/common/config/PacketConfigSync",
+					"method": "fromBytes",
+					"severity": "notice"
+				}
+			]
+		},
+		{
+			"name": "BdLib 1.12.2 1.14.3.12",
+			"role": "vulnerable",
+			"note": "BleedingPipe. The network codec deserializes every message with a plain ObjectInputStream.",
+			"file": "curseforge-2518031-bdlib-1.14.3.12-mc1.12.2.jar",
+			"sha1": "96d4142448fe2fd1245caa4dcfde3cf73a00132d",
+			"source": { "curseforge": { "modId": 70496, "fileId": 2518031 } },
+			"expect": [
+				{
+					"rule": "unsafe-deserialization",
+					"class": "net/bdew/lib/network/SerializedMessageCodec",
+					"method": "decode",
+					"severity": "critical"
+				}
+			]
+		},
+		{
+			"name": "BdLib 1.12.2 1.14.4.1",
+			"role": "fixed",
+			"note": "Fix swaps in SafeObjectInputStream.",
+			"file": "curseforge-4675629-bdlib-1.14.4.1-mc1.12.2.jar",
+			"sha1": "6cb8cb1edc2897cf30f5071b04c29a2482d2b109",
+			"source": { "curseforge": { "modId": 70496, "fileId": 4675629 } },
+			"expect": [
+				{
+					"rule": "unsafe-deserialization",
+					"class": "net/bdew/lib/network/SerializedMessageCodec",
+					"method": "decode",
+					"severity": "notice"
+				}
+			]
+		},
+		{
+			"name": "BdLib 1.7.10 1.9.4.109",
+			"role": "vulnerable",
+			"note": "BleedingPipe, same codec as 1.12.2.",
+			"file": "curseforge-2269259-bdlib-1.9.4.109-mc1.7.10.jar",
+			"sha1": "f9d965a3b66f4e2cbe392217ce9fe7ca753611cb",
+			"source": { "curseforge": { "modId": 70496, "fileId": 2269259 } },
+			"expect": [
+				{
+					"rule": "unsafe-deserialization",
+					"class": "net/bdew/lib/network/SerializedMessageCodec",
+					"method": "decode",
+					"severity": "critical"
+				}
+			]
+		},
+		{
+			"name": "BdLib 1.7.10 1.9.5.1",
+			"role": "fixed",
+			"note": "Same SafeObjectInputStream fix as 1.12.2.",
+			"file": "curseforge-4673767-bdlib-1.9.5.1-mc1.7.10.jar",
+			"sha1": "39441e4cf394bcba7365391e1ad98dab859dcb64",
+			"source": { "curseforge": { "modId": 70496, "fileId": 4673767 } },
+			"expect": [
+				{
+					"rule": "unsafe-deserialization",
+					"class": "net/bdew/lib/network/SerializedMessageCodec",
+					"method": "decode",
+					"severity": "notice"
+				}
+			]
+		},
+		{
+			"name": "Astral Sorcery 1.12.2 1.9.1",
+			"role": "vulnerable",
+			"note": "BleedingPipe. Config sync packet.",
+			"file": "curseforge-2573295-astralsorcery-1.12.2-1.9.1.jar",
+			"sha1": "932aa293ae9b51fee0a318d693426825bfa65165",
+			"source": { "curseforge": { "modId": 241721, "fileId": 2573295 } },
+			"expect": [
+				{
+					"rule": "unsafe-deserialization",
+					"class": "hellfirepvp/astralsorcery/common/network/packet/server/PktSyncConfig",
+					"method": "fromBytes",
+					"severity": "critical"
+				}
+			]
+		},
+		{
+			"name": "Astral Sorcery 1.12.2 1.9.2",
+			"role": "fixed",
+			"note": "Deserialization removed.",
+			"file": "curseforge-2578281-astralsorcery-1.12.2-1.9.2.jar",
+			"sha1": "dfe98ae5fd9f9eae08d619d44e017fc27e68533d",
+			"source": { "curseforge": { "modId": 241721, "fileId": 2578281 } },
+			"expect": []
+		},
+		{
+			"name": "JourneyMap 1.16.5 5.7.1",
+			"role": "vulnerable",
+			"note": "The packet handler passes bytes to a separate deserialize method, so a single method check rates it Warning. Tracking across methods should raise it to Critical.",
+			"file": "curseforge-3222876-journeymap-1.16.5-5.7.1.jar",
+			"sha1": "64290d7d59001d7ebea9593216ce1d25c43f8ad7",
+			"source": { "curseforge": { "modId": 32274, "fileId": 3222876 } },
+			"expect": [
+				{
+					"rule": "unsafe-deserialization",
+					"class": "journeymap/common/network/impl/Message",
+					"method": "deserialize",
+					"severity": "warning"
+				}
+			]
+		},
+		{
+			"name": "JourneyMap 1.16.5 5.7.2",
+			"role": "fixed",
+			"note": "Deserialization removed.",
+			"file": "curseforge-3396700-journeymap-1.16.5-5.7.2.jar",
+			"sha1": "7e1258b13dc00938dc0780b2a2374c02a862b1f4",
+			"source": { "curseforge": { "modId": 32274, "fileId": 3396700 } },
+			"expect": []
+		},
+		{
+			"name": "RebornCore 1.16 4.7.2",
+			"role": "vulnerable",
+			"note": "BleedingPipe. A Fabric packet buffer subclass deserializes a BigInteger from packet bytes.",
+			"file": "github-RebornCore-1.16-4.7.2+build.132.jar",
+			"sha1": "75d0b35297b128aad9b49aecac728c7158cb44c2",
+			"source": {
+				"github": {
+					"repo": "TechReborn/RebornCore",
+					"tag": "4.7.2+build.132",
+					"asset": "RebornCore-1.16-4.7.2+build.132.jar"
+				}
+			},
+			"expect": [
+				{
+					"rule": "unsafe-deserialization",
+					"class": "reborncore/common/network/ExtendedPacketBuffer",
+					"method": "readBigInt",
+					"severity": "critical"
+				}
+			]
+		},
+		{
+			"name": "RebornCore 1.16 4.7.3",
+			"role": "fixed",
+			"note": "Deserialization removed. Byte for byte the same file on GitHub, Modrinth, and CurseForge.",
+			"file": "github-RebornCore-1.16-4.7.3+build.136.jar",
+			"sha1": "d8de8c0261a30f2a860500dedb7e2fe866bf70ca",
+			"source": {
+				"github": {
+					"repo": "TechReborn/RebornCore",
+					"tag": "4.7.3+build.136",
+					"asset": "RebornCore-1.16-4.7.3+build.136.jar"
+				}
+			},
+			"expect": []
+		},
+		{
+			"name": "Logistics Pipes GTNH 1.0.5",
+			"role": "vulnerable",
+			"note": "BleedingPipe. Reads through the ObjectInput interface. The packet stream is a parameter of the mod's own type, so it rates Warning until tracking across methods.",
+			"file": "github-logisticspipes-1.0.5-GTNH.jar",
+			"sha1": "d5843ed7806ac4e9d5c0248b96d19c63eab170f1",
+			"source": {
+				"github": {
+					"repo": "GTNewHorizons/LogisticsPipes",
+					"tag": "1.0.5-GTNH",
+					"asset": "logisticspipes-1.0.5-GTNH.jar"
+				}
+			},
+			"expect": [
+				{
+					"rule": "unsafe-deserialization",
+					"class": "logisticspipes/network/abstractpackets/GenericPacket",
+					"method": "readData",
+					"severity": "warning"
+				},
+				{
+					"rule": "unsafe-deserialization",
+					"class": "logisticspipes/network/packets/debuggui/DebugTargetResponse",
+					"method": "readData",
+					"severity": "warning"
+				},
+				{
+					"rule": "unsafe-deserialization",
+					"class": "logisticspipes/network/packets/routingdebug/RoutingUpdateTargetResponse",
+					"method": "readData",
+					"severity": "warning"
+				}
+			]
+		},
+		{
+			"name": "Logistics Pipes GTNH 1.0.6",
+			"role": "fixed",
+			"note": "Commit \"Don't use ObjectInputStream\" removed all three.",
+			"file": "github-logisticspipes-1.0.6-GTNH.jar",
+			"sha1": "1f2aa489b21f9f7a52803fe0106ad47191bd1992",
+			"source": {
+				"github": {
+					"repo": "GTNewHorizons/LogisticsPipes",
+					"tag": "1.0.6-GTNH",
+					"asset": "logisticspipes-1.0.6-GTNH.jar"
+				}
+			},
+			"expect": []
+		},
+		{
+			"name": "Astral Sorcery 1.10.2 1.4.5",
+			"role": "unfixed",
+			"note": "Newest 1.10.2 build, never patched.",
+			"file": "curseforge-2445788-astralsorcery-1.4.5.jar",
+			"sha1": "95e56d600ad440db6ce84c6369d700d873985c1e",
+			"source": { "curseforge": { "modId": 241721, "fileId": 2445788 } },
+			"expect": [
+				{
+					"rule": "unsafe-deserialization",
+					"class": "hellfirepvp/astralsorcery/common/network/packet/server/PktSyncConfig",
+					"method": "fromBytes",
+					"severity": "critical"
+				}
+			]
+		},
+		{
+			"name": "/dank/null 1.12.2 1.7.101",
+			"role": "unfixed",
+			"note": "Newest 1.12.2 build, never patched.",
+			"file": "curseforge-2962052-DankNull-1.12.2-1.7.101.jar",
+			"sha1": "d082f6a00a3a11bc2bc4c9f8aac40851a413b92c",
+			"source": { "curseforge": { "modId": 272514, "fileId": 2962052 } },
+			"expect": [
+				{
+					"rule": "unsafe-deserialization",
+					"class": "p455w0rd/danknull/network/PacketConfigSync",
+					"method": "fromBytes",
+					"severity": "critical"
+				}
+			]
+		},
+		{
+			"name": "Gadomancy 1.7.10 1.0.7.3",
+			"role": "unfixed",
+			"note": "Newest build, never patched. ModData.load reads a local file, so it rates Warning.",
+			"file": "curseforge-2338768-gadomancy-1.7.10-1.0.7.3.jar",
+			"sha1": "7d897c6a50b6381ea294dfbec74911f23f924a39",
+			"source": { "curseforge": { "modId": 237271, "fileId": 2338768 } },
+			"expect": [
+				{
+					"rule": "unsafe-deserialization",
+					"class": "makeo/gadomancy/common/data/config/ModData",
+					"method": "load",
+					"severity": "warning"
+				},
+				{
+					"rule": "unsafe-deserialization",
+					"class": "makeo/gadomancy/common/network/packets/PacketSyncConfigs",
+					"method": "fromBytes",
+					"severity": "critical"
+				},
+				{
+					"rule": "unsafe-deserialization",
+					"class": "makeo/gadomancy/common/network/packets/PacketUpdateGolemTypeOrder",
+					"method": "fromBytes",
+					"severity": "critical"
+				}
+			]
+		},
+		{
+			"name": "Advent of Ascension 1.12.2 3.3.6",
+			"role": "unfixed",
+			"note": "Newest 1.12.2 build, never patched. The leaderboard loader reads a local file, so it rates Warning.",
+			"file": "curseforge-3054253-AoA3-3.3.6.jar",
+			"sha1": "b0e46f6c8d608972157d5ba27f7b093c46797e5a",
+			"source": { "curseforge": { "modId": 311054, "fileId": 3054253 } },
+			"expect": [
+				{
+					"rule": "unsafe-deserialization",
+					"class": "net/tslat/aoa3/common/packet/leaderboard/PacketIndividualLeaderboardStats",
+					"method": "fromBytes",
+					"severity": "critical"
+				},
+				{
+					"rule": "unsafe-deserialization",
+					"class": "net/tslat/aoa3/common/packet/leaderboard/PacketLeaderboardStats",
+					"method": "fromBytes",
+					"severity": "critical"
+				},
+				{
+					"rule": "unsafe-deserialization",
+					"class": "net/tslat/aoa3/library/leaderboard/LeaderboardDataHandler",
+					"method": "loadLeaderboard",
+					"severity": "warning"
+				}
+			]
+		},
+		{
+			"name": "RebornCore 1.12.2 3.19.5",
+			"role": "control",
+			"note": "Bundles Caffeine, whose readObject(ObjectInputStream) serialization hooks must not be flagged.",
+			"file": "modrinth-RebornCore-1.12.2-3.19.5-universal.jar",
+			"sha1": "7a296b3ea8cbffce723b9949bf3726af3a4e8215",
+			"source": {
+				"modrinth": {
+					"versionId": "9QJTQQ6n",
+					"filename": "RebornCore-1.12.2-3.19.5-universal.jar"
+				}
+			},
+			"expect": []
+		},
+		{
+			"name": "JourneyMap 1.12.2 6.0.10",
+			"role": "control",
+			"note": "Bundles Mixin's annotation processor, which deserializes a local build file. Must stay Warning, never Critical.",
+			"file": "curseforge-9049805-journeymap-forge-1.12.2-6.0.10.jar",
+			"sha1": "6455be4d12b507878067738ccb23cfa02992c719",
+			"source": { "curseforge": { "modId": 32274, "fileId": 9049805 } },
+			"expect": [
+				{
+					"rule": "unsafe-deserialization",
+					"class": "org/spongepowered/tools/obfuscation/TargetMap",
+					"method": "read",
+					"severity": "warning"
+				}
+			]
+		},
+		{
+			"name": "Fabric API 0.116.17+1.21.1",
+			"role": "control",
+			"note": "50 nested jars and no deserialization.",
+			"file": "modrinth-fabric-api-0.116.17+1.21.1.jar",
+			"sha1": "810b2b0195371a012906241d8b85a32a1d6de53c",
+			"source": {
+				"modrinth": {
+					"versionId": "Mys3P7lK",
+					"filename": "fabric-api-0.116.17+1.21.1.jar"
+				}
+			},
+			"expect": []
+		}
+	]
+}
