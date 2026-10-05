@@ -98,15 +98,40 @@ impl ClassBuilder {
     }
 
     pub fn code_attribute(&mut self, bytecode: &[u8]) -> Vec<u8> {
+        self.code_attribute_with_handlers(bytecode, &[])
+    }
+
+    /// A Code attribute with exception table entries of (start, end, handler, catch type index).
+    pub fn code_attribute_with_handlers(
+        &mut self,
+        bytecode: &[u8],
+        handlers: &[(u16, u16, u16, u16)],
+    ) -> Vec<u8> {
         let mut body = vec![0, 8, 0, 8];
         body.extend((bytecode.len() as u32).to_be_bytes());
         body.extend(bytecode);
-        body.extend([0, 0, 0, 0]);
+        body.extend((handlers.len() as u16).to_be_bytes());
+        for (start, end, handler, catch_type) in handlers {
+            for value in [start, end, handler, catch_type] {
+                body.extend(value.to_be_bytes());
+            }
+        }
+        body.extend([0, 0]);
         self.attribute("Code", &body)
     }
 
     fn member(&mut self, name: &str, descriptor: &str, attributes: &[Vec<u8>]) -> Vec<u8> {
-        let mut out = vec![0x00, 0x09];
+        self.member_with_access(0x0009, name, descriptor, attributes)
+    }
+
+    fn member_with_access(
+        &mut self,
+        access: u16,
+        name: &str,
+        descriptor: &str,
+        attributes: &[Vec<u8>],
+    ) -> Vec<u8> {
+        let mut out = access.to_be_bytes().to_vec();
         out.extend(self.utf8(name).to_be_bytes());
         out.extend(self.utf8(descriptor).to_be_bytes());
         out.extend((attributes.len() as u16).to_be_bytes());
@@ -124,6 +149,20 @@ impl ClassBuilder {
 
     pub fn method(&mut self, name: &str, descriptor: &str, attributes: &[Vec<u8>]) {
         let method = self.member(name, descriptor, attributes);
+        self.methods.extend(method);
+        self.method_count += 1;
+    }
+
+    /// A method with explicit access flags, such as 0x0001 for a public
+    /// instance method. Other helpers make public static methods.
+    pub fn method_with_access(
+        &mut self,
+        access: u16,
+        name: &str,
+        descriptor: &str,
+        attributes: &[Vec<u8>],
+    ) {
+        let method = self.member_with_access(access, name, descriptor, attributes);
         self.methods.extend(method);
         self.method_count += 1;
     }

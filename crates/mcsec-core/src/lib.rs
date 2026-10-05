@@ -9,6 +9,7 @@
 pub mod analysis;
 pub mod archive;
 pub mod class_file;
+pub mod dataflow;
 pub mod error;
 pub mod finding;
 pub mod hash;

@@ -1,22 +1,32 @@
-//! Unsafe Java deserialization, the BleedingPipe pattern.
+//! Unsafe Java deserialization, the bug class behind BleedingPipe.
 //!
 //! `ObjectInputStream.readObject` instantiates whatever serializable class the
 //! input names, so feeding it data an attacker controls can run code through
-//! gadget classes on the classpath. The rule flags methods that create an
-//! `ObjectInputStream` and read an object from it.
+//! gadget classes on the classpath. The rule flags reads from streams a
+//! method creates itself, and rates them by where the stream's data comes
+//! from according to the data flow engine.
 //!
-//! Checks one method at a time. A stream created in one method and read in
-//! another, or bytes passed in from a packet handler as a parameter, need
-//! tracking across methods and are rated as if the source were unknown.
+//! Data entering through another method, such as bytes a packet handler
+//! passes in as a parameter, needs tracking across methods and is rated as
+//! if the source were unknown for now.
+
+use std::collections::HashSet;
 
 use super::Context;
-use crate::class_file::{Instruction, Operand, op};
+use crate::class_file::{Operand, op};
+use crate::dataflow::{self, Alloc, Frame, Labels, Policy, Site, Value};
 use crate::finding::{EvidenceStep, Finding, MethodRef, Severity};
 
 pub const RULE_ID: &str = "unsafe-deserialization";
 
 const OBJECT_INPUT_STREAM: &str = "java/io/ObjectInputStream";
 const OBJECT_INPUT: &str = "java/io/ObjectInput";
+/// Holds the static `setObjectInputFilter(stream, filter)` on Java 8, as
+/// `sun.misc` and `java.io` place it in different releases.
+const FILTER_CONFIGS: &[&str] = &[
+    "java/io/ObjectInputFilter$Config",
+    "sun/misc/ObjectInputFilter$Config",
+];
 
 /// Types that carry bytes received from the network. Minecraft class names
 /// are given as they appear in shipped jars for each loader generation:
@@ -32,160 +42,184 @@ const NETWORK_TYPES: &[&str] = &[
     "cpw/mods/fml/common/network/internal/FMLProxyPacket",
 ];
 
+const NETWORK: Labels = Labels(1);
+
+struct NetworkSources<'c, 'r, 'a> {
+    context: &'c Context<'r, 'a>,
+}
+
+impl Policy for NetworkSources<'_, '_, '_> {
+    fn parameter(&self, ty: &str, receiver: bool) -> Option<(Labels, String)> {
+        if !is_network_type(self.context, ty) {
+            return None;
+        }
+        let description = if receiver {
+            format!("Runs on network data, as {ty} is a network type")
+        } else {
+            format!("Receives network data as a parameter of type {ty}")
+        };
+        Some((NETWORK, description))
+    }
+
+    fn call(&self, owner: &str, name: &str, _descriptor: &str) -> Option<(Labels, String)> {
+        is_network_type(self.context, owner).then(|| {
+            (
+                NETWORK,
+                format!("Reads network data through {owner}.{name}"),
+            )
+        })
+    }
+
+    fn allocation(&self, _class: &str) -> Option<(Labels, String)> {
+        // A freshly created buffer is empty, not network data.
+        None
+    }
+}
+
+/// A `readObject` call on a stream the method created.
+struct Read {
+    offset: u32,
+    stream: Value,
+    created: Alloc,
+}
+
 pub(crate) fn check(context: &Context, findings: &mut Vec<Finding>) {
     let class = &context.parsed.class;
     let pool = &class.constant_pool;
+    let policy = NetworkSources { context };
     for method in &class.methods {
         let (Ok(name), Ok(descriptor)) = (method.name(pool), method.descriptor(pool)) else {
             continue;
         };
-        let Ok(Some(code)) = method.code(pool) else {
-            continue;
-        };
+
+        let mut reads = Vec::new();
+        let mut filtered = HashSet::new();
+        dataflow::analyze(class, method, &policy, &mut |site, frame| {
+            observe(context, site, frame, &mut reads, &mut filtered);
+        });
+
         let method_ref = MethodRef {
             name: name.into_owned(),
             descriptor: descriptor.into_owned(),
         };
-
-        let mut scan = MethodScan::default();
-        if let Some(param) = parameter_types(&method_ref.descriptor)
-            .into_iter()
-            .find(|t| is_network_type(context, t))
-        {
-            scan.network = Some(Source::Parameter(param));
-        }
-        // A method that fails to decode partway is checked up to the failure.
-        for instruction in code.instructions().map_while(Result::ok) {
-            scan.visit(context, &instruction);
-        }
-
-        if let Some(finding) = scan.finding(context, &method_ref) {
+        if let Some(finding) = finding(context, &method_ref, reads, &filtered) {
             findings.push(finding);
         }
     }
 }
 
-enum Source {
-    /// The method receives network data as a parameter of this type.
-    Parameter(String),
-    /// The method calls into or creates this network type at an offset.
-    Call { offset: u32, owner: String },
-}
+fn observe(
+    context: &Context,
+    site: &Site,
+    frame: &Frame,
+    reads: &mut Vec<Read>,
+    filtered: &mut HashSet<u32>,
+) {
+    let ins = site.instruction;
+    let index = match (ins.opcode, &ins.operand) {
+        (op::INVOKEVIRTUAL | op::INVOKESTATIC, Operand::Constant(index)) => *index,
+        (op::INVOKEINTERFACE, Operand::InvokeInterface { index, .. }) => *index,
+        _ => return,
+    };
+    let Ok(target) = site.pool.member_ref(index) else {
+        return;
+    };
+    let owner = target.class_name.as_ref();
 
-#[derive(Default)]
-struct MethodScan {
-    /// Where an `ObjectInputStream`, or a subclass, is created, and its type.
-    created: Option<(u32, String)>,
-    /// Offset of the first `readObject` or `readUnshared` call.
-    read: Option<u32>,
-    /// Offset of a `setObjectInputFilter` call, which limits the classes read.
-    filtered: Option<u32>,
-    network: Option<Source>,
-}
-
-impl MethodScan {
-    fn visit(&mut self, context: &Context, instruction: &Instruction) {
-        let pool = &context.parsed.class.constant_pool;
-        let offset = instruction.offset;
-        match (instruction.opcode, &instruction.operand) {
-            (op::NEW, Operand::Constant(index)) => {
-                let Ok(created) = pool.class_name(*index) else {
-                    return;
-                };
-                if self.created.is_none() && is_object_input_stream(context, &created) {
-                    self.created = Some((offset, created.into_owned()));
-                } else if self.network.is_none() && is_network_type(context, &created) {
-                    self.network = Some(Source::Call {
-                        offset,
-                        owner: created.into_owned(),
-                    });
-                }
-            }
-            (
-                op::INVOKEVIRTUAL | op::INVOKESPECIAL | op::INVOKESTATIC,
-                Operand::Constant(index),
-            )
-            | (op::INVOKEINTERFACE, Operand::InvokeInterface { index, .. }) => {
-                let Ok(target) = pool.member_ref(*index) else {
-                    return;
-                };
-                let owner = target.class_name.as_ref();
-                let stream_call = owner == OBJECT_INPUT || is_object_input_stream(context, owner);
-                let reads_object = matches!(target.name.as_ref(), "readObject" | "readUnshared")
-                    && target.descriptor == "()Ljava/lang/Object;";
-                if stream_call && reads_object {
-                    self.read.get_or_insert(offset);
-                } else if stream_call && target.name == "setObjectInputFilter" {
-                    self.filtered.get_or_insert(offset);
-                } else if self.network.is_none() && is_network_type(context, owner) {
-                    self.network = Some(Source::Call {
-                        offset,
-                        owner: owner.to_owned(),
-                    });
-                }
-            }
-            _ => {}
+    let reads_object = matches!(target.name.as_ref(), "readObject" | "readUnshared")
+        && target.descriptor == "()Ljava/lang/Object;";
+    if reads_object && (owner == OBJECT_INPUT || is_object_input_stream(context, owner)) {
+        // Only streams this method creates. A stream received as a
+        // parameter belongs to whoever created it, as in Java's own
+        // readObject(ObjectInputStream) serialization hooks.
+        if let Some(stream) = frame.peek(0)
+            && let Some(created) = stream
+                .alloc
+                .clone()
+                .filter(|a| is_object_input_stream(context, &a.class))
+        {
+            reads.push(Read {
+                offset: ins.offset,
+                stream: stream.clone(),
+                created,
+            });
         }
+        return;
     }
 
-    fn finding(self, context: &Context, method: &MethodRef) -> Option<Finding> {
-        let (created_at, created_type) = self.created?;
-        let read_at = self.read?;
-        let custom_stream = created_type != OBJECT_INPUT_STREAM;
+    // Both the instance call `stream.setObjectInputFilter(filter)` and the
+    // static `Config.setObjectInputFilter(stream, filter)` leave the stream
+    // second from the top.
+    let sets_filter = target.name == "setObjectInputFilter"
+        && (FILTER_CONFIGS.contains(&owner) || is_object_input_stream(context, owner));
+    if sets_filter && let Some(alloc) = frame.peek(1).and_then(|s| s.alloc.as_ref()) {
+        filtered.insert(alloc.offset);
+    }
+}
 
-        let severity = if self.filtered.is_some() || custom_stream {
-            Severity::Notice
-        } else if self.network.is_some() {
-            Severity::Critical
-        } else {
-            Severity::Warning
-        };
-        let title = match severity {
-            Severity::Critical => "Deserializes network data with ObjectInputStream",
-            Severity::Warning => "Deserializes data with ObjectInputStream",
-            Severity::Notice => "Deserializes with a filtered or custom ObjectInputStream",
-        };
+fn severity_of(read: &Read, filtered: &HashSet<u32>) -> Severity {
+    if filtered.contains(&read.created.offset) || &*read.created.class != OBJECT_INPUT_STREAM {
+        Severity::Notice
+    } else if read.stream.labels.contains(NETWORK) {
+        Severity::Critical
+    } else {
+        Severity::Warning
+    }
+}
 
-        let step = |description: String, offset: u32| EvidenceStep {
-            description,
-            location: context.location(method, offset),
-        };
-        let mut evidence = Vec::new();
-        match &self.network {
-            Some(Source::Parameter(param)) => evidence.push(step(
-                format!("Receives network data as a parameter of type {param}"),
-                0,
-            )),
-            Some(Source::Call { offset, owner }) => {
-                evidence.push(step(format!("Reads network data through {owner}"), *offset))
-            }
-            None => {}
-        }
-        evidence.push(step(format!("Creates {created_type}"), created_at));
-        if let Some(offset) = self.filtered {
-            evidence.push(step(
-                "Installs an ObjectInputFilter that limits the classes it accepts".to_owned(),
-                offset,
-            ));
-        } else if custom_stream {
-            evidence.push(step(
-                format!("{created_type} extends ObjectInputStream and may restrict the classes it resolves"),
-                created_at,
-            ));
-        }
+fn finding(
+    context: &Context,
+    method: &MethodRef,
+    reads: Vec<Read>,
+    filtered: &HashSet<u32>,
+) -> Option<Finding> {
+    // One finding per method, for its most severe read.
+    let read = reads
+        .into_iter()
+        .max_by_key(|read| (severity_of(read, filtered), std::cmp::Reverse(read.offset)))?;
+    let severity = severity_of(&read, filtered);
+    let title = match severity {
+        Severity::Critical => "Deserializes network data with ObjectInputStream",
+        Severity::Warning => "Deserializes data with ObjectInputStream",
+        Severity::Notice => "Deserializes with a filtered or custom ObjectInputStream",
+    };
+
+    let step = |description: String, offset: u32| EvidenceStep {
+        description,
+        location: context.location(method, offset),
+    };
+    let mut evidence = Vec::new();
+    if let Some(origin) = &read.stream.origin {
+        evidence.push(step(origin.description.to_string(), origin.offset));
+    }
+    let created = &read.created;
+    evidence.push(step(format!("Creates {}", created.class), created.offset));
+    if filtered.contains(&created.offset) {
         evidence.push(step(
-            "Calls readObject, which instantiates any serializable class the data names".to_owned(),
-            read_at,
+            "Installs an ObjectInputFilter that limits the classes it accepts".to_owned(),
+            created.offset,
         ));
-
-        Some(Finding {
-            rule_id: RULE_ID.to_owned(),
-            severity,
-            title: title.to_owned(),
-            location: context.location(method, read_at),
-            evidence,
-        })
+    } else if &*created.class != OBJECT_INPUT_STREAM {
+        evidence.push(step(
+            format!(
+                "{} extends ObjectInputStream and may restrict the classes it resolves",
+                created.class
+            ),
+            created.offset,
+        ));
     }
+    evidence.push(step(
+        "Calls readObject, which instantiates any serializable class the data names".to_owned(),
+        read.offset,
+    ));
+
+    Some(Finding {
+        rule_id: RULE_ID.to_owned(),
+        severity,
+        title: title.to_owned(),
+        location: context.location(method, read.offset),
+        evidence,
+    })
 }
 
 fn is_object_input_stream(context: &Context, name: &str) -> bool {
@@ -194,36 +228,4 @@ fn is_object_input_stream(context: &Context, name: &str) -> bool {
 
 fn is_network_type(context: &Context, name: &str) -> bool {
     context.hierarchy.extends_any(name, NETWORK_TYPES)
-}
-
-/// Internal names of the object types among a method descriptor's parameters.
-fn parameter_types(descriptor: &str) -> Vec<String> {
-    let params = descriptor
-        .strip_prefix('(')
-        .and_then(|rest| rest.split_once(')'))
-        .map_or("", |(params, _)| params);
-    let mut types = Vec::new();
-    let mut rest = params;
-    while let Some(start) = rest.find('L') {
-        let after = &rest[start + 1..];
-        let Some(end) = after.find(';') else { break };
-        types.push(after[..end].to_owned());
-        rest = &after[end + 1..];
-    }
-    types
-}
-
-#[cfg(test)]
-mod tests {
-    use super::parameter_types;
-
-    #[test]
-    fn reads_object_parameter_types() {
-        assert_eq!(
-            parameter_types("(ILio/netty/buffer/ByteBuf;[Ljava/lang/String;J)V"),
-            vec!["io/netty/buffer/ByteBuf", "java/lang/String"]
-        );
-        assert!(parameter_types("()V").is_empty());
-        assert!(parameter_types("garbage").is_empty());
-    }
 }

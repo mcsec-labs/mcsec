@@ -1,0 +1,2 @@
+# Shell scripts run inside Linux containers, where a carriage return breaks them.
+*.sh text eol=lf
