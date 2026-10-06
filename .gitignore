@@ -1,3 +1,4 @@
 planning/
 /target
 /corpus/cache/
+/corpus/variants/build/

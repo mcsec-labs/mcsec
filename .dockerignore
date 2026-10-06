@@ -1,6 +1,7 @@
 .git
 target
 corpus/cache
+corpus/variants/build
 planning
 .vscode
 .history

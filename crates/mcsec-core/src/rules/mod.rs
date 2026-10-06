@@ -1,7 +1,8 @@
-//! Detection rules. Each rule reads parsed classes and reports findings with
-//! the exact location and evidence behind them.
+//! Detection rules. Rules are definition files run through the data flow
+//! engine, and each finding carries the exact location and evidence behind it.
 
-mod deserialization;
+mod flow;
+pub mod spec;
 
 use crate::analysis::{Hierarchy, ParsedArchive, ParsedClass};
 use crate::finding::{Finding, Location, MethodRef};
@@ -17,7 +18,9 @@ pub fn run(root: &ParsedArchive) -> Vec<Finding> {
                 parsed,
                 hierarchy: &hierarchy,
             };
-            deserialization::check(&context, &mut findings);
+            for rule in spec::embedded() {
+                flow::check(rule, &context, &mut findings);
+            }
         }
     }
     findings

@@ -11,16 +11,19 @@ RUN apk add --no-cache musl-dev
 WORKDIR /src
 COPY . .
 RUN cargo test --release --locked --workspace --no-run --message-format=json \
-        | grep -o '"executable":"[^"]*"' | cut -d '"' -f 4 > /tmp/test-binaries \
+    | grep -o '"executable":"[^"]*"' | cut -d '"' -f 4 > /tmp/test-binaries \
     && mkdir /tests \
     && xargs -I '{}' cp '{}' /tests/ < /tmp/test-binaries
 
 FROM alpine:3@sha256:294b683cb724975bec92580e1e685676bd4b50bda910ddb8c51d4cabeaec77e6
-# The corpus test finds the manifest relative to the crate directory it was
-# compiled in, so that path has to exist here too.
-RUN mkdir -p /src/crates/mcsec-core /src/corpus/cache
+# The corpus and variant tests find their files relative to the crate
+# directory they were compiled in, so that path has to exist here too. The
+# variant sources carry the expected results. The compiled variants and the
+# corpus jars are mounted read-only at run time.
+RUN mkdir -p /src/crates/mcsec-core /src/corpus/cache /src/corpus/variants/build
 COPY --from=build /tests /tests
 COPY corpus/manifest.json /src/corpus/manifest.json
+COPY corpus/variants /src/corpus/variants
 COPY docker/run-tests.sh /run-tests.sh
 USER 65534:65534
 ENTRYPOINT ["/bin/sh", "/run-tests.sh"]

@@ -1,0 +1,69 @@
+# Unsafe deserialization, the bug class behind BleedingPipe.
+#
+# Java deserializers that read arbitrary types instantiate whatever class the
+# input names. With attacker data, gadget classes on the classpath turn that
+# into code execution.
+
+id = "unsafe-deserialization"
+name = "Unsafe deserialization"
+cwe = "CWE-502"
+explanation = "Deserializing data with a reader that accepts any class lets whoever controls the data choose which classes are created. Gadget chains in common libraries turn that into running arbitrary code."
+fix = "Use a format that only produces plain data, such as JSON into fixed types, NBT, or explicit field reads from the packet buffer. If Java serialization is unavoidable, install an ObjectInputFilter or override resolveClass with an allowlist."
+
+# Where untrusted data enters. Each source gets its own label in the data
+# flow engine. Types match themselves and any class in the jar extending them.
+[sources.network]
+# Minecraft classes appear under different names per loader generation: MCP
+# names on Forge up to 1.16, Mojang names on later Forge and NeoForge, and
+# intermediary names on Fabric and Quilt.
+types = [
+    "io/netty/buffer/ByteBuf",
+    "io/netty/buffer/ByteBufInputStream",
+    "net/minecraft/network/PacketBuffer",
+    "net/minecraft/network/FriendlyByteBuf",
+    "net/minecraft/class_2540",
+    "net/minecraftforge/fml/common/network/internal/FMLProxyPacket",
+    "cpw/mods/fml/common/network/internal/FMLProxyPacket",
+]
+parameter = "Receives network data as a parameter of type {type}"
+receiver = "Runs on network data, as {type} is a network type"
+call = "Reads network data through {owner}.{name}"
+
+# A stream sink is an object the method creates over some data, then reads
+# from. The data the stream was created over decides the severity. A stream
+# the method only receives as a parameter belongs to whoever created it, as
+# with Java's own readObject(ObjectInputStream) serialization hooks.
+[[sinks]]
+id = "object-input-stream"
+kind = "stream"
+type = "java/io/ObjectInputStream"
+reads = [
+    "java/io/ObjectInputStream.readObject()Ljava/lang/Object;",
+    "java/io/ObjectInputStream.readUnshared()Ljava/lang/Object;",
+    # Code that stores the stream in an ObjectInput variable calls the
+    # interface instead.
+    "java/io/ObjectInput.readObject()Ljava/lang/Object;",
+]
+critical-sources = ["network"]
+creates = "Creates {type}"
+read = "Calls readObject, which instantiates any serializable class the data names"
+# Subclasses usually exist to override resolveClass with an allowlist, the
+# way EnderCore and BdLib fixed BleedingPipe.
+subclass = "{type} extends ObjectInputStream and may restrict the classes it resolves"
+
+[sinks.title]
+critical = "Deserializes network data with ObjectInputStream"
+warning = "Deserializes data with ObjectInputStream"
+notice = "Deserializes with a filtered or custom ObjectInputStream"
+
+# Java 9 and later only have this instance form.
+[[sinks.sanitizers]]
+call = "java/io/ObjectInputStream.setObjectInputFilter(Ljava/io/ObjectInputFilter;)V"
+target = "receiver"
+note = "Installs an ObjectInputFilter that limits the classes it accepts"
+
+# The Java 8 backport, from 8u121, is a static call taking the stream.
+[[sinks.sanitizers]]
+call = "sun/misc/ObjectInputFilter$Config.setObjectInputFilter(Ljava/io/ObjectInputStream;Lsun/misc/ObjectInputFilter;)V"
+target = "argument 0"
+note = "Installs an ObjectInputFilter that limits the classes it accepts"

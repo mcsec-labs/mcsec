@@ -670,16 +670,16 @@ impl Engine<'_, '_> {
             return;
         }
 
-        // Reading from a labeled object into an array argument, as in
-        // `buf.readBytes(bytes)`, fills that array with labeled data.
-        if let Some(receiver) = receiver.as_ref().filter(|r| !r.labels.is_empty()) {
-            for (arg, param) in args.iter().zip(&method.params) {
-                let is_array = param
-                    .reference
-                    .as_deref()
-                    .is_some_and(|t| t.starts_with('['));
-                if let (true, Some(alloc)) = (is_array, &arg.alloc) {
-                    f.taint_alloc(alloc.offset, receiver.labels, receiver.origin.as_ref());
+        // A call can fill an array argument from any of its other inputs, as
+        // in `buf.readBytes(bytes)` from the receiver or
+        // `System.arraycopy(source, 0, bytes, 0, n)` from another argument.
+        let inputs = Value::derived(receiver.iter().chain(&args), false);
+        if !inputs.labels.is_empty() {
+            // Judged by what was passed rather than the declared type, since
+            // `arraycopy` declares its arrays as Object.
+            for arg in &args {
+                if let Some(alloc) = arg.alloc.as_ref().filter(|a| a.class.starts_with('[')) {
+                    f.taint_alloc(alloc.offset, inputs.labels, inputs.origin.as_ref());
                 }
             }
         }
