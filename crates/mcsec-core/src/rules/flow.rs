@@ -1,13 +1,16 @@
 //! Runs a rule definition over a class through the data flow engine.
 //!
-//! The rule's sources become the engine's policy. Its sinks and sanitizers
+//! The rule's sources become the engine's policy. Its sinks and settings
 //! are matched against calls as the engine replays each method, and each
 //! method gets at most one finding per sink, for its most severe use.
 
+use std::cmp::Ordering;
+
 use super::Context;
-use super::spec::{MethodSig, Rule, Sink, SinkKind, Target, fill};
+use super::spec::{Condition, Effect, Is, MethodSig, Rule, Sink, SinkKind, Target, fill};
+use crate::analysis::compare_versions;
 use crate::class_file::{Operand, op};
-use crate::dataflow::{self, Alloc, Frame, Labels, MethodType, Policy, Site, Value};
+use crate::dataflow::{self, Alloc, Frame, Known, Labels, MethodType, Policy, Site, Value};
 use crate::finding::{EvidenceStep, Finding, MethodRef, Severity};
 
 struct RuleSources<'s, 'c, 'r, 'a> {
@@ -49,20 +52,31 @@ impl Policy for RuleSources<'_, '_, '_, '_> {
     }
 }
 
-/// A read from a stream the method created.
-struct Read {
+/// One call to a sink.
+struct Use {
     offset: u32,
-    stream: Value,
-    created: Alloc,
+    /// The value whose labels decide the severity, the stream for stream
+    /// sinks and the data argument for call sinks.
+    data: Value,
+    /// The stream or receiver, when this method created it.
+    created: Option<Alloc>,
+    /// Set when the sink has a receiver this method did not create, so its
+    /// settings are not visible. Holds the receiver's declared type.
+    outside: Option<String>,
+}
+
+/// A setting call applied to an object this method created.
+struct Applied {
+    alloc: u32,
+    setting: usize,
+    offset: u32,
 }
 
 /// What one method does with one sink.
 #[derive(Default)]
 struct SinkUse {
-    reads: Vec<Read>,
-    /// Streams a sanitizer was applied to, by creation offset, with the
-    /// sanitizer's note.
-    sanitized: Vec<(u32, usize)>,
+    uses: Vec<Use>,
+    applied: Vec<Applied>,
 }
 
 pub(crate) fn check(rule: &Rule, context: &Context, findings: &mut Vec<Finding>) {
@@ -73,16 +87,16 @@ pub(crate) fn check(rule: &Rule, context: &Context, findings: &mut Vec<Finding>)
         let (Ok(name), Ok(descriptor)) = (method.name(pool), method.descriptor(pool)) else {
             continue;
         };
-        let mut uses: Vec<SinkUse> = rule.sinks.iter().map(|_| SinkUse::default()).collect();
+        let mut sink_uses: Vec<SinkUse> = rule.sinks.iter().map(|_| SinkUse::default()).collect();
         dataflow::analyze(class, method, &policy, &mut |site, frame| {
-            observe(rule, context, site, frame, &mut uses);
+            observe(rule, context, site, frame, &mut sink_uses);
         });
 
         let method_ref = MethodRef {
             name: name.into_owned(),
             descriptor: descriptor.into_owned(),
         };
-        for (sink, sink_use) in rule.sinks.iter().zip(uses) {
+        for (sink, sink_use) in rule.sinks.iter().zip(sink_uses) {
             if let Some(finding) = finding(rule, sink, context, &method_ref, sink_use) {
                 findings.push(finding);
             }
@@ -90,7 +104,7 @@ pub(crate) fn check(rule: &Rule, context: &Context, findings: &mut Vec<Finding>)
     }
 }
 
-fn observe(rule: &Rule, context: &Context, site: &Site, frame: &Frame, uses: &mut [SinkUse]) {
+fn observe(rule: &Rule, context: &Context, site: &Site, frame: &Frame, sink_uses: &mut [SinkUse]) {
     let ins = site.instruction;
     let index = match (ins.opcode, &ins.operand) {
         (op::INVOKEVIRTUAL | op::INVOKESPECIAL | op::INVOKESTATIC, Operand::Constant(index)) => {
@@ -107,67 +121,178 @@ fn observe(rule: &Rule, context: &Context, site: &Site, frame: &Frame, uses: &mu
         target.name.as_ref(),
         target.descriptor.as_ref(),
     );
-    let matches = |sig: &MethodSig| {
-        sig.name == name
-            && sig.descriptor == descriptor
-            && context.hierarchy.extends_any(owner, &[sig.owner.as_str()])
+    let extends = |class: &str, ancestors: &[String]| {
+        let ancestors: Vec<&str> = ancestors.iter().map(String::as_str).collect();
+        context.hierarchy.extends_any(class, &ancestors)
     };
+    let matches = |sig: &MethodSig| {
+        sig.matches_name(name, descriptor) && context.hierarchy.extends_any(owner, &[&sig.owner])
+    };
+    let is_static = ins.opcode == op::INVOKESTATIC;
     // Each value takes one stack entry in the engine, wide or not.
     let arguments = MethodType::parse(descriptor).params.len();
+    let at = |target: Target| target.depth(arguments).and_then(|d| frame.peek(d));
+    let created_from =
+        |value: &Value, types: &[String]| value.alloc.clone().filter(|a| extends(&a.class, types));
 
-    for (sink, sink_use) in rule.sinks.iter().zip(uses.iter_mut()) {
-        match sink.kind {
-            SinkKind::Stream => {
-                if ins.opcode != op::INVOKESTATIC && sink.reads.iter().any(matches) {
-                    // Only streams this method creates. One received as a
-                    // parameter belongs to whoever created it.
-                    if let Some(stream) = frame.peek(arguments)
-                        && let Some(created) = stream.alloc.clone().filter(|a| {
-                            context
-                                .hierarchy
-                                .extends_any(&a.class, &[sink.stream_type.as_str()])
-                        })
-                    {
-                        sink_use.reads.push(Read {
-                            offset: ins.offset,
-                            stream: stream.clone(),
-                            created,
-                        });
+    for (sink, sink_use) in rule.sinks.iter().zip(sink_uses.iter_mut()) {
+        if sink.calls.iter().any(matches) {
+            let found = match sink.kind {
+                // Only streams this method creates. One received as a
+                // parameter belongs to whoever created it.
+                SinkKind::Stream if !is_static => at(Target::Receiver)
+                    .and_then(|stream| Some((stream, created_from(stream, &sink.types)?)))
+                    .map(|(stream, created)| Use {
+                        offset: ins.offset,
+                        data: stream.clone(),
+                        created: Some(created),
+                        outside: None,
+                    }),
+                SinkKind::Stream => None,
+                SinkKind::Call => sink.data.and_then(at).map(|data| {
+                    let receiver = (!is_static && !sink.types.is_empty())
+                        .then(|| at(Target::Receiver))
+                        .flatten();
+                    let created = receiver.and_then(|r| created_from(r, &sink.types));
+                    Use {
+                        offset: ins.offset,
+                        data: data.clone(),
+                        outside: (receiver.is_some() && created.is_none())
+                            .then(|| owner.to_owned()),
+                        created,
                     }
-                }
-            }
+                }),
+            };
+            sink_use.uses.extend(found);
         }
-        for (which, sanitizer) in sink.sanitizers.iter().enumerate() {
-            if !matches(&sanitizer.call) {
+
+        for (which, setting) in sink.settings.iter().enumerate() {
+            if !matches(&setting.call) {
                 continue;
             }
-            let depth = match sanitizer.target {
-                Target::Receiver => Some(arguments),
-                Target::Argument(i) => arguments.checked_sub(i + 1),
-            };
-            if let Some(alloc) = depth
-                .and_then(|d| frame.peek(d))
-                .and_then(|v| v.alloc.as_ref())
+            let holds = setting.condition.as_ref().is_none_or(|condition| {
+                at(Target::Argument(condition.argument))
+                    .is_some_and(|value| condition_holds(condition, value, &extends))
+            });
+            if let Some(alloc) = at(setting.target).and_then(|v| v.alloc.as_ref())
+                && holds
             {
-                sink_use.sanitized.push((alloc.offset, which));
+                sink_use.applied.push(Applied {
+                    alloc: alloc.offset,
+                    setting: which,
+                    offset: ins.offset,
+                });
             }
         }
     }
 }
 
-fn severity_of(sink: &Sink, read: &Read, sanitized: &[(u32, usize)]) -> Severity {
-    let custom = sink.subclass.is_some() && *read.created.class != *sink.stream_type;
-    if custom
-        || sanitized
-            .iter()
-            .any(|(offset, _)| *offset == read.created.offset)
-    {
-        Severity::Notice
-    } else if read.stream.labels.0 & sink.critical.0 != 0 {
-        Severity::Critical
-    } else {
-        Severity::Warning
+fn condition_holds(
+    condition: &Condition,
+    value: &Value,
+    extends: &dyn Fn(&str, &[String]) -> bool,
+) -> bool {
+    let is = condition
+        .is
+        .as_ref()
+        .is_none_or(|is| match (is, &value.known) {
+            (Is::Int(want), Some(Known::Int(got))) => want == got,
+            (Is::Static(want), Some(Known::Static(got))) => **want == **got,
+            _ => false,
+        });
+    let class = value.alloc.as_ref().map(|a| &*a.class);
+    let within = |ty: &Option<String>, expected: bool| {
+        ty.as_ref().is_none_or(|ty| {
+            class.is_some_and(|c| extends(c, std::slice::from_ref(ty)) == expected)
+        })
+    };
+    is && within(&condition.extends, true) && within(&condition.not_extends, false)
+}
+
+/// The judgment on one use, with the evidence step that decided it.
+struct Assessment {
+    severity: Severity,
+    /// Explains the judgment, with the offset it points at.
+    reason: Option<(String, u32)>,
+}
+
+fn assess(sink: &Sink, item: &Use, applied: &[Applied], context: &Context) -> Option<Assessment> {
+    let critical = item.data.labels.0 & sink.critical.0 != 0;
+    let dangerous = |reason| Assessment {
+        severity: if critical {
+            Severity::Critical
+        } else {
+            Severity::Warning
+        },
+        reason,
+    };
+    let notice = |reason| Assessment {
+        severity: Severity::Notice,
+        reason,
+    };
+
+    if let Some(ty) = &item.outside {
+        // Settings on a receiver from elsewhere cannot be seen, so only
+        // network data into one that is unsafe by default is reported.
+        let note = sink
+            .outside
+            .as_ref()
+            .map(|t| (fill(t, &[("type", ty)]), item.offset));
+        return (sink.default == Effect::Unsafe && critical).then_some(Assessment {
+            severity: Severity::Warning,
+            reason: note,
+        });
     }
+
+    if let Some(created) = &item.created {
+        let on_created = |effect: Effect| {
+            applied
+                .iter()
+                .filter(|a| a.alloc == created.offset)
+                .find(|a| sink.settings[a.setting].effect == effect)
+                .map(|a| (sink.settings[a.setting].note.clone(), a.offset))
+        };
+        if let Some(reason) = on_created(Effect::Unsafe) {
+            return Some(dangerous(Some(reason)));
+        }
+        if let Some(reason) = on_created(Effect::Safe) {
+            return Some(notice(Some(reason)));
+        }
+        if let Some(subclass) = sink
+            .subclass
+            .as_ref()
+            .filter(|_| !sink.types.iter().any(|t| **t == *created.class))
+        {
+            let text = fill(subclass, &[("type", &created.class)]);
+            return Some(notice(Some((text, created.offset))));
+        }
+    }
+    if sink.default == Effect::Safe {
+        return None;
+    }
+
+    let Some(library) = &sink.library else {
+        return Some(dangerous(None));
+    };
+    let (name, safe_from) = (&library.name, &library.safe_from);
+    Some(match context.libraries.version(&library.coordinates) {
+        Some(version) if compare_versions(version, safe_from) != Ordering::Less => notice(Some((
+            format!("Bundles {name} {version}, whose defaults only accept allowed classes"),
+            item.offset,
+        ))),
+        Some(version) => dangerous(Some((
+            format!(
+                "Bundles {name} {version}, which accepts any class by default before {safe_from}"
+            ),
+            item.offset,
+        ))),
+        None => dangerous(Some((
+            format!(
+                "{name} accepts any class by default before {safe_from}, and no bundled copy shows which version runs"
+            ),
+            item.offset,
+        ))),
+    })
 }
 
 fn finding(
@@ -177,14 +302,15 @@ fn finding(
     method: &MethodRef,
     sink_use: SinkUse,
 ) -> Option<Finding> {
-    let sanitized = &sink_use.sanitized;
-    let read = sink_use.reads.into_iter().max_by_key(|read| {
-        (
-            severity_of(sink, read, sanitized),
-            std::cmp::Reverse(read.offset),
-        )
-    })?;
-    let severity = severity_of(sink, &read, sanitized);
+    let (item, assessment) = sink_use
+        .uses
+        .into_iter()
+        .filter_map(|item| {
+            let assessment = assess(sink, &item, &sink_use.applied, context)?;
+            Some((item, assessment))
+        })
+        .max_by_key(|(item, assessment)| (assessment.severity, std::cmp::Reverse(item.offset)))?;
+    let severity = assessment.severity;
     let title = match severity {
         Severity::Critical => &sink.title.critical,
         Severity::Warning => &sink.title.warning,
@@ -196,31 +322,25 @@ fn finding(
         location: context.location(method, offset),
     };
     let mut evidence = Vec::new();
-    if let Some(origin) = &read.stream.origin {
+    if let Some(origin) = &item.data.origin {
         evidence.push(step(origin.description.to_string(), origin.offset));
     }
-    let created = &read.created;
-    let type_value = [("type", &*created.class)];
-    evidence.push(step(fill(&sink.creates, &type_value), created.offset));
-    if let Some((_, which)) = sanitized
-        .iter()
-        .find(|(offset, _)| *offset == created.offset)
-    {
-        evidence.push(step(sink.sanitizers[*which].note.clone(), created.offset));
-    } else if let Some(subclass) = sink
-        .subclass
-        .as_ref()
-        .filter(|_| *created.class != *sink.stream_type)
-    {
-        evidence.push(step(fill(subclass, &type_value), created.offset));
+    if let (Some(created), Some(creates)) = (&item.created, &sink.creates) {
+        evidence.push(step(
+            fill(creates, &[("type", &created.class)]),
+            created.offset,
+        ));
     }
-    evidence.push(step(sink.read.clone(), read.offset));
+    if let Some((reason, offset)) = assessment.reason {
+        evidence.push(step(reason, offset));
+    }
+    evidence.push(step(sink.read.clone(), item.offset));
 
     Some(Finding {
         rule_id: rule.id.clone(),
         severity,
         title: title.clone(),
-        location: context.location(method, read.offset),
+        location: context.location(method, item.offset),
         evidence,
     })
 }

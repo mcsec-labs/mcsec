@@ -662,3 +662,70 @@ fn malformed_stacks_do_not_panic() {
 
     assert!(scan_one(b).is_empty());
 }
+
+/// `static void load(ByteBuf buf) { new Yaml().load(new ByteBufInputStream(buf)); }`
+fn yaml_loader() -> Vec<u8> {
+    const YAML: &str = "org/yaml/snakeyaml/Yaml";
+    let mut b = ClassBuilder::new();
+    let pool = Pool::new(&mut b);
+    let yaml = b.class(YAML);
+    let yaml_init = b.method_ref(YAML, "<init>", "()V");
+    let load = b.method_ref(YAML, "load", "(Ljava/io/InputStream;)Ljava/lang/Object;");
+    let mut asm = Asm::default();
+    asm.index(op::NEW, yaml)
+        .op(op::DUP)
+        .index(op::INVOKESPECIAL, yaml_init)
+        .index(op::NEW, pool.bbis)
+        .op(op::DUP)
+        .local(op::ALOAD, 0)
+        .index(op::INVOKESPECIAL, pool.bbis_init)
+        .index(op::INVOKEVIRTUAL, load)
+        .op(op::POP)
+        .op(op::RETURN);
+    let code = asm.finish();
+    method(
+        &mut b,
+        PUBLIC_STATIC,
+        "load",
+        "(Lio/netty/buffer/ByteBuf;)V",
+        &code,
+    );
+    class(b, "net/example/Packet")
+}
+
+fn has_evidence(finding: &Finding, text: &str) -> bool {
+    finding
+        .evidence
+        .iter()
+        .any(|step| step.description.contains(text))
+}
+
+#[test]
+fn bundled_library_version_decides_unsafe_defaults() {
+    let loader = yaml_loader();
+    let entry = "net/example/Packet.class";
+    let pom_path = "META-INF/maven/org.yaml/snakeyaml/pom.properties";
+    let pom = |version: &str| {
+        format!("groupId=org.yaml\nartifactId=snakeyaml\nversion={version}\n").into_bytes()
+    };
+
+    let unknown = scan(&[(entry, &loader)]);
+    assert_eq!(only(&unknown).severity, Severity::Critical);
+    assert!(has_evidence(&unknown[0], "no bundled copy"));
+
+    let old = scan(&[(entry, &loader), (pom_path, &pom("1.33"))]);
+    assert_eq!(only(&old).severity, Severity::Critical);
+    assert!(has_evidence(&old[0], "Bundles SnakeYAML 1.33"));
+
+    let new = scan(&[(entry, &loader), (pom_path, &pom("2.2"))]);
+    assert_eq!(only(&new).severity, Severity::Notice);
+    assert!(has_evidence(&new[0], "Bundles SnakeYAML 2.2"));
+
+    // Jar-in-Jar loaders store the library as a nested jar named by version.
+    let library = jar(&[("readme.txt", b"snakeyaml")]);
+    let nested = scan(&[
+        (entry, &loader),
+        ("META-INF/jars/snakeyaml-2.2.jar", &library),
+    ]);
+    assert_eq!(only(&nested).severity, Severity::Notice);
+}

@@ -4,12 +4,13 @@
 mod flow;
 pub mod spec;
 
-use crate::analysis::{Hierarchy, ParsedArchive, ParsedClass};
+use crate::analysis::{Hierarchy, Libraries, ParsedArchive, ParsedClass};
 use crate::finding::{Finding, Location, MethodRef};
 
 /// Runs every rule over a jar and the archives nested in it.
 pub fn run(root: &ParsedArchive) -> Vec<Finding> {
     let hierarchy = Hierarchy::build(root);
+    let libraries = Libraries::build(root);
     let mut findings = Vec::new();
     for archive in root.walk() {
         for parsed in &archive.classes {
@@ -17,6 +18,7 @@ pub fn run(root: &ParsedArchive) -> Vec<Finding> {
                 archive,
                 parsed,
                 hierarchy: &hierarchy,
+                libraries: &libraries,
             };
             for rule in spec::embedded() {
                 flow::check(rule, &context, &mut findings);
@@ -31,6 +33,7 @@ pub(crate) struct Context<'r, 'a> {
     pub archive: &'r ParsedArchive<'a>,
     pub parsed: &'r ParsedClass<'a>,
     pub hierarchy: &'r Hierarchy,
+    pub libraries: &'r Libraries,
 }
 
 impl Context<'_, '_> {

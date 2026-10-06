@@ -8,7 +8,7 @@ id = "unsafe-deserialization"
 name = "Unsafe deserialization"
 cwe = "CWE-502"
 explanation = "Deserializing data with a reader that accepts any class lets whoever controls the data choose which classes are created. Gadget chains in common libraries turn that into running arbitrary code."
-fix = "Use a format that only produces plain data, such as JSON into fixed types, NBT, or explicit field reads from the packet buffer. If Java serialization is unavoidable, install an ObjectInputFilter or override resolveClass with an allowlist."
+fix = "Use a format that only produces plain data, such as JSON into fixed types, NBT, or explicit field reads from the packet buffer. If a polymorphic format is unavoidable, restrict it to an allowlist of classes, such as an ObjectInputFilter, a resolveClass override, XStream permissions, SnakeYAML's SafeConstructor, or Kryo class registration."
 
 # Where untrusted data enters. Each source gets its own label in the data
 # flow engine. Types match themselves and any class in the jar extending them.
@@ -29,15 +29,26 @@ parameter = "Receives network data as a parameter of type {type}"
 receiver = "Runs on network data, as {type} is a network type"
 call = "Reads network data through {owner}.{name}"
 
+# Sink kinds:
+#
 # A stream sink is an object the method creates over some data, then reads
 # from. The data the stream was created over decides the severity. A stream
 # the method only receives as a parameter belongs to whoever created it, as
 # with Java's own readObject(ObjectInputStream) serialization hooks.
+#
+# A call sink takes the data as an argument. When it has receiver types, the
+# receiver is a configured deserializer: settings applied to one the method
+# creates decide whether it is safe, and one from elsewhere is only reported
+# for network data, since its settings are not visible.
+#
+# A library table names a library whose defaults became safe in a later
+# version. A copy bundled in the jar decides which default applies.
+
 [[sinks]]
 id = "object-input-stream"
 kind = "stream"
-type = "java/io/ObjectInputStream"
-reads = [
+types = ["java/io/ObjectInputStream"]
+calls = [
     "java/io/ObjectInputStream.readObject()Ljava/lang/Object;",
     "java/io/ObjectInputStream.readUnshared()Ljava/lang/Object;",
     # Code that stores the stream in an ObjectInput variable calls the
@@ -57,13 +68,234 @@ warning = "Deserializes data with ObjectInputStream"
 notice = "Deserializes with a filtered or custom ObjectInputStream"
 
 # Java 9 and later only have this instance form.
-[[sinks.sanitizers]]
+[[sinks.settings]]
 call = "java/io/ObjectInputStream.setObjectInputFilter(Ljava/io/ObjectInputFilter;)V"
 target = "receiver"
+effect = "safe"
 note = "Installs an ObjectInputFilter that limits the classes it accepts"
 
 # The Java 8 backport, from 8u121, is a static call taking the stream.
-[[sinks.sanitizers]]
+[[sinks.settings]]
 call = "sun/misc/ObjectInputFilter$Config.setObjectInputFilter(Ljava/io/ObjectInputStream;Lsun/misc/ObjectInputFilter;)V"
 target = "argument 0"
+effect = "safe"
 note = "Installs an ObjectInputFilter that limits the classes it accepts"
+
+# XMLDecoder runs the method calls the XML describes, which is worse than
+# picking classes, and has no filter to install.
+[[sinks]]
+id = "xml-decoder"
+kind = "stream"
+types = ["java/beans/XMLDecoder"]
+calls = ["java/beans/XMLDecoder.readObject()Ljava/lang/Object;"]
+critical-sources = ["network"]
+creates = "Creates {type}"
+read = "Calls XMLDecoder.readObject, which creates any class and calls any method the XML names"
+
+[sinks.title]
+critical = "Decodes network data with XMLDecoder"
+warning = "Decodes data with XMLDecoder"
+notice = "Decodes data with a custom XMLDecoder"
+
+[[sinks]]
+id = "hessian"
+kind = "stream"
+types = [
+    "com/caucho/hessian/io/HessianInput",
+    "com/caucho/hessian/io/Hessian2Input",
+]
+calls = [
+    "com/caucho/hessian/io/HessianInput.readObject(*)",
+    "com/caucho/hessian/io/Hessian2Input.readObject(*)",
+]
+critical-sources = ["network"]
+creates = "Creates {type}"
+read = "Calls Hessian readObject, which instantiates any class the data names"
+subclass = "{type} extends a Hessian reader and may restrict the classes it resolves"
+
+[sinks.title]
+critical = "Deserializes network data with Hessian"
+warning = "Deserializes data with Hessian"
+notice = "Deserializes with a custom Hessian reader"
+
+# Helpers that wrap ObjectInputStream. Commons Lang ships with Minecraft, so
+# every mod has it on the classpath.
+[[sinks]]
+id = "serialization-utils"
+kind = "call"
+calls = [
+    "org/apache/commons/lang3/SerializationUtils.deserialize([B)Ljava/lang/Object;",
+    "org/apache/commons/lang3/SerializationUtils.deserialize(Ljava/io/InputStream;)Ljava/lang/Object;",
+    "org/apache/commons/lang/SerializationUtils.deserialize([B)Ljava/lang/Object;",
+    "org/apache/commons/lang/SerializationUtils.deserialize(Ljava/io/InputStream;)Ljava/lang/Object;",
+    "org/springframework/util/SerializationUtils.deserialize([B)Ljava/lang/Object;",
+]
+data = "argument 0"
+critical-sources = ["network"]
+read = "Calls SerializationUtils.deserialize, which reads the data with an unfiltered ObjectInputStream"
+
+[sinks.title]
+critical = "Deserializes network data with SerializationUtils"
+warning = "Deserializes data with SerializationUtils"
+notice = "Deserializes data with SerializationUtils"
+
+[[sinks]]
+id = "xstream"
+kind = "call"
+types = ["com/thoughtworks/xstream/XStream"]
+calls = ["com/thoughtworks/xstream/XStream.fromXML(*)"]
+data = "argument 0"
+critical-sources = ["network"]
+creates = "Creates {type}"
+read = "Calls XStream.fromXML, which creates the classes the XML names"
+outside = "The {type} instance comes from outside this method, so its permissions are not visible here"
+
+[sinks.library]
+name = "XStream"
+coordinates = "com.thoughtworks.xstream:xstream"
+safe-from = "1.4.18"
+
+[sinks.title]
+critical = "Deserializes network data with XStream"
+warning = "Deserializes data with XStream"
+notice = "Deserializes with an XStream instance limited to allowed types"
+
+[[sinks.settings]]
+call = "com/thoughtworks/xstream/XStream.addPermission(Lcom/thoughtworks/xstream/security/TypePermission;)V"
+target = "receiver"
+effect = "unsafe"
+when = { argument = 0, is = "field com/thoughtworks/xstream/security/AnyTypePermission.ANY" }
+note = "Adds AnyTypePermission, which lets the XML name any class"
+
+[[sinks.settings]]
+call = "com/thoughtworks/xstream/XStream.addPermission(Lcom/thoughtworks/xstream/security/TypePermission;)V"
+target = "receiver"
+effect = "safe"
+when = { argument = 0, is = "field com/thoughtworks/xstream/security/NoTypePermission.NONE" }
+note = "Clears every permission with NoTypePermission, so only types allowed afterwards are created"
+
+[[sinks.settings]]
+call = "com/thoughtworks/xstream/XStream.setupDefaultSecurity(Lcom/thoughtworks/xstream/XStream;)V"
+target = "argument 0"
+effect = "safe"
+note = "Calls setupDefaultSecurity, which limits the instance to an allowlist of types"
+
+[[sinks]]
+id = "snakeyaml"
+kind = "call"
+types = ["org/yaml/snakeyaml/Yaml"]
+calls = [
+    "org/yaml/snakeyaml/Yaml.load(*)",
+    "org/yaml/snakeyaml/Yaml.loadAs(*)",
+    "org/yaml/snakeyaml/Yaml.loadAll(*)",
+]
+data = "argument 0"
+critical-sources = ["network"]
+creates = "Creates {type}"
+read = "Calls Yaml.load, which creates the classes that global tags in the YAML name"
+outside = "The {type} instance comes from outside this method, so its constructor is not visible here"
+
+[sinks.library]
+name = "SnakeYAML"
+coordinates = "org.yaml:snakeyaml"
+safe-from = "2.0"
+
+[sinks.title]
+critical = "Loads network data with an unrestricted SnakeYAML instance"
+warning = "Loads data with an unrestricted SnakeYAML instance"
+notice = "Loads YAML with a restricted SnakeYAML instance"
+
+# Constructor extends SafeConstructor but still honors global tags, so only
+# SafeConstructor and other subclasses count.
+[[sinks.settings]]
+call = "org/yaml/snakeyaml/Yaml.<init>(*)"
+target = "receiver"
+effect = "safe"
+when = { argument = 0, extends = "org/yaml/snakeyaml/constructor/SafeConstructor", not-extends = "org/yaml/snakeyaml/constructor/Constructor" }
+note = "Creates the Yaml instance with SafeConstructor, which only builds plain types"
+
+[[sinks]]
+id = "kryo"
+kind = "call"
+types = ["com/esotericsoftware/kryo/Kryo"]
+calls = [
+    "com/esotericsoftware/kryo/Kryo.readClassAndObject(*)",
+    "com/esotericsoftware/kryo/Kryo.readObject(*)",
+    "com/esotericsoftware/kryo/Kryo.readObjectOrNull(*)",
+]
+data = "argument 0"
+critical-sources = ["network"]
+creates = "Creates {type}"
+read = "Calls Kryo to read objects, which creates any class the data names unless registration is required"
+outside = "The {type} instance comes from outside this method, so its registration setting is not visible here"
+
+[sinks.library]
+name = "Kryo"
+coordinates = "com.esotericsoftware:kryo"
+safe-from = "5.0"
+
+[sinks.title]
+critical = "Deserializes network data with Kryo without class registration"
+warning = "Deserializes data with Kryo without class registration"
+notice = "Deserializes with Kryo limited to registered classes"
+
+[[sinks.settings]]
+call = "com/esotericsoftware/kryo/Kryo.setRegistrationRequired(Z)V"
+target = "receiver"
+effect = "unsafe"
+when = { argument = 0, is = "int 0" }
+note = "Turns off required registration, so the data can name any class"
+
+[[sinks.settings]]
+call = "com/esotericsoftware/kryo/Kryo.setRegistrationRequired(Z)V"
+target = "receiver"
+effect = "safe"
+when = { argument = 0, is = "int 1" }
+note = "Requires registration, so only registered classes are created"
+
+# Jackson only reads fixed types until default typing is turned on, which
+# lets the JSON name the class to create.
+[[sinks]]
+id = "jackson"
+kind = "call"
+types = ["com/fasterxml/jackson/databind/ObjectMapper"]
+calls = [
+    "com/fasterxml/jackson/databind/ObjectMapper.readValue(*)",
+    "com/fasterxml/jackson/databind/ObjectMapper.readValues(*)",
+]
+data = "argument 0"
+default = "safe"
+critical-sources = ["network"]
+creates = "Creates {type}"
+read = "Calls ObjectMapper.readValue, which creates the classes the JSON names when default typing is on"
+
+[sinks.title]
+critical = "Deserializes network data with Jackson default typing"
+warning = "Deserializes data with Jackson default typing"
+notice = "Deserializes with Jackson default typing"
+
+[[sinks.settings]]
+call = "com/fasterxml/jackson/databind/ObjectMapper.enableDefaultTyping(*)"
+target = "receiver"
+effect = "unsafe"
+note = "Turns on default typing with no type validator"
+
+[[sinks.settings]]
+call = "com/fasterxml/jackson/databind/ObjectMapper.enableDefaultTypingAsProperty(*)"
+target = "receiver"
+effect = "unsafe"
+note = "Turns on default typing with no type validator"
+
+[[sinks.settings]]
+call = "com/fasterxml/jackson/databind/ObjectMapper.activateDefaultTyping(*)"
+target = "receiver"
+effect = "unsafe"
+when = { argument = 0, is = "field com/fasterxml/jackson/databind/jsontype/impl/LaissezFaireSubTypeValidator.instance" }
+note = "Turns on default typing with LaissezFaireSubTypeValidator, which allows every class"
+
+[[sinks.settings]]
+call = "com/fasterxml/jackson/databind/ObjectMapper.activateDefaultTypingAsProperty(*)"
+target = "receiver"
+effect = "unsafe"
+when = { argument = 0, is = "field com/fasterxml/jackson/databind/jsontype/impl/LaissezFaireSubTypeValidator.instance" }
+note = "Turns on default typing with LaissezFaireSubTypeValidator, which allows every class"

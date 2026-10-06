@@ -115,3 +115,100 @@ impl Hierarchy {
         }
     }
 }
+
+/// Versions of libraries bundled in a jar and its nested jars, keyed by
+/// Maven coordinates as `group:artifact`.
+#[derive(Debug, Default)]
+pub struct Libraries {
+    by_coordinates: HashMap<String, String>,
+    /// File names of nested jars without the extension, which Jar-in-Jar
+    /// loaders store as `<artifact>-<version>`.
+    nested_jars: Vec<String>,
+}
+
+impl Libraries {
+    pub fn build(root: &ParsedArchive) -> Self {
+        let mut libraries = Self::default();
+        for archive in root.walk() {
+            if let Some(name) = archive.archive.path.last() {
+                let file = name.rsplit('/').next().unwrap_or(name);
+                if let Some(stem) = file.strip_suffix(".jar") {
+                    libraries.nested_jars.push(stem.to_owned());
+                }
+            }
+            for entry in &archive.archive.entries {
+                let Some(coordinates) = entry
+                    .name
+                    .strip_prefix("META-INF/maven/")
+                    .and_then(|rest| rest.strip_suffix("/pom.properties"))
+                    .and_then(|rest| rest.split_once('/'))
+                else {
+                    continue;
+                };
+                let version = String::from_utf8_lossy(&entry.data)
+                    .lines()
+                    .find_map(|line| line.trim().strip_prefix("version=").map(str::to_owned));
+                if let Some(version) = version {
+                    libraries
+                        .by_coordinates
+                        .entry(format!("{}:{}", coordinates.0, coordinates.1))
+                        .or_insert(version);
+                }
+            }
+        }
+        libraries
+    }
+
+    /// The bundled version of `group:artifact`, from its Maven metadata or
+    /// else from a nested jar's file name.
+    pub fn version(&self, coordinates: &str) -> Option<&str> {
+        if let Some(version) = self.by_coordinates.get(coordinates) {
+            return Some(version);
+        }
+        let artifact = coordinates.rsplit(':').next()?;
+        self.nested_jars.iter().find_map(|stem| {
+            stem.strip_prefix(artifact)?
+                .strip_prefix('-')
+                .filter(|v| v.starts_with(|c: char| c.is_ascii_digit()))
+        })
+    }
+}
+
+/// Compares dotted version numbers by their numeric parts, so `1.4.18` is
+/// newer than `1.4.9`. A suffix such as `-SNAPSHOT` is ignored, and missing
+/// parts count as zero.
+pub fn compare_versions(a: &str, b: &str) -> std::cmp::Ordering {
+    let parts = |v: &str| -> Vec<u64> {
+        v.split(['-', '+'])
+            .next()
+            .unwrap_or("")
+            .split('.')
+            .map(|part| {
+                let digits: String = part.chars().take_while(char::is_ascii_digit).collect();
+                digits.parse().unwrap_or(0)
+            })
+            .collect()
+    };
+    let (a, b) = (parts(a), parts(b));
+    let length = a.len().max(b.len());
+    let at = |v: &[u64], i: usize| v.get(i).copied().unwrap_or(0);
+    (0..length)
+        .map(|i| at(&a, i).cmp(&at(&b, i)))
+        .find(|order| order.is_ne())
+        .unwrap_or(std::cmp::Ordering::Equal)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::compare_versions;
+    use std::cmp::Ordering;
+
+    #[test]
+    fn compares_versions_numerically() {
+        assert_eq!(compare_versions("1.4.18", "1.4.9"), Ordering::Greater);
+        assert_eq!(compare_versions("1.33", "2.0"), Ordering::Less);
+        assert_eq!(compare_versions("2.0", "2"), Ordering::Equal);
+        assert_eq!(compare_versions("5.0.0-RC1", "5.0"), Ordering::Equal);
+        assert_eq!(compare_versions("4.0.2", "5.0"), Ordering::Less);
+    }
+}

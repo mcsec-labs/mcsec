@@ -57,11 +57,22 @@ pub struct Alloc {
     pub class: Rc<str>,
 }
 
+/// A value the bytecode pins down on every path, such as `iconst_0` or a
+/// static field read.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub enum Known {
+    Int(i32),
+    /// A static field, as `owner.name`.
+    Static(Rc<str>),
+}
+
 #[derive(Debug, Clone, Default, PartialEq, Eq)]
 pub struct Value {
     pub labels: Labels,
     pub origin: Option<Origin>,
     pub alloc: Option<Alloc>,
+    /// Kept only while every path that reaches this point agrees on it.
+    pub known: Option<Known>,
     /// Long and double values, which take two slots.
     pub wide: bool,
 }
@@ -70,6 +81,13 @@ impl Value {
     fn of_width(wide: bool) -> Self {
         Self {
             wide,
+            ..Self::default()
+        }
+    }
+
+    fn known(known: Known) -> Self {
+        Self {
+            known: Some(known),
             ..Self::default()
         }
     }
@@ -99,11 +117,15 @@ impl Value {
             self.labels,
             self.origin.is_some(),
             self.alloc.is_some(),
+            self.known.is_some(),
             self.wide,
         );
         self.add(other.labels, other.origin.as_ref());
         if self.alloc.is_none() {
             self.alloc = other.alloc.clone();
+        }
+        if self.known != other.known {
+            self.known = None;
         }
         self.wide |= other.wide;
         before
@@ -111,6 +133,7 @@ impl Value {
                 self.labels,
                 self.origin.is_some(),
                 self.alloc.is_some(),
+                self.known.is_some(),
                 self.wide,
             )
     }
@@ -366,10 +389,14 @@ impl Engine<'_, '_> {
         match opcode {
             op::NOP | op::IINC | op::GOTO | op::GOTO_W | op::RET | op::RETURN => {}
 
-            op::ACONST_NULL..=op::ICONST_5
-            | op::FCONST_0..=op::FCONST_2
-            | op::BIPUSH
-            | op::SIPUSH => f.push(Value::of_width(false)),
+            op::ICONST_M1..=op::ICONST_5 => f.push(Value::known(Known::Int(
+                i32::from(opcode) - i32::from(op::ICONST_0),
+            ))),
+            op::BIPUSH | op::SIPUSH => match ins.operand {
+                Operand::Immediate(value) => f.push(Value::known(Known::Int(value))),
+                _ => f.push(Value::of_width(false)),
+            },
+            op::ACONST_NULL | op::FCONST_0..=op::FCONST_2 => f.push(Value::of_width(false)),
             op::LCONST_0 | op::LCONST_1 | op::DCONST_0 | op::DCONST_1 => {
                 f.push(Value::of_width(true))
             }
@@ -543,7 +570,16 @@ impl Engine<'_, '_> {
                 f.pop();
             }
 
-            op::GETSTATIC => f.push(Value::of_width(self.field_is_wide(ins))),
+            op::GETSTATIC => {
+                let mut value = Value::of_width(self.field_is_wide(ins));
+                if let Operand::Constant(index) = ins.operand
+                    && let Ok(field) = self.pool.member_ref(index)
+                {
+                    let name = format!("{}.{}", field.class_name, field.name);
+                    value.known = Some(Known::Static(name.into()));
+                }
+                f.push(value);
+            }
             op::PUTSTATIC => {
                 f.pop();
             }
@@ -686,6 +722,12 @@ impl Engine<'_, '_> {
 
         if let Some(returns) = method.returns {
             let mut result = Value::derived(receiver.iter().chain(&args), returns.wide);
+            // A method returning its own class is taken to return the
+            // receiver, as fluent setters and builders do, so settings
+            // chained onto a new object still reach it.
+            if returns.reference.as_deref() == Some(owner.as_str()) {
+                result.alloc = receiver.as_ref().and_then(|r| r.alloc.clone());
+            }
             if !owner.is_empty() {
                 self.source(
                     self.policy.call(&owner, &name, &descriptor),
