@@ -34,6 +34,28 @@ pub enum DataOrigin {
     Caller,
     /// A constant the mod embeds in its own code.
     EmbeddedTemplate,
+    /// Bytes the mod wrote itself with a serializer, which only name the
+    /// classes of objects it already had.
+    Serialized,
+}
+
+/// Who can supply the data a finding is about, judged from how the mod
+/// registers the packets that carry it. A finding without one is unknown,
+/// such as packet data reaching code through a dispatcher the scanner does
+/// not recognize. Nothing here claims code is unreachable, since a mod can
+/// always register or call it in a way the scanner cannot see.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub enum Exposure {
+    /// Any player connected to a server running the mod, through a packet
+    /// the server decodes from clients.
+    AnyPlayer,
+    /// Any server a player running the mod joins, through a packet only the
+    /// client decodes.
+    AnyServer,
+    /// Only someone who can change files on the player's or server's own
+    /// disk.
+    LocalUser,
 }
 
 /// What limits a dangerous operation, when something does.
@@ -105,6 +127,8 @@ pub struct Finding {
     pub origin: Option<DataOrigin>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub safeguard: Option<Safeguard>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub exposure: Option<Exposure>,
     /// Source to sink steps for data flow rules. Empty for single location rules.
     #[serde(skip_serializing_if = "Vec::is_empty")]
     pub evidence: Vec<EvidenceStep>,

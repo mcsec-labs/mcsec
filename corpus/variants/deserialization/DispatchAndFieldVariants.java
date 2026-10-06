@@ -107,12 +107,26 @@ public class DispatchAndFieldVariants {
         return new ObjectInputStream(new ByteArrayInputStream(out.toByteArray())).readObject();
     }
 
-    // EXPECT notice caller
+    // A deep copy, reading back only what writeObject wrote, so the stream
+    // names the classes of the caller's object and nothing else.
+    // EXPECT notice serialized
     static Object copyThroughSerialization(java.io.Serializable value) throws Exception {
         java.io.ByteArrayOutputStream bytes = new java.io.ByteArrayOutputStream();
         java.io.ObjectOutputStream out = new java.io.ObjectOutputStream(bytes);
         out.writeObject(value);
         out.close();
+        return new ObjectInputStream(new ByteArrayInputStream(bytes.toByteArray())).readObject();
+    }
+
+    // Packet bytes written straight into the buffer bypass the serializer,
+    // so they can name any class.
+    // EXPECT critical network
+    static Object networkBesideSerialization(java.io.Serializable value, ByteBuf buf) throws Exception {
+        java.io.ByteArrayOutputStream bytes = new java.io.ByteArrayOutputStream();
+        java.io.ObjectOutputStream out = new java.io.ObjectOutputStream(bytes);
+        out.writeObject(value);
+        out.flush();
+        bytes.write(bytes(buf));
         return new ObjectInputStream(new ByteArrayInputStream(bytes.toByteArray())).readObject();
     }
 

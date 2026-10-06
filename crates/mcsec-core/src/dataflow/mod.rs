@@ -12,11 +12,13 @@
 
 mod cfg;
 mod descriptor;
+mod lambda;
 
 use std::collections::{HashMap, VecDeque};
 use std::rc::Rc;
 
 pub use descriptor::{JvmType, MethodType, field_type};
+pub use lambda::{LambdaTarget, lambda_target};
 
 use crate::class_file::{ClassFile, Constant, ConstantPool, Instruction, Member, Operand, op};
 use cfg::Cfg;
@@ -29,7 +31,7 @@ const MAX_VISITS_PER_BLOCK: usize = 64;
 
 /// A set of source kinds, as bits a policy assigns.
 #[derive(Debug, Clone, Copy, Default, PartialEq, Eq)]
-pub struct Labels(pub u32);
+pub struct Labels(pub u64);
 
 impl Labels {
     pub fn is_empty(self) -> bool {
@@ -46,15 +48,52 @@ impl Labels {
 pub struct Origin {
     pub offset: u32,
     pub description: Rc<str>,
+    /// The labels came with one of the method's parameters, so they are
+    /// whatever the caller passed rather than something the method reads.
+    pub parameter: bool,
 }
 
-/// The `new` instruction that created an object or array. Copies of a
-/// reference share it, so labels added through one copy reach the others.
+/// The instruction that produced an object or array, a `new` or a call
+/// returning it. Copies of a reference share it, so labels added through one
+/// copy reach the others.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Alloc {
+    /// The instruction's offset, identifying the object it created most
+    /// recently. With [`OLDER`] set it stands for every earlier object from
+    /// that instruction instead, as in a loop that creates one per pass.
     pub offset: u32,
-    /// Internal name of the class, or the array descriptor.
+    /// Internal name of the class, or the array descriptor. For an object a
+    /// call returned, its declared return type.
     pub class: Rc<str>,
+    /// The method created the object itself with `new`, rather than getting
+    /// it back from a call.
+    pub made: bool,
+}
+
+/// Final JDK classes whose instances never change, so nothing written into
+/// them needs following.
+const IMMUTABLE: &[&str] = &[
+    "java/lang/String",
+    "java/lang/Integer",
+    "java/lang/Long",
+    "java/lang/Short",
+    "java/lang/Byte",
+    "java/lang/Character",
+    "java/lang/Boolean",
+    "java/lang/Double",
+    "java/lang/Float",
+    "java/lang/Class",
+];
+
+/// Marks an allocation offset as standing for the earlier objects from its
+/// instruction. Offsets within a method never reach this bit.
+pub const OLDER: u32 = 1 << 31;
+
+impl Alloc {
+    /// The offset of the instruction that created the object.
+    pub fn site(&self) -> u32 {
+        self.offset & !OLDER
+    }
 }
 
 /// A value the bytecode pins down on every path, such as `iconst_0` or a
@@ -64,6 +103,14 @@ pub enum Known {
     Int(i32),
     /// A static field, as `owner.name`.
     Static(Rc<str>),
+    /// A class constant, as its internal name.
+    Class(Rc<str>),
+    /// The function object a lambda or method reference creates, by the
+    /// constant pool index of its `invokedynamic` call site.
+    Lambda(u16),
+    /// The result of a static method that takes no arguments, as
+    /// `owner.name`, such as a registry accessor.
+    Call(Rc<str>),
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Eq)]
@@ -72,10 +119,23 @@ pub struct Value {
     /// The method's own parameters this value is computed from, one bit per
     /// declared parameter index. Parameters past the 64th are not tracked.
     pub params: u64,
+    /// The value is computed from the method's receiver.
+    pub receiver: bool,
     pub origin: Option<Origin>,
     pub alloc: Option<Alloc>,
+    /// The field this value was read from, as `owner.name`, for as long as
+    /// it is the same object. A call that stores into that object, such as
+    /// adding to a list, stores into the field.
+    pub field: Option<Rc<str>>,
     /// Kept only while every path that reaches this point agrees on it.
     pub known: Option<Known>,
+    /// The static type of the value, as an internal name or array
+    /// descriptor, from a cast, a declared type, or the class it was created
+    /// from. Kept only while every path agrees on it.
+    pub ty: Option<Rc<str>>,
+    /// The index of the declared parameter this value still is, unchanged,
+    /// while every path agrees on it.
+    pub param: Option<usize>,
     /// Long and double values, which take two slots.
     pub wide: bool,
 }
@@ -109,11 +169,20 @@ impl Value {
     fn absorb(&mut self, other: &Value) {
         self.add(other.labels, other.origin.as_ref());
         self.params |= other.params;
+        self.receiver |= other.receiver;
     }
 
     /// True when the value carries labels or comes from a parameter.
-    fn carries_anything(&self) -> bool {
+    pub fn carries_anything(&self) -> bool {
         !self.labels.is_empty() || self.params != 0
+    }
+
+    /// The method inputs this value is computed from.
+    pub fn inputs(&self) -> Inputs {
+        Inputs {
+            params: self.params,
+            receiver: self.receiver,
+        }
     }
 
     fn add(&mut self, labels: Labels, origin: Option<&Origin>) {
@@ -131,26 +200,50 @@ impl Value {
         let before = (
             self.labels,
             self.params,
+            self.receiver,
             self.origin.is_some(),
-            self.alloc.is_some(),
+            self.alloc.as_ref().map(|a| (a.offset, a.made)),
+            self.field.is_some(),
             self.known.is_some(),
+            self.ty.is_some(),
+            self.param.is_some(),
             self.wide,
         );
         self.absorb(other);
-        if self.alloc.is_none() {
+        // Where paths bring different objects, one the method created
+        // itself is kept, as the value is that object on at least one path.
+        let replace = match (&self.alloc, &other.alloc) {
+            (None, Some(_)) => true,
+            (Some(mine), Some(theirs)) => !mine.made && theirs.made,
+            _ => false,
+        };
+        if replace {
             self.alloc = other.alloc.clone();
+        }
+        if self.field.is_none() {
+            self.field = other.field.clone();
         }
         if self.known != other.known {
             self.known = None;
+        }
+        if self.ty != other.ty {
+            self.ty = None;
+        }
+        if self.param != other.param {
+            self.param = None;
         }
         self.wide |= other.wide;
         before
             != (
                 self.labels,
                 self.params,
+                self.receiver,
                 self.origin.is_some(),
-                self.alloc.is_some(),
+                self.alloc.as_ref().map(|a| (a.offset, a.made)),
+                self.field.is_some(),
                 self.known.is_some(),
+                self.ty.is_some(),
+                self.param.is_some(),
                 self.wide,
             )
     }
@@ -165,9 +258,115 @@ pub struct Frame {
     /// offsets, such as an ObjectOutputStream over a ByteArrayOutputStream.
     /// Data written into a wrapper also reaches what it wraps.
     pub wraps: Vec<(u32, u32)>,
+    /// Allocation offsets of objects that may have been written after they
+    /// were created, or that left the method's hands where something else
+    /// could write them, such as a call receiving them or a field store.
+    pub written: Vec<u32>,
 }
 
 impl Frame {
+    /// Makes room for a new object from the instruction at `site`. The
+    /// object it created before joins the earlier ones, keeping what was
+    /// recorded about it, and the new object starts with nothing recorded.
+    fn retire(&mut self, site: u32) {
+        let held = self
+            .locals
+            .iter()
+            .chain(&self.stack)
+            .any(|v| v.alloc.as_ref().is_some_and(|a| a.offset == site));
+        let linked = self.wraps.iter().any(|&(w, i)| w == site || i == site);
+        if !held && !linked && !self.written.contains(&site) {
+            return;
+        }
+        let older = site | OLDER;
+        for value in self.locals.iter_mut().chain(self.stack.iter_mut()) {
+            if let Some(alloc) = value.alloc.as_mut()
+                && alloc.offset == site
+            {
+                alloc.offset = older;
+            }
+        }
+        let retired = |offset: u32| if offset == site { older } else { offset };
+        let mut wraps: Vec<(u32, u32)> = Vec::with_capacity(self.wraps.len());
+        for &(wrapper, wrapped) in &self.wraps {
+            let link = (retired(wrapper), retired(wrapped));
+            if !wraps.contains(&link) {
+                wraps.push(link);
+            }
+        }
+        self.wraps = wraps;
+        if let Some(position) = self.written.iter().position(|o| *o == site) {
+            self.written.remove(position);
+            if !self.written.contains(&older) {
+                self.written.push(older);
+            }
+        }
+    }
+
+    /// Records that the object created at `alloc`, and everything it wraps,
+    /// may have been written.
+    fn mark_written(&mut self, alloc: u32) {
+        let mut pending = vec![alloc];
+        while let Some(current) = pending.pop() {
+            if self.written.contains(&current) {
+                continue;
+            }
+            self.written.push(current);
+            pending.extend(
+                self.wraps
+                    .iter()
+                    .filter(|(wrapper, _)| *wrapper == current)
+                    .map(|(_, wrapped)| *wrapped),
+            );
+        }
+    }
+
+    /// Only objects the method created are tracked, as only those can be
+    /// shown to be empty, and only they can wrap other objects.
+    fn mark_value_written(&mut self, value: &Value) {
+        if let Some(alloc) = value.alloc.as_ref().filter(|a| a.made) {
+            self.mark_written(alloc.offset);
+        }
+    }
+
+    /// True when the object created at `alloc` is built only around arrays
+    /// this method created and nothing has written since, so any data read
+    /// from it is all zeros. Objects whose class no value here records do
+    /// not count.
+    pub fn holds_only_empty_arrays(&self, alloc: u32) -> bool {
+        let mut pending = vec![alloc];
+        let mut seen = Vec::new();
+        while let Some(current) = pending.pop() {
+            if seen.contains(&current) {
+                continue;
+            }
+            seen.push(current);
+            if self.written.contains(&current) {
+                return false;
+            }
+            let inner: Vec<u32> = self
+                .wraps
+                .iter()
+                .filter(|(wrapper, _)| *wrapper == current)
+                .map(|(_, wrapped)| *wrapped)
+                .collect();
+            if inner.is_empty() {
+                let is_array = self
+                    .locals
+                    .iter()
+                    .chain(&self.stack)
+                    .filter_map(|v| v.alloc.as_ref())
+                    .find(|a| a.offset == current)
+                    .is_some_and(|a| a.made && a.class.starts_with('['));
+                if !is_array {
+                    return false;
+                }
+            }
+            pending.extend(inner);
+        }
+        true
+    }
+
     /// The value `depth` entries below the top of the stack.
     pub fn peek(&self, depth: usize) -> Option<&Value> {
         self.stack
@@ -250,7 +449,30 @@ impl Frame {
                 changed = true;
             }
         }
+        for alloc in &other.written {
+            if !self.written.contains(alloc) {
+                self.written.push(*alloc);
+                changed = true;
+            }
+        }
         changed
+    }
+}
+
+/// Which of a method's inputs a value is computed from.
+#[derive(Debug, Clone, Copy, Default, PartialEq, Eq, Hash)]
+pub struct Inputs {
+    /// One bit per declared parameter index.
+    pub params: u64,
+    pub receiver: bool,
+}
+
+impl Inputs {
+    pub fn union(self, other: Inputs) -> Inputs {
+        Inputs {
+            params: self.params | other.params,
+            receiver: self.receiver || other.receiver,
+        }
     }
 }
 
@@ -261,7 +483,14 @@ pub trait Policy {
     /// `None` for `this`, whose type is the class being analyzed.
     fn parameter(&self, index: Option<usize>, ty: &str) -> Option<(Labels, String)>;
     /// Labels added to the result of calling a method.
-    fn call(&self, _owner: &str, _name: &str, _descriptor: &str) -> Option<(Labels, String)> {
+    /// `site` is the call's offset, the same on every pass over the method.
+    fn call(
+        &self,
+        _site: u32,
+        _owner: &str,
+        _name: &str,
+        _descriptor: &str,
+    ) -> Option<(Labels, String)> {
         None
     }
     /// Labels for an object created with `new`.
@@ -276,6 +505,31 @@ pub trait Policy {
     /// Labels for a value read from a field, static or not, because of its
     /// declared type or what code elsewhere stores in it.
     fn field(&self, _owner: &str, _name: &str, _descriptor: &str) -> Option<(Labels, String)> {
+        None
+    }
+    /// The inputs a call's result is computed from, when known to be fewer
+    /// than all of them. `site` is the call's offset, the same on every pass
+    /// over the method, and `dispatches` is set for calls that can reach an
+    /// override.
+    fn result_inputs(
+        &self,
+        _site: u32,
+        _owner: &str,
+        _name: &str,
+        _descriptor: &str,
+        _dispatches: bool,
+    ) -> Option<Inputs> {
+        None
+    }
+    /// Labels returned by the body of the lambda or method reference made at
+    /// the `invokedynamic` call site at constant pool `index`. A call handed
+    /// that function object, such as a stream's `map`, can return them.
+    fn lambda_result(&self, _index: u16) -> Option<(Labels, String)> {
+        None
+    }
+    /// Labels for what a call writes into its receiver in place of what its
+    /// arguments carry, such as a serializer recording an object's classes.
+    fn serializes(&self, _owner: &str, _name: &str, _descriptor: &str) -> Option<(Labels, String)> {
         None
     }
 }
@@ -842,6 +1096,7 @@ fn entry_frame(
             let origin = Origin {
                 offset: 0,
                 description: description.into(),
+                parameter: true,
             };
             value.add(labels, Some(&origin));
         }
@@ -850,7 +1105,10 @@ fn entry_frame(
     let mut frame = Frame::default();
     let mut slot = 0;
     if !is_static {
-        frame.set_local(0, source(None, class_name));
+        let mut receiver = source(None, class_name);
+        receiver.ty = Some(class_name.into());
+        receiver.receiver = true;
+        frame.set_local(0, receiver);
         slot = 1;
     }
     for (index, param) in MethodType::parse(descriptor).params.into_iter().enumerate() {
@@ -858,6 +1116,8 @@ fn entry_frame(
             Some(ty) => source(Some(index), ty),
             None => Value::default(),
         };
+        value.ty = param.reference.as_deref().map(Into::into);
+        value.param = Some(index);
         if index < 64 {
             value.params = 1 << index;
         }
@@ -878,6 +1138,7 @@ fn handler_frame(frame: &Frame) -> Frame {
         locals: frame.locals.clone(),
         stack: vec![Value::default()],
         wraps: frame.wraps.clone(),
+        written: frame.written.clone(),
     }
 }
 
@@ -892,6 +1153,7 @@ impl Engine<'_, '_> {
             let origin = Origin {
                 offset,
                 description: description.into(),
+                parameter: false,
             };
             value.add(labels, Some(&origin));
         }
@@ -913,7 +1175,22 @@ impl Engine<'_, '_> {
             op::LCONST_0 | op::LCONST_1 | op::DCONST_0 | op::DCONST_1 => {
                 f.push(Value::of_width(true))
             }
-            op::LDC | op::LDC_W => f.push(Value::of_width(false)),
+            op::LDC | op::LDC_W => {
+                let mut value = Value::of_width(false);
+                if let Operand::Constant(index) = ins.operand {
+                    match self.pool.get(index) {
+                        Some(Constant::Class { .. }) => {
+                            if let Ok(name) = self.pool.class_name(index) {
+                                value.known = Some(Known::Class(name.into()));
+                            }
+                            value.ty = Some("java/lang/Class".into());
+                        }
+                        Some(Constant::String { .. }) => value.ty = Some("java/lang/String".into()),
+                        _ => {}
+                    }
+                }
+                f.push(value);
+            }
             op::LDC2_W => f.push(Value::of_width(true)),
 
             op::ILOAD..=op::ALOAD => {
@@ -958,6 +1235,8 @@ impl Engine<'_, '_> {
                 if let Some(alloc) = &array.alloc {
                     f.taint_alloc(alloc.offset, &value);
                 }
+                f.mark_value_written(&array);
+                f.mark_value_written(&value);
             }
 
             op::POP => {
@@ -1088,8 +1367,12 @@ impl Engine<'_, '_> {
                 if let Operand::Constant(index) = ins.operand
                     && let Ok(field) = self.pool.member_ref(index)
                 {
-                    let name = format!("{}.{}", field.class_name, field.name);
-                    value.known = Some(Known::Static(name.into()));
+                    let name: Rc<str> = format!("{}.{}", field.class_name, field.name).into();
+                    value.known = Some(Known::Static(name.clone()));
+                    value.field = Some(name);
+                    value.ty = field_type(&field.descriptor)
+                        .and_then(|t| t.reference)
+                        .map(Into::into);
                     let found = self.policy.static_field(&field.class_name, &field.name);
                     self.source(found, ins.offset, &mut value);
                     let stored =
@@ -1100,7 +1383,8 @@ impl Engine<'_, '_> {
                 f.push(value);
             }
             op::PUTSTATIC => {
-                f.pop();
+                let value = f.pop();
+                f.mark_value_written(&value);
             }
             op::GETFIELD => {
                 // A field read from a labeled object carries its labels, and
@@ -1115,6 +1399,10 @@ impl Engine<'_, '_> {
                         self.policy
                             .field(&field.class_name, &field.name, &field.descriptor);
                     self.source(stored, ins.offset, &mut value);
+                    value.field = Some(format!("{}.{}", field.class_name, field.name).into());
+                    value.ty = field_type(&field.descriptor)
+                        .and_then(|t| t.reference)
+                        .map(Into::into);
                 }
                 f.push(value);
             }
@@ -1124,6 +1412,8 @@ impl Engine<'_, '_> {
                 if let Some(alloc) = &object.alloc {
                     f.taint_alloc(alloc.offset, &value);
                 }
+                f.mark_value_written(&object);
+                f.mark_value_written(&value);
             }
 
             op::INVOKEVIRTUAL
@@ -1141,11 +1431,14 @@ impl Engine<'_, '_> {
                         .unwrap_or_else(|_| "".into()),
                     _ => "".into(),
                 };
+                f.retire(ins.offset);
                 let mut value = Value {
                     alloc: Some(Alloc {
                         offset: ins.offset,
                         class: class.clone(),
+                        made: true,
                     }),
+                    ty: (!class.is_empty()).then(|| class.clone()),
                     ..Value::default()
                 };
                 self.source(self.policy.allocation(&class), ins.offset, &mut value);
@@ -1159,10 +1452,12 @@ impl Engine<'_, '_> {
                 for _ in 0..dimensions {
                     f.pop();
                 }
+                f.retire(ins.offset);
                 f.push(Value {
                     alloc: Some(Alloc {
                         offset: ins.offset,
                         class: "[".into(),
+                        made: true,
                     }),
                     ..Value::default()
                 });
@@ -1171,7 +1466,16 @@ impl Engine<'_, '_> {
                 let operand = f.pop();
                 f.push(Value::derived([&operand], false));
             }
-            op::CHECKCAST => {}
+            op::CHECKCAST => {
+                // A cast that succeeds pins the type, and the value is
+                // otherwise unchanged.
+                if let Operand::Constant(index) = ins.operand
+                    && let Ok(name) = self.pool.class_name(index)
+                    && let Some(top) = f.stack.last_mut()
+                {
+                    top.ty = Some(name.into());
+                }
+            }
 
             _ => {}
         }
@@ -1243,6 +1547,29 @@ impl Engine<'_, '_> {
             return;
         }
 
+        // Any other call can write the objects it is handed, including its
+        // receiver and what they wrap.
+        for value in receiver.iter().chain(&args) {
+            f.mark_value_written(value);
+        }
+
+        // A serializer writes a description of the object into the stream
+        // it was built over, carrying its own source in place of the
+        // object's data.
+        if !owner.is_empty()
+            && let Some(found) = self.policy.serializes(&owner, &name, &descriptor)
+        {
+            if let Some(alloc) = receiver.as_ref().and_then(|r| r.alloc.as_ref()) {
+                let mut written = Value::default();
+                self.source(Some(found), ins.offset, &mut written);
+                f.taint_alloc(alloc.offset, &written);
+            }
+            if let Some(returns) = method.returns {
+                f.push(Value::of_width(returns.wide));
+            }
+            return;
+        }
+
         // A call can fill any object it is handed from its other inputs, as
         // in `buf.readBytes(bytes)` from the receiver,
         // `System.arraycopy(source, 0, bytes, 0, n)` from another argument,
@@ -1263,19 +1590,70 @@ impl Engine<'_, '_> {
         }
 
         if let Some(returns) = method.returns {
-            let mut result = Value::derived(receiver.iter().chain(&args), returns.wide);
+            let dispatches = matches!(ins.opcode, op::INVOKEVIRTUAL | op::INVOKEINTERFACE);
+            let known = (!owner.is_empty())
+                .then(|| {
+                    self.policy
+                        .result_inputs(ins.offset, &owner, &name, &descriptor, dispatches)
+                })
+                .flatten();
+            let mut result = match known {
+                // Only the inputs the callee's returned value comes from.
+                Some(inputs) => Value::derived(
+                    receiver.iter().filter(|_| inputs.receiver).chain(
+                        args.iter()
+                            .enumerate()
+                            .filter(|(i, _)| *i < 64 && inputs.params & (1 << i) != 0)
+                            .map(|(_, arg)| arg),
+                    ),
+                    returns.wide,
+                ),
+                None => Value::derived(receiver.iter().chain(&args), returns.wide),
+            };
+            result.ty = returns.reference.as_deref().map(Into::into);
             // A method returning its own class is taken to return the
             // receiver, as fluent setters and builders do, so settings
             // chained onto a new object still reach it.
             if returns.reference.as_deref() == Some(owner.as_str()) {
                 result.alloc = receiver.as_ref().and_then(|r| r.alloc.clone());
             }
+            // Any other object a call returns gets an identity of its own, so
+            // what is written into it later, such as a buffer filled after
+            // ByteBuffer.allocate, stays with it.
+            if result.alloc.is_none()
+                && let Some(class) = returns.reference.as_deref()
+                && !IMMUTABLE.contains(&class)
+            {
+                f.retire(ins.offset);
+                result.alloc = Some(Alloc {
+                    offset: ins.offset,
+                    class: class.into(),
+                    made: false,
+                });
+            }
+            result.known = match ins.opcode {
+                op::INVOKEDYNAMIC => Some(Known::Lambda(index)),
+                op::INVOKESTATIC if args.is_empty() => {
+                    Some(Known::Call(format!("{owner}.{name}").into()))
+                }
+                // Optional.of only wraps its argument, so a constant passed
+                // through it, such as a packet direction, stays visible.
+                op::INVOKESTATIC if owner == "java/util/Optional" && name == "of" => {
+                    args.first().and_then(|a| a.known.clone())
+                }
+                _ => None,
+            };
             if !owner.is_empty() {
                 self.source(
-                    self.policy.call(&owner, &name, &descriptor),
+                    self.policy.call(ins.offset, &owner, &name, &descriptor),
                     ins.offset,
                     &mut result,
                 );
+            }
+            for arg in &args {
+                if let Some(Known::Lambda(index)) = arg.known {
+                    self.source(self.policy.lambda_result(index), ins.offset, &mut result);
+                }
             }
             f.push(result);
         }

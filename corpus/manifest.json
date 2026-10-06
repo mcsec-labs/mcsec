@@ -257,7 +257,7 @@
 		{
 			"name": "Logistics Pipes GTNH 1.0.5",
 			"role": "vulnerable",
-			"note": "BleedingPipe. PacketHandler.decode wraps the packet buffer in the mod's own stream type and passes it to the abstract readData, and the overrides deserialize it through the ObjectInput interface. Critical in decode, where the network data enters. The overrides take whatever their caller passes.",
+			"note": "BleedingPipe. PacketHandler.decode wraps the packet buffer in the mod's own stream type and passes it to the abstract readData, and the overrides deserialize it through the ObjectInput interface. Critical in decode, where the network data enters. The overrides take whatever their caller passes. Compressed packets are queued and decompressed at tick end, then dispatched to the same readData, so both decompressor threads are Critical too.",
 			"file": "github-logisticspipes-1.0.5-GTNH.jar",
 			"sha1": "d5843ed7806ac4e9d5c0248b96d19c63eab170f1",
 			"source": {
@@ -291,6 +291,18 @@
 					"class": "logisticspipes/network/packets/routingdebug/RoutingUpdateTargetResponse",
 					"method": "readData",
 					"severity": "notice"
+				},
+				{
+					"rule": "unsafe-deserialization",
+					"class": "logisticspipes/ticks/ClientPacketBufferHandlerThread$ClientDecompressorThread",
+					"method": "clientTickEnd",
+					"severity": "critical"
+				},
+				{
+					"rule": "unsafe-deserialization",
+					"class": "logisticspipes/ticks/ServerPacketBufferHandlerThread$ServerDecompressorThread",
+					"method": "serverTickEnd",
+					"severity": "critical"
 				}
 			]
 		},
@@ -372,23 +384,11 @@
 		{
 			"name": "Advent of Ascension 1.12.2 3.3.6",
 			"role": "control",
-			"note": "Listed as affected by BleedingPipe, but in this build no packet data reaches readObject. Each packet handler copies the packet bytes into a temporary array that is discarded, then deserializes a different, zero-filled array whose size comes from the packet. So the deserialization rates Warning, not Critical. The array size is a separate denial of service bug for the resource exhaustion rule. The leaderboard loader reads a local file.",
+			"note": "Listed as affected by BleedingPipe, but in this build no packet data reaches readObject. Each packet handler copies the packet bytes into a temporary array that is discarded, then deserializes a different, zero-filled array whose size comes from the packet. Deserializing an array nothing wrote reads only zeros and fails before creating any class, so the packets are not reported. The array size is a separate denial of service bug for the resource exhaustion rule. The leaderboard loader reads a local file.",
 			"file": "curseforge-3054253-AoA3-3.3.6.jar",
 			"sha1": "b0e46f6c8d608972157d5ba27f7b093c46797e5a",
 			"source": { "curseforge": { "modId": 311054, "fileId": 3054253 } },
 			"expect": [
-				{
-					"rule": "unsafe-deserialization",
-					"class": "net/tslat/aoa3/common/packet/leaderboard/PacketIndividualLeaderboardStats",
-					"method": "fromBytes",
-					"severity": "warning"
-				},
-				{
-					"rule": "unsafe-deserialization",
-					"class": "net/tslat/aoa3/common/packet/leaderboard/PacketLeaderboardStats",
-					"method": "fromBytes",
-					"severity": "warning"
-				},
 				{
 					"rule": "unsafe-deserialization",
 					"class": "net/tslat/aoa3/library/leaderboard/LeaderboardDataHandler",

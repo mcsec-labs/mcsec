@@ -2,9 +2,10 @@
 //! programs that write the same bug many different ways, plus safe code
 //! that must stay clean. Each method carries a marker comment such as
 //! `// EXPECT critical` or `// EXPECT none`. Words after the severity name
-//! the finding's origin or safeguard as the report spells them, such as
-//! `// EXPECT notice localFile` or `// EXPECT notice allowlist`, and are
-//! checked when present.
+//! the finding's origin, safeguard, or exposure as the report spells them,
+//! such as `// EXPECT notice localFile` or `// EXPECT critical network
+//! anyPlayer`, and are checked when present. The word `noExposure` requires
+//! a finding that claims no exposure.
 //!
 //! A marker ending in KNOWN-GAP records the right answer for a case the
 //! engine cannot reach yet. Those are counted and listed instead of failing,
@@ -209,6 +210,14 @@ fn variants_match_expectations() {
                 finding
                     .safeguard
                     .and_then(|s| name(serde_json::to_value(s).unwrap())),
+                // A finding whose exposure is unknown says so, so a marker
+                // can require that no exposure is claimed.
+                Some(
+                    finding
+                        .exposure
+                        .and_then(|e| name(serde_json::to_value(e).unwrap()))
+                        .unwrap_or_else(|| "noExposure".to_owned()),
+                ),
             ];
             actual.insert((class, method), words.into_iter().flatten().collect());
         }

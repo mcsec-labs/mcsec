@@ -241,9 +241,10 @@ fn data_copied_into_an_array_is_critical() {
 }
 
 #[test]
-fn reading_into_a_discarded_array_is_not_critical() {
+fn reading_into_a_discarded_array_is_not_reported() {
     // The Advent of Ascension shape. Packet data goes into a temporary array
-    // that is thrown away, and a different, empty array is deserialized.
+    // that is thrown away, and a different array nothing ever writes is
+    // deserialized, which reads only zeros and creates no class.
     //     byte[] bytes = new byte[16];
     //     buf.readBytes(new byte[buf.readableBytes()]);
     //     new ObjectInputStream(new ByteArrayInputStream(bytes)).readObject();
@@ -275,7 +276,11 @@ fn reading_into_a_discarded_array_is_not_critical() {
         &code,
     );
 
-    assert_eq!(only(&scan_one(b)).severity, Severity::Warning);
+    let findings = scan_one(b);
+    assert!(
+        findings.is_empty(),
+        "expected no finding, got {findings:#?}"
+    );
 }
 
 #[test]

@@ -45,8 +45,9 @@
 			"descriptor": "(Ljava/io/File;)Lorg/spongepowered/tools/obfuscation/TargetMap;",
 			"severity": "notice",
 			"origin": "localFile",
+			"exposure": "localUser",
 			"verdict": "accurate",
-			"reason": "Origin localFile is right. Mixin's annotation processor, bundled under org.spongepowered.tools, reads back the target database it wrote itself to a temporary file during compilation, with no class restriction. It only runs inside javac when a mod is built.",
+			"reason": "Origin localFile is right. Mixin's annotation processor, bundled under org.spongepowered.tools, reads back the target database it wrote itself to a temporary file during compilation, with no class restriction. It only runs inside javac when a mod is built. Exposure localUser follows from the origin, as the data comes from a file on the local disk.",
 			"tiers": ["gate"],
 			"example": {
 				"file": "modrinth-sl8MXedu-Resourcify-1.12.2-forge--1.6.2.jar",
@@ -61,8 +62,9 @@
 			"descriptor": "(Ljava/io/File;)Lorg/spongepowered/tools/obfuscation/TargetMap;",
 			"severity": "notice",
 			"origin": "localFile",
+			"exposure": "localUser",
 			"verdict": "accurate",
-			"reason": "Origin localFile is right. Mixin's annotation processor, bundled under org.spongepowered.tools, reads back the target database it wrote itself to a temporary file during compilation, with no class restriction. It only runs inside javac when a mod is built.",
+			"reason": "Origin localFile is right. Mixin's annotation processor, bundled under org.spongepowered.tools, reads back the target database it wrote itself to a temporary file during compilation, with no class restriction. It only runs inside javac when a mod is built. Exposure localUser follows from the origin, as the data comes from a file on the local disk.",
 			"tiers": ["gate"],
 			"example": {
 				"file": "modrinth-NoGF2P4Y-SereneSeasons-1.7.10-1.2.18.jar",
@@ -98,8 +100,9 @@
 			"descriptor": "(Ljava/io/File;)Lorg/spongepowered/tools/obfuscation/TargetMap;",
 			"severity": "notice",
 			"origin": "localFile",
+			"exposure": "localUser",
 			"verdict": "accurate",
-			"reason": "Origin localFile is right. Mixin's annotation processor, bundled under org.spongepowered.tools, reads back the target database it wrote itself to a temporary file during compilation, with no class restriction. It only runs inside javac when a mod is built.",
+			"reason": "Origin localFile is right. Mixin's annotation processor, bundled under org.spongepowered.tools, reads back the target database it wrote itself to a temporary file during compilation, with no class restriction. It only runs inside javac when a mod is built. Exposure localUser follows from the origin, as the data comes from a file on the local disk.",
 			"tiers": ["gate", "extended"],
 			"example": {
 				"file": "modrinth-9rqjmdxp-Highlighter-1.12.2-forge-1.1.7.jar",
@@ -114,8 +117,9 @@
 			"descriptor": "(Ljava/io/File;)Lorg/spongepowered/tools/obfuscation/TargetMap;",
 			"severity": "notice",
 			"origin": "localFile",
+			"exposure": "localUser",
 			"verdict": "accurate",
-			"reason": "Origin localFile is right. Mixin's annotation processor, bundled under org.spongepowered.tools, reads back the target database it wrote itself to a temporary file during compilation, with no class restriction. It only runs inside javac when a mod is built.",
+			"reason": "Origin localFile is right. Mixin's annotation processor, bundled under org.spongepowered.tools, reads back the target database it wrote itself to a temporary file during compilation, with no class restriction. It only runs inside javac when a mod is built. Exposure localUser follows from the origin, as the data comes from a file on the local disk.",
 			"tiers": ["gate", "extended"],
 			"example": {
 				"file": "modrinth-V8x1l1js-replaymod-1.12.2-2.6.24.jar",
@@ -130,8 +134,9 @@
 			"descriptor": "(Ljava/io/File;)Lorg/spongepowered/tools/obfuscation/TargetMap;",
 			"severity": "notice",
 			"origin": "localFile",
+			"exposure": "localUser",
 			"verdict": "accurate",
-			"reason": "Origin localFile is right. Mixin's annotation processor, bundled under org.spongepowered.tools, reads back the target database it wrote itself to a temporary file during compilation, with no class restriction. It only runs inside javac when a mod is built.",
+			"reason": "Origin localFile is right. Mixin's annotation processor, bundled under org.spongepowered.tools, reads back the target database it wrote itself to a temporary file during compilation, with no class restriction. It only runs inside javac when a mod is built. Exposure localUser follows from the origin, as the data comes from a file on the local disk.",
 			"tiers": ["gate", "extended"],
 			"example": {
 				"file": "modrinth-9MFKDRpJ-3dSkinLayers-forge-mc1.12.2-1.2.0.jar",
@@ -287,8 +292,9 @@
 			"descriptor": "(Ljava/io/File;)Lorg/spongepowered/tools/obfuscation/TargetMap;",
 			"severity": "notice",
 			"origin": "localFile",
+			"exposure": "localUser",
 			"verdict": "accurate",
-			"reason": "Origin localFile is right. Mixin's annotation processor, bundled under org.spongepowered.tools, reads back the target database it wrote itself to a temporary file during compilation, with no class restriction. It only runs inside javac when a mod is built.",
+			"reason": "Origin localFile is right. Mixin's annotation processor, bundled under org.spongepowered.tools, reads back the target database it wrote itself to a temporary file during compilation, with no class restriction. It only runs inside javac when a mod is built. Exposure localUser follows from the origin, as the data comes from a file on the local disk.",
 			"tiers": ["gate"],
 			"example": {
 				"file": "modrinth-L3j1XOYm-Essential_1-5-0-1_forge_1-12-2.jar",
@@ -307,8 +313,9 @@
 			"descriptor": "(Ljava/io/File;)Ljava/lang/Object;",
 			"severity": "notice",
 			"origin": "localFile",
+			"exposure": "localUser",
 			"verdict": "accurate",
-			"reason": "Origin caller is right. A public helper in the fastutil copy bundled by Just Enough Characters, which deserializes whatever file or stream its caller passes, and no class in the jar outside BinIO calls it.",
+			"reason": "Origin caller is right. A public helper in the fastutil copy bundled by Just Enough Characters, which deserializes whatever file or stream its caller passes, and no class in the jar outside BinIO calls it. Exposure localUser follows from the origin, as the data comes from a file on the local disk.",
 			"tiers": ["gate"],
 			"example": {
 				"file": "modrinth-xeGzcHsN-jecharacters-1.12.0-3.7.3.jar",
@@ -375,28 +382,13 @@
 			"descriptor": "(Ljava/io/File;)Lorg/spongepowered/tools/obfuscation/TargetMap;",
 			"severity": "notice",
 			"origin": "localFile",
+			"exposure": "localUser",
 			"verdict": "accurate",
-			"reason": "Origin localFile is right. Mixin's annotation processor, bundled under org.spongepowered.tools, reads back the target database it wrote itself to a temporary file during compilation, with no class restriction. It only runs inside javac when a mod is built.",
+			"reason": "Origin localFile is right. Mixin's annotation processor, bundled under org.spongepowered.tools, reads back the target database it wrote itself to a temporary file during compilation, with no class restriction. It only runs inside javac when a mod is built. Exposure localUser follows from the origin, as the data comes from a file on the local disk.",
 			"tiers": ["gate", "extended"],
 			"example": {
 				"file": "modrinth-IEb5FUk2-matmos-1.12.2-36.0.1.jar",
 				"entry": "org/spongepowered/tools/obfuscation/TargetMap.class"
-			}
-		},
-		{
-			"rule": "unsafe-deserialization",
-			"classSha1": "001a3c48769cd1383a564c4d3d6965e629533652",
-			"class": "dev/xhyrom/e4mc/shadow/io/netty/resolver/dns/DefaultDnsCache",
-			"method": "copyThrowable",
-			"descriptor": "(Ljava/lang/Throwable;)Ljava/lang/Throwable;",
-			"severity": "notice",
-			"origin": "caller",
-			"verdict": "accurate",
-			"reason": "Origin caller is right. copyThrowable deserializes what its caller passes, and no caller in the jar passes it untrusted data.",
-			"tiers": ["extended"],
-			"example": {
-				"file": "modrinth-AOqLK7Cs-e4mc-retro_ornithe-1.0.2+1.7.x.jar",
-				"entry": "dev/xhyrom/e4mc/shadow/io/netty/resolver/dns/DefaultDnsCache.class"
 			}
 		},
 		{
@@ -407,8 +399,9 @@
 			"descriptor": "()V",
 			"severity": "notice",
 			"origin": "localFile",
+			"exposure": "localUser",
 			"verdict": "accurate",
-			"reason": "Origin localFile is right. loadFromOld deserializes a file it opens from the local disk.",
+			"reason": "Origin localFile is right. loadFromOld deserializes a file it opens from the local disk. Exposure localUser follows from the origin, as the data comes from a file on the local disk.",
 			"tiers": ["extended"],
 			"example": {
 				"file": "modrinth-ZR3n7ejW-InGameAccountSwitcher-Forge-1.12.2-7.1.2.jar",
@@ -423,8 +416,9 @@
 			"descriptor": "()V",
 			"severity": "notice",
 			"origin": "localFile",
+			"exposure": "localUser",
 			"verdict": "accurate",
-			"reason": "Origin localFile is right. readFromFile deserializes a file it opens from the local disk.",
+			"reason": "Origin localFile is right. readFromFile deserializes a file it opens from the local disk. Exposure localUser follows from the origin, as the data comes from a file on the local disk.",
 			"tiers": ["extended"],
 			"example": {
 				"file": "modrinth-ZR3n7ejW-InGameAccountSwitcher-Forge-1.12.2-7.1.2.jar",
@@ -439,8 +433,9 @@
 			"descriptor": "([BLjava/lang/String;Ljava/lang/String;)[B",
 			"severity": "notice",
 			"origin": "localFile",
+			"exposure": "localUser",
 			"verdict": "accurate",
-			"reason": "Origin localFile is right. transform deserializes a file it opens from the local disk.",
+			"reason": "Origin localFile is right. transform deserializes a file it opens from the local disk. Exposure localUser follows from the origin, as the data comes from a file on the local disk.",
 			"tiers": ["extended"],
 			"example": {
 				"file": "modrinth-YmKitGGB-modernfix-mc1.16.5-1.12.2.jar",
@@ -455,8 +450,9 @@
 			"descriptor": "(Ljava/io/File;)Lorg/spongepowered/tools/obfuscation/TargetMap;",
 			"severity": "notice",
 			"origin": "localFile",
+			"exposure": "localUser",
 			"verdict": "accurate",
-			"reason": "Origin localFile is right. read deserializes a file it opens from the local disk.",
+			"reason": "Origin localFile is right. read deserializes a file it opens from the local disk. Exposure localUser follows from the origin, as the data comes from a file on the local disk.",
 			"tiers": ["extended"],
 			"example": {
 				"file": "modrinth-GqXT1zbV-SRParasites-1.10.9.jar",
@@ -487,8 +483,9 @@
 			"descriptor": "(Ljava/io/File;)Lorg/spongepowered/tools/obfuscation/TargetMap;",
 			"severity": "notice",
 			"origin": "localFile",
+			"exposure": "localUser",
 			"verdict": "accurate",
-			"reason": "Origin localFile is right. read deserializes a file it opens from the local disk.",
+			"reason": "Origin localFile is right. read deserializes a file it opens from the local disk. Exposure localUser follows from the origin, as the data comes from a file on the local disk.",
 			"tiers": ["extended"],
 			"example": {
 				"file": "modrinth-8zhGUDDJ-valkyrien-skies-1.12.2-1.1.6.jar",
@@ -503,8 +500,9 @@
 			"descriptor": "(Lio/netty/buffer/ByteBuf;)V",
 			"severity": "critical",
 			"origin": "network",
+			"exposure": "anyPlayer",
 			"verdict": "true-positive",
-			"reason": "Copies the packet bytes one at a time into an array, then reads it through GZIP with a plain ObjectInputStream.",
+			"reason": "Copies the packet bytes one at a time into an array, then reads it through GZIP with a plain ObjectInputStream. Exposure anyPlayer is right. ModNetworking registers PacketFriendermanRegistrySync with Side.CLIENT through Forge's SimpleNetworkWrapper, and Forge 1.7 to 1.12 decodes a registered message on whichever side receives it.",
 			"tiers": ["extended"],
 			"example": {
 				"file": "curseforge-2495745-p455w0rdsthings-1.10.2-2.2.32.jar",
@@ -519,8 +517,9 @@
 			"descriptor": "(Lio/netty/buffer/ByteBuf;)V",
 			"severity": "critical",
 			"origin": "network",
+			"exposure": "anyPlayer",
 			"verdict": "true-positive",
-			"reason": "Copies the packet bytes one at a time into an array, then reads it through GZIP with a plain ObjectInputStream.",
+			"reason": "Copies the packet bytes one at a time into an array, then reads it through GZIP with a plain ObjectInputStream. Exposure anyPlayer is right. ModNetworking registers PacketConfigSync with Side.CLIENT through Forge's SimpleNetworkWrapper, and Forge 1.7 to 1.12 decodes a registered message on whichever side receives it.",
 			"tiers": ["extended"],
 			"example": {
 				"file": "curseforge-2495745-p455w0rdsthings-1.10.2-2.2.32.jar",
@@ -535,29 +534,13 @@
 			"descriptor": "(Ljava/io/File;)Lorg/spongepowered/tools/obfuscation/TargetMap;",
 			"severity": "notice",
 			"origin": "localFile",
+			"exposure": "localUser",
 			"verdict": "accurate",
-			"reason": "Origin localFile is right. read deserializes a file it opens from the local disk.",
+			"reason": "Origin localFile is right. read deserializes a file it opens from the local disk. Exposure localUser follows from the origin, as the data comes from a file on the local disk.",
 			"tiers": ["extended"],
 			"example": {
 				"file": "curseforge-2680892-malisiscore-1.12.2-6.5.1.jar",
 				"entry": "org/spongepowered/tools/obfuscation/TargetMap.class"
-			}
-		},
-		{
-			"rule": "unsafe-deserialization",
-			"classSha1": "2583cb141c1f69245f8a0c10a90ae5d5fcdb5cb5",
-			"class": "com/radiance/client/pipeline/Pipeline",
-			"method": "getModuleAttributes",
-			"descriptor": "(Lcom/radiance/client/pipeline/Module;)V",
-			"severity": "notice",
-			"origin": "caller",
-			"safeguard": "libraryVersion",
-			"verdict": "accurate",
-			"reason": "Safeguard libraryVersion is right. The jar bundles SnakeYAML 2.x, which rejects global tags unless code turns them on.",
-			"tiers": ["extended"],
-			"example": {
-				"file": "modrinth-kacLmdL4-Radiance-0.1.6-alpha-neoforge-1.21.4-windows.jar",
-				"entry": "com/radiance/client/pipeline/Pipeline.class"
 			}
 		},
 		{
@@ -569,8 +552,9 @@
 			"severity": "notice",
 			"origin": "localFile",
 			"safeguard": "libraryVersion",
+			"exposure": "localUser",
 			"verdict": "accurate",
-			"reason": "Safeguard libraryVersion is right. The jar bundles SnakeYAML 2.x, which rejects global tags unless code turns them on.",
+			"reason": "Safeguard libraryVersion is right. The jar bundles SnakeYAML 2.x, which rejects global tags unless code turns them on. Exposure localUser follows from the origin, as the data comes from a file on the local disk.",
 			"tiers": ["extended"],
 			"example": {
 				"file": "modrinth-kacLmdL4-Radiance-0.1.6-alpha-neoforge-1.21.4-windows.jar",
@@ -586,8 +570,9 @@
 			"severity": "notice",
 			"origin": "localFile",
 			"safeguard": "libraryVersion",
+			"exposure": "localUser",
 			"verdict": "accurate",
-			"reason": "Safeguard libraryVersion is right. The jar bundles SnakeYAML 2.x, which rejects global tags unless code turns them on.",
+			"reason": "Safeguard libraryVersion is right. The jar bundles SnakeYAML 2.x, which rejects global tags unless code turns them on. Exposure localUser follows from the origin, as the data comes from a file on the local disk.",
 			"tiers": ["extended"],
 			"example": {
 				"file": "modrinth-kacLmdL4-Radiance-0.1.6-alpha-neoforge-1.21.4-windows.jar",
@@ -603,8 +588,9 @@
 			"severity": "notice",
 			"origin": "localFile",
 			"safeguard": "libraryVersion",
+			"exposure": "localUser",
 			"verdict": "accurate",
-			"reason": "Safeguard libraryVersion is right. The jar bundles SnakeYAML 2.x, which rejects global tags unless code turns them on.",
+			"reason": "Safeguard libraryVersion is right. The jar bundles SnakeYAML 2.x, which rejects global tags unless code turns them on. Exposure localUser follows from the origin, as the data comes from a file on the local disk.",
 			"tiers": ["extended"],
 			"example": {
 				"file": "modrinth-NSxwah05-Kiwi-1.20.1-Forge-11.10.3.jar",
@@ -620,8 +606,9 @@
 			"severity": "notice",
 			"origin": "network",
 			"safeguard": "allowlist",
+			"exposure": "anyPlayer",
 			"verdict": "accurate",
-			"reason": "Safeguard allowlist is right. The stream's resolveClass checks each class against an allowed set before resolving it.",
+			"reason": "Safeguard allowlist is right. The stream's resolveClass checks each class against an allowed set before resolving it. Exposure anyPlayer is right. EnderPacketHandler registers PacketConfigSync with Side.CLIENT through Forge's SimpleNetworkWrapper, and Forge 1.7 to 1.12 decodes a registered message on whichever side receives it.",
 			"tiers": ["extended"],
 			"example": {
 				"file": "curseforge-4671288-EnderCore-1.7.10-0.2.0.40_beta.jar",
@@ -636,8 +623,9 @@
 			"descriptor": "(Ljava/io/File;)Lorg/spongepowered/tools/obfuscation/TargetMap;",
 			"severity": "notice",
 			"origin": "localFile",
+			"exposure": "localUser",
 			"verdict": "accurate",
-			"reason": "Origin localFile is right. read deserializes a file it opens from the local disk.",
+			"reason": "Origin localFile is right. read deserializes a file it opens from the local disk. Exposure localUser follows from the origin, as the data comes from a file on the local disk.",
 			"tiers": ["extended"],
 			"example": {
 				"file": "modrinth-UmaoM7yG-gtnhmixins-2.1.2.jar",
@@ -653,28 +641,13 @@
 			"severity": "notice",
 			"origin": "localFile",
 			"safeguard": "libraryVersion",
+			"exposure": "localUser",
 			"verdict": "accurate",
-			"reason": "Safeguard libraryVersion is right. The jar bundles SnakeYAML 2.x, which rejects global tags unless code turns them on.",
+			"reason": "Safeguard libraryVersion is right. The jar bundles SnakeYAML 2.x, which rejects global tags unless code turns them on. Exposure localUser follows from the origin, as the data comes from a file on the local disk.",
 			"tiers": ["extended"],
 			"example": {
 				"file": "modrinth-UDraViyI-TAB-v6.2.0.jar",
 				"entry": "me/neznamy/tab/libs/me/neznamy/yamlassist/YamlAssist.class"
-			}
-		},
-		{
-			"rule": "unsafe-deserialization",
-			"classSha1": "508932934f805b950c8959c3f13c0379b2c59a79",
-			"class": "io/github/somehussar/janinoloader/script/SafeScriptClassBody",
-			"method": "lambda$static$1",
-			"descriptor": "(Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/ClassLoader;)Ljava/lang/Object;",
-			"severity": "notice",
-			"origin": "caller",
-			"verdict": "accurate",
-			"reason": "Origin caller is right. lambda$static$1 deserializes what its caller passes, and no caller in the jar passes it untrusted data.",
-			"tiers": ["extended"],
-			"example": {
-				"file": "modrinth-RtMxVKPM-CustomNPC-Plus-1.11.1.jar",
-				"entry": "io/github/somehussar/janinoloader/script/SafeScriptClassBody.class"
 			}
 		},
 		{
@@ -765,8 +738,9 @@
 			"descriptor": "()Lcom/github/mrebhan/ingameaccountswitcher/tools/Config;",
 			"severity": "notice",
 			"origin": "localFile",
+			"exposure": "localUser",
 			"verdict": "accurate",
-			"reason": "Origin localFile is right. getConfigV1 deserializes a file it opens from the local disk.",
+			"reason": "Origin localFile is right. getConfigV1 deserializes a file it opens from the local disk. Exposure localUser follows from the origin, as the data comes from a file on the local disk.",
 			"tiers": ["extended"],
 			"example": {
 				"file": "modrinth-ZR3n7ejW-InGameAccountSwitcher-Forge-1.12.2-7.1.2.jar",
@@ -781,8 +755,9 @@
 			"descriptor": "()Lcom/github/mrebhan/ingameaccountswitcher/tools/Config;",
 			"severity": "notice",
 			"origin": "localFile",
+			"exposure": "localUser",
 			"verdict": "accurate",
-			"reason": "Origin localFile is right. getConfigV2 deserializes a file it opens from the local disk.",
+			"reason": "Origin localFile is right. getConfigV2 deserializes a file it opens from the local disk. Exposure localUser follows from the origin, as the data comes from a file on the local disk.",
 			"tiers": ["extended"],
 			"example": {
 				"file": "modrinth-ZR3n7ejW-InGameAccountSwitcher-Forge-1.12.2-7.1.2.jar",
@@ -797,8 +772,9 @@
 			"descriptor": "()Lcom/github/mrebhan/ingameaccountswitcher/tools/Config;",
 			"severity": "notice",
 			"origin": "localFile",
+			"exposure": "localUser",
 			"verdict": "accurate",
-			"reason": "Origin localFile is right. getConfigV3 deserializes a file it opens from the local disk.",
+			"reason": "Origin localFile is right. getConfigV3 deserializes a file it opens from the local disk. Exposure localUser follows from the origin, as the data comes from a file on the local disk.",
 			"tiers": ["extended"],
 			"example": {
 				"file": "modrinth-ZR3n7ejW-InGameAccountSwitcher-Forge-1.12.2-7.1.2.jar",
@@ -813,8 +789,9 @@
 			"descriptor": "()Ljava/lang/String;",
 			"severity": "notice",
 			"origin": "localFile",
+			"exposure": "localUser",
 			"verdict": "accurate",
-			"reason": "Origin localFile is right. getPassword deserializes a file it opens from the local disk.",
+			"reason": "Origin localFile is right. getPassword deserializes a file it opens from the local disk. Exposure localUser follows from the origin, as the data comes from a file on the local disk.",
 			"tiers": ["extended"],
 			"example": {
 				"file": "modrinth-ZR3n7ejW-InGameAccountSwitcher-Forge-1.12.2-7.1.2.jar",
@@ -829,8 +806,9 @@
 			"descriptor": "(Ljava/lang/String;)Lorg/ejml/data/ReshapeMatrix64F;",
 			"severity": "notice",
 			"origin": "localFile",
+			"exposure": "localUser",
 			"verdict": "accurate",
-			"reason": "Origin localFile is right. loadBin deserializes a file it opens from the local disk.",
+			"reason": "Origin localFile is right. loadBin deserializes a file it opens from the local disk. Exposure localUser follows from the origin, as the data comes from a file on the local disk.",
 			"tiers": ["extended"],
 			"example": {
 				"file": "curseforge-6833054-industrialcraft-2-2.2.828-experimental.jar",
@@ -846,8 +824,9 @@
 			"descriptor": "(Ljava/io/File;)Ljava/util/Map;",
 			"severity": "notice",
 			"origin": "localFile",
+			"exposure": "localUser",
 			"verdict": "accurate",
-			"reason": "Origin localFile is right. load deserializes a file it opens from the local disk.",
+			"reason": "Origin localFile is right. load deserializes a file it opens from the local disk. Exposure localUser follows from the origin, as the data comes from a file on the local disk.",
 			"tiers": ["extended"],
 			"example": {
 				"file": "curseforge-8669671-lightspeed-1.21.1-1.2.3.jar",
@@ -873,31 +852,15 @@
 		},
 		{
 			"rule": "unsafe-deserialization",
-			"classSha1": "63e951dcd384c51976d1289bf7418f2b6ca07ba5",
-			"class": "org/apache/http/impl/client/BasicAuthCache",
-			"method": "get",
-			"descriptor": "(Lorg/apache/http/HttpHost;)Lorg/apache/http/auth/AuthScheme;",
-			"severity": "notice",
-			"origin": "caller",
-			"verdict": "accurate",
-			"reason": "Origin caller is right. get deserializes what its caller passes, and no caller in the jar passes it untrusted data.",
-			"tiers": ["extended"],
-			"example": {
-				"file": "modrinth-4RbSvFEo-neruina-3.3.3+26.2-neoforge.jar",
-				"archivePath": ["META-INF/jarjar/httpclient-4.5.jar"],
-				"entry": "org/apache/http/impl/client/BasicAuthCache.class"
-			}
-		},
-		{
-			"rule": "unsafe-deserialization",
 			"classSha1": "65ba9123059329f1c3993326809ef99723d72dc8",
 			"class": "net/wurstclient/altmanager/Encryption",
 			"method": "loadRsaKeys",
 			"descriptor": "(Ljava/nio/file/Path;Ljava/nio/file/Path;)Ljava/security/KeyPair;",
 			"severity": "notice",
 			"origin": "localFile",
+			"exposure": "localUser",
 			"verdict": "accurate",
-			"reason": "Origin localFile is right. loadRsaKeys deserializes a file it opens from the local disk.",
+			"reason": "Origin localFile is right. loadRsaKeys deserializes a file it opens from the local disk. Exposure localUser follows from the origin, as the data comes from a file on the local disk.",
 			"tiers": ["extended"],
 			"example": {
 				"file": "modrinth-XstbwzTD-NiceWurst-v7.55.1-CevAPI-MC26.3_v0.60.jar",
@@ -993,8 +956,9 @@
 			"descriptor": "(Ljava/io/File;)Ljava/lang/Object;",
 			"severity": "notice",
 			"origin": "localFile",
+			"exposure": "localUser",
 			"verdict": "accurate",
-			"reason": "Origin localFile is right. loadObject deserializes a file it opens from the local disk.",
+			"reason": "Origin localFile is right. loadObject deserializes a file it opens from the local disk. Exposure localUser follows from the origin, as the data comes from a file on the local disk.",
 			"tiers": ["extended"],
 			"example": {
 				"file": "modrinth-lhgFrJrN-ViaFabric-0.4.19+110-legacy.jar",
@@ -1031,8 +995,9 @@
 			"descriptor": "(Lnet/minecraft/network/FriendlyByteBuf;)Lnet/minecraft/util/Tuple;",
 			"severity": "critical",
 			"origin": "network",
+			"exposure": "anyPlayer",
 			"verdict": "true-positive",
-			"reason": "Reads a length and that many bytes from the packet buffer and deserializes them with a plain ObjectInputStream.",
+			"reason": "Reads a length and that many bytes from the packet buffer and deserializes them with a plain ObjectInputStream. Exposure anyPlayer is right. ZetterNetwork registers CCanvasActionPacket with playToServer, and its decoder reaches readEntry through CanvasAction and AbstractToolParameters.readPacketData.",
 			"tiers": ["extended"],
 			"example": {
 				"file": "modrinth-vs8wxHPC-zetter-1.21.1-0.21.7.jar",
@@ -1090,22 +1055,6 @@
 		},
 		{
 			"rule": "unsafe-deserialization",
-			"classSha1": "7eab282931280c60672ff66e0cd9a6026c88a0b3",
-			"class": "dev/xhyrom/e4mc/shadow/io/netty/resolver/dns/DefaultDnsCache",
-			"method": "copyThrowable",
-			"descriptor": "(Ljava/lang/Throwable;)Ljava/lang/Throwable;",
-			"severity": "notice",
-			"origin": "caller",
-			"verdict": "accurate",
-			"reason": "Origin caller is right. copyThrowable deserializes what its caller passes, and no caller in the jar passes it untrusted data.",
-			"tiers": ["extended"],
-			"example": {
-				"file": "modrinth-CNEnmz8a-e4mc-retro_ornithe-1.1.0+1.9-1.12.2.jar",
-				"entry": "dev/xhyrom/e4mc/shadow/io/netty/resolver/dns/DefaultDnsCache.class"
-			}
-		},
-		{
-			"rule": "unsafe-deserialization",
 			"classSha1": "8688725949854d1b64b2a0af510f7e2f762cbe50",
 			"class": "nl/enjarai/cicada/api/util/YamlSource",
 			"method": "lambda$fromUrl$2",
@@ -1129,8 +1078,9 @@
 			"descriptor": "(Lnet/minecraft/client/Minecraft;)V",
 			"severity": "notice",
 			"origin": "localFile",
+			"exposure": "localUser",
 			"verdict": "accurate",
-			"reason": "Origin localFile is right. load deserializes a file it opens from the local disk.",
+			"reason": "Origin localFile is right. load deserializes a file it opens from the local disk. Exposure localUser follows from the origin, as the data comes from a file on the local disk.",
 			"tiers": ["extended"],
 			"example": {
 				"file": "modrinth-ZR3n7ejW-InGameAccountSwitcher-Forge-1.12.2-7.1.2.jar",
@@ -1161,8 +1111,9 @@
 			"descriptor": "(Ljava/lang/String;)Ljava/lang/Object;",
 			"severity": "notice",
 			"origin": "localFile",
+			"exposure": "localUser",
 			"verdict": "accurate",
-			"reason": "Origin localFile is right. deserializeFromFile deserializes a file it opens from the local disk.",
+			"reason": "Origin localFile is right. deserializeFromFile deserializes a file it opens from the local disk. Exposure localUser follows from the origin, as the data comes from a file on the local disk.",
 			"tiers": ["extended"],
 			"example": {
 				"file": "modrinth-QGuLhUxu-calcmod-forge-1.12.2-1.3.0.jar",
@@ -1210,8 +1161,9 @@
 			"descriptor": "(Lio/netty/buffer/ByteBuf;)Ljava/lang/Object;",
 			"severity": "critical",
 			"origin": "network",
+			"exposure": "anyPlayer",
 			"verdict": "true-positive",
-			"reason": "McLib, bundled in Blockbuster, reads a byte array from the buffer and deserializes it with a plain ObjectInputStream.",
+			"reason": "McLib, bundled in Blockbuster, reads a byte array from the buffer and deserializes it with a plain ObjectInputStream. Exposure anyPlayer overstates it. McLib's server receiver decodes any message id, and the engine follows fromBytes into every message class, including the client-only one that reaches this method. Exposure anyPlayer overstates it. McLib's server receiver decodes any message id, and the engine follows fromBytes into every message class, including the client-only one that reaches this method.",
 			"tiers": ["extended"],
 			"example": {
 				"file": "curseforge-8594964-blockbuster-2.7.3-1.20.4.jar",
@@ -1226,29 +1178,13 @@
 			"descriptor": "(Ljava/io/File;)Lorg/spongepowered/tools/obfuscation/TargetMap;",
 			"severity": "notice",
 			"origin": "localFile",
+			"exposure": "localUser",
 			"verdict": "accurate",
-			"reason": "Origin localFile is right. read deserializes a file it opens from the local disk.",
+			"reason": "Origin localFile is right. read deserializes a file it opens from the local disk. Exposure localUser follows from the origin, as the data comes from a file on the local disk.",
 			"tiers": ["extended"],
 			"example": {
 				"file": "modrinth-uC0HAPwp-matmos-1.7.10-36.0.1.jar",
 				"entry": "org/spongepowered/tools/obfuscation/TargetMap.class"
-			}
-		},
-		{
-			"rule": "unsafe-deserialization",
-			"classSha1": "a6235155894ed52f993c9af570d8f8d4d062aa45",
-			"class": "org/apache/http/impl/client/BasicAuthCache",
-			"method": "get",
-			"descriptor": "(Lorg/apache/http/HttpHost;)Lorg/apache/http/auth/AuthScheme;",
-			"severity": "notice",
-			"origin": "caller",
-			"verdict": "accurate",
-			"reason": "Origin caller is right. get deserializes what its caller passes, and no caller in the jar passes it untrusted data.",
-			"tiers": ["extended"],
-			"example": {
-				"file": "modrinth-5dT3oeRO-authme-neoforge-9.3.0+26.3.jar",
-				"archivePath": ["META-INF/jars/httpclient-4.5.14.jar"],
-				"entry": "org/apache/http/impl/client/BasicAuthCache.class"
 			}
 		},
 		{
@@ -1260,8 +1196,9 @@
 			"severity": "notice",
 			"origin": "network",
 			"safeguard": "allowlist",
+			"exposure": "anyPlayer",
 			"verdict": "accurate",
-			"reason": "Safeguard allowlist is right. The stream's resolveClass checks each class against an allowed set before resolving it.",
+			"reason": "Safeguard allowlist is right. The stream's resolveClass checks each class against an allowed set before resolving it. Exposure anyPlayer is right. EnderPacketHandler registers PacketConfigSync with Side.CLIENT through Forge's SimpleNetworkWrapper, wrapped in the mod's ThreadedNetworkWrapper, and Forge 1.7 to 1.12 decodes a registered message on whichever side receives it.",
 			"tiers": ["extended"],
 			"example": {
 				"file": "curseforge-4671384-EnderCore-1.12.2-0.5.78.jar",
@@ -1308,28 +1245,13 @@
 			"descriptor": "(Lio/netty/buffer/ByteBuf;)V",
 			"severity": "critical",
 			"origin": "network",
+			"exposure": "anyPlayer",
 			"verdict": "true-positive",
-			"reason": "After reading the config strings, deserializes the rest of the packet with a plain ObjectInputStream.",
+			"reason": "After reading the config strings, deserializes the rest of the packet with a plain ObjectInputStream. Exposure anyPlayer is right. NetworkHandler registers ConfigPacket with Side.CLIENT through Forge's SimpleNetworkWrapper, and Forge 1.7 to 1.12 decodes a registered message on whichever side receives it.",
 			"tiers": ["extended"],
 			"example": {
 				"file": "modrinth-bGX4qj1i-simple-rpc-1.12.2-3.1.1.jar",
 				"entry": "me/hypherionmc/simplerpc/network/ConfigPacket.class"
-			}
-		},
-		{
-			"rule": "unsafe-deserialization",
-			"classSha1": "b7ed5ad09c1548160e4246613a3024508c01b959",
-			"class": "thecodex6824/thaumicaugmentation/common/world/biome/BiomeUtil",
-			"method": "copyRand",
-			"descriptor": "(Ljava/util/Random;)Ljava/util/Random;",
-			"severity": "notice",
-			"origin": "caller",
-			"verdict": "accurate",
-			"reason": "Origin caller is right. copyRand deserializes what its caller passes, and no caller in the jar passes it untrusted data.",
-			"tiers": ["extended"],
-			"example": {
-				"file": "curseforge-6047659-ThaumicAugmentation-1.12.2-2.1.14.jar",
-				"entry": "thecodex6824/thaumicaugmentation/common/world/biome/BiomeUtil.class"
 			}
 		},
 		{
@@ -1340,8 +1262,9 @@
 			"descriptor": "()Ljava/util/HashMap;",
 			"severity": "notice",
 			"origin": "localFile",
+			"exposure": "localUser",
 			"verdict": "accurate",
-			"reason": "Origin localFile is right. loadFile deserializes a file it opens from the local disk.",
+			"reason": "Origin localFile is right. loadFile deserializes a file it opens from the local disk. Exposure localUser follows from the origin, as the data comes from a file on the local disk.",
 			"tiers": ["extended"],
 			"example": {
 				"file": "curseforge-2822288-BloodMagic-1.12.2-2.4.3-105.jar",
@@ -1375,8 +1298,9 @@
 			"descriptor": "(Ljava/lang/String;)Ljava/lang/Object;",
 			"severity": "notice",
 			"origin": "localFile",
+			"exposure": "localUser",
 			"verdict": "accurate",
-			"reason": "Origin localFile is right. deserializeFromFile deserializes a file it opens from the local disk.",
+			"reason": "Origin localFile is right. deserializeFromFile deserializes a file it opens from the local disk. Exposure localUser follows from the origin, as the data comes from a file on the local disk.",
 			"tiers": ["extended"],
 			"example": {
 				"file": "modrinth-QbWk19ut-immersive_aircraft-neoforge-1.5.2+26.2.jar",
@@ -1394,8 +1318,9 @@
 			"descriptor": "(Ljava/io/File;)Lorg/spongepowered/tools/obfuscation/TargetMap;",
 			"severity": "notice",
 			"origin": "localFile",
+			"exposure": "localUser",
 			"verdict": "accurate",
-			"reason": "Origin localFile is right. read deserializes a file it opens from the local disk.",
+			"reason": "Origin localFile is right. read deserializes a file it opens from the local disk. Exposure localUser follows from the origin, as the data comes from a file on the local disk.",
 			"tiers": ["extended"],
 			"example": {
 				"file": "modrinth-r3k4PH9B-MinecraftCapes-Forge-1.7.10-1.1.0.jar",
@@ -1410,28 +1335,13 @@
 			"descriptor": "(Lnet/minecraft/class_634;Lnet/fabricmc/fabric/api/networking/v1/PacketSender;Lnet/minecraft/class_310;Lnet/minecraft/class_2540;)V",
 			"severity": "critical",
 			"origin": "network",
+			"exposure": "anyServer",
 			"verdict": "true-positive",
-			"reason": "The client's config sync handler passes the packet's byte array straight to SerializationUtils.deserialize, so the server sending the packet chooses the classes created.",
+			"reason": "The client's config sync handler passes the packet's byte array straight to SerializationUtils.deserialize, so the server sending the packet chooses the classes created. Exposure anyServer is right. The handler is registered only through ClientPlayNetworking.registerReceiver.",
 			"tiers": ["extended"],
 			"example": {
 				"file": "modrinth-yW1vcqoE-AllStackable-v2.0.0-1.20.4.jar",
 				"entry": "online/connlost/allstackable/client/AllStackableClientInit.class"
-			}
-		},
-		{
-			"rule": "unsafe-deserialization",
-			"classSha1": "c0b4b56ea8573979e85a78adf590dc62801f4d8d",
-			"class": "com/gitlab/srcmc/rctmod/network/BatchedPayload",
-			"method": "from",
-			"descriptor": "([Lcom/gitlab/srcmc/rctmod/network/BatchedPayload$Payload;)Ljava/io/Serializable;",
-			"severity": "notice",
-			"origin": "caller",
-			"verdict": "inaccurate",
-			"reason": "Origin caller is wrong. The payload codec is built from lambdas, decoded payloads wait in a queue, and from reassembles their bytes and deserializes them with a plain ObjectInputStream, so the data is network data. The engine does not follow lambdas yet, so this is a missed Critical.",
-			"tiers": ["extended"],
-			"example": {
-				"file": "modrinth-rgfBfnW9-rctmod-fabric-1.21.1-0.19.2-beta.jar",
-				"entry": "com/gitlab/srcmc/rctmod/network/BatchedPayload.class"
 			}
 		},
 		{
@@ -1485,30 +1395,15 @@
 		},
 		{
 			"rule": "unsafe-deserialization",
-			"classSha1": "d59eb19dfc31739b1d43345edffd5d49709d8995",
-			"class": "com/supermartijn642/configlib/ConfigSyncPacket",
-			"method": "fromBytes",
-			"descriptor": "(Lio/netty/buffer/ByteBuf;)V",
-			"severity": "warning",
-			"origin": "untraced",
-			"verdict": "false-positive",
-			"reason": "Allocates an array sized by the packet but never fills it, then deserializes the zero filled array, which fails before creating any class. The size taken from the packet is a separate denial of service bug.",
-			"tiers": ["extended"],
-			"example": {
-				"file": "curseforge-3175648-supermartijn642configlib-1.0.0-mc1.12.jar",
-				"entry": "com/supermartijn642/configlib/ConfigSyncPacket.class"
-			}
-		},
-		{
-			"rule": "unsafe-deserialization",
 			"classSha1": "dc6ed274e7d89d51b77b831113733c906e3dc6c4",
 			"class": "infiniteinvo/handlers/EventHandler",
 			"method": "LoadCache",
 			"descriptor": "(Ljava/io/File;)V",
 			"severity": "notice",
 			"origin": "localFile",
+			"exposure": "localUser",
 			"verdict": "accurate",
-			"reason": "Origin localFile is right. LoadCache deserializes a file it opens from the local disk.",
+			"reason": "Origin localFile is right. LoadCache deserializes a file it opens from the local disk. Exposure localUser follows from the origin, as the data comes from a file on the local disk.",
 			"tiers": ["extended"],
 			"example": {
 				"file": "curseforge-2303166-InfiniteInvo-1.1.53.jar",
@@ -1523,8 +1418,9 @@
 			"descriptor": "(Lio/netty/buffer/ByteBuf;)V",
 			"severity": "critical",
 			"origin": "network",
+			"exposure": "anyPlayer",
 			"verdict": "true-positive",
-			"reason": "The config sync packet that EnderCore later inherited, deserializing the packet with a plain ObjectInputStream, the BleedingPipe pattern.",
+			"reason": "The config sync packet that EnderCore later inherited, deserializing the packet with a plain ObjectInputStream, the BleedingPipe pattern. Exposure anyPlayer is right. TTPacketHandler registers PacketConfigSync with Side.CLIENT through Forge's SimpleNetworkWrapper, and Forge 1.7 to 1.12 decodes a registered message on whichever side receives it.",
 			"tiers": ["extended"],
 			"example": {
 				"file": "curseforge-2244334-ttCore-MC1.7.10-0.1.1-78.jar",
@@ -1573,8 +1469,9 @@
 			"severity": "notice",
 			"origin": "localFile",
 			"safeguard": "libraryVersion",
+			"exposure": "localUser",
 			"verdict": "accurate",
-			"reason": "Safeguard libraryVersion is right. The jar bundles SnakeYAML 2.x, which rejects global tags unless code turns them on.",
+			"reason": "Safeguard libraryVersion is right. The jar bundles SnakeYAML 2.x, which rejects global tags unless code turns them on. Exposure localUser follows from the origin, as the data comes from a file on the local disk.",
 			"tiers": ["extended"],
 			"example": {
 				"file": "modrinth-UDraViyI-TAB-v6.2.0.jar",
@@ -1589,8 +1486,8 @@
 			"descriptor": "([B)V",
 			"severity": "notice",
 			"origin": "caller",
-			"verdict": "inaccurate",
-			"reason": "Origin caller is wrong. The update bytes come from the batched payloads the client receives over the network, through the lambda codec the engine does not follow yet.",
+			"verdict": "accurate",
+			"reason": "Origin caller is right for this method. ModClient.onClientLevelTick passes it the queued network bytes and is reported Critical.",
 			"tiers": ["extended"],
 			"example": {
 				"file": "modrinth-rgfBfnW9-rctmod-fabric-1.21.1-0.19.2-beta.jar",
@@ -1655,12 +1552,162 @@
 			"descriptor": "(Ljava/lang/String;Ljava/lang/Class;)Ljava/io/Serializable;",
 			"severity": "notice",
 			"origin": "localFile",
+			"exposure": "localUser",
 			"verdict": "accurate",
-			"reason": "Origin localFile is right. deserializeCache deserializes a file it opens from the local disk.",
+			"reason": "Origin localFile is right. deserializeCache deserializes a file it opens from the local disk. Exposure localUser follows from the origin, as the data comes from a file on the local disk.",
 			"tiers": ["extended"],
 			"example": {
 				"file": "curseforge-2209901-JourneyMap4.0.3_FairPlay_MC1.6.4.jar",
 				"entry": "net/techbrew/journeymap/io/FileHandler.class"
+			}
+		},
+		{
+			"rule": "unsafe-deserialization",
+			"classSha1": "1cd6750648d4d07eb8350b0e0dfda34583c862b5",
+			"class": "com/gitlab/srcmc/rctmod/client/ModClient",
+			"method": "onClientLevelTick",
+			"descriptor": "(Lnet/minecraft/class_1937;)V",
+			"severity": "critical",
+			"origin": "network",
+			"exposure": "anyServer",
+			"verdict": "true-positive",
+			"reason": "Receives the batched player state payloads from the server through the lambda codec, collects their bytes in a list, queues the combined bytes, and on the next tick passes them to PlayerState.deserializeUpdate, which reads them with a plain ObjectInputStream. Exposure anyServer is right. The receiver is registered for S2C only.",
+			"tiers": ["extended"],
+			"example": {
+				"file": "modrinth-rgfBfnW9-rctmod-fabric-1.21.1-0.19.2-beta.jar",
+				"entry": "com/gitlab/srcmc/rctmod/client/ModClient.class"
+			}
+		},
+		{
+			"rule": "unsafe-deserialization",
+			"classSha1": "001a3c48769cd1383a564c4d3d6965e629533652",
+			"class": "dev/xhyrom/e4mc/shadow/io/netty/resolver/dns/DefaultDnsCache",
+			"method": "copyThrowable",
+			"descriptor": "(Ljava/lang/Throwable;)Ljava/lang/Throwable;",
+			"severity": "notice",
+			"origin": "serialized",
+			"verdict": "accurate",
+			"reason": "Origin serialized is right. copyThrowable writes the cause with ObjectOutputStream and reads the same bytes straight back to copy it, so the stream only names the cause's own classes.",
+			"tiers": ["extended"],
+			"example": {
+				"file": "modrinth-AOqLK7Cs-e4mc-retro_ornithe-1.0.2+1.7.x.jar",
+				"entry": "dev/xhyrom/e4mc/shadow/io/netty/resolver/dns/DefaultDnsCache.class"
+			}
+		},
+		{
+			"rule": "unsafe-deserialization",
+			"classSha1": "2583cb141c1f69245f8a0c10a90ae5d5fcdb5cb5",
+			"class": "com/radiance/client/pipeline/Pipeline",
+			"method": "getModuleAttributes",
+			"descriptor": "(Lcom/radiance/client/pipeline/Module;)V",
+			"severity": "notice",
+			"origin": "caller",
+			"safeguard": "libraryVersion",
+			"verdict": "accurate",
+			"reason": "Safeguard libraryVersion is right. The jar bundles SnakeYAML 2.x, which rejects global tags unless code turns them on.",
+			"tiers": ["extended"],
+			"example": {
+				"file": "modrinth-kacLmdL4-Radiance-0.1.6-alpha-neoforge-1.21.4-windows.jar",
+				"entry": "com/radiance/client/pipeline/Pipeline.class"
+			}
+		},
+		{
+			"rule": "unsafe-deserialization",
+			"classSha1": "508932934f805b950c8959c3f13c0379b2c59a79",
+			"class": "io/github/somehussar/janinoloader/script/SafeScriptClassBody",
+			"method": "lambda$static$1",
+			"descriptor": "(Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/ClassLoader;)Ljava/lang/Object;",
+			"severity": "notice",
+			"origin": "serialized",
+			"verdict": "accurate",
+			"reason": "Origin serialized is right. The lambda writes its argument with ObjectOutputStream and reads the same bytes back through ReloadingObjectInputStream to reload the object, so the stream only names that object's classes.",
+			"tiers": ["extended"],
+			"example": {
+				"file": "modrinth-RtMxVKPM-CustomNPC-Plus-1.11.1.jar",
+				"entry": "io/github/somehussar/janinoloader/script/SafeScriptClassBody.class"
+			}
+		},
+		{
+			"rule": "unsafe-deserialization",
+			"classSha1": "63e951dcd384c51976d1289bf7418f2b6ca07ba5",
+			"class": "org/apache/http/impl/client/BasicAuthCache",
+			"method": "get",
+			"descriptor": "(Lorg/apache/http/HttpHost;)Lorg/apache/http/auth/AuthScheme;",
+			"severity": "notice",
+			"origin": "serialized",
+			"verdict": "accurate",
+			"reason": "Origin serialized is right. put serializes each AuthScheme with ObjectOutputStream into the cache's map, and get deserializes the bytes it finds there, so the stream only names the cached schemes' classes.",
+			"tiers": ["extended"],
+			"example": {
+				"file": "modrinth-4RbSvFEo-neruina-3.3.3+26.2-neoforge.jar",
+				"archivePath": ["META-INF/jarjar/httpclient-4.5.jar"],
+				"entry": "org/apache/http/impl/client/BasicAuthCache.class"
+			}
+		},
+		{
+			"rule": "unsafe-deserialization",
+			"classSha1": "7eab282931280c60672ff66e0cd9a6026c88a0b3",
+			"class": "dev/xhyrom/e4mc/shadow/io/netty/resolver/dns/DefaultDnsCache",
+			"method": "copyThrowable",
+			"descriptor": "(Ljava/lang/Throwable;)Ljava/lang/Throwable;",
+			"severity": "notice",
+			"origin": "serialized",
+			"verdict": "accurate",
+			"reason": "Origin serialized is right. copyThrowable writes the cause with ObjectOutputStream and reads the same bytes straight back to copy it, so the stream only names the cause's own classes.",
+			"tiers": ["extended"],
+			"example": {
+				"file": "modrinth-CNEnmz8a-e4mc-retro_ornithe-1.1.0+1.9-1.12.2.jar",
+				"entry": "dev/xhyrom/e4mc/shadow/io/netty/resolver/dns/DefaultDnsCache.class"
+			}
+		},
+		{
+			"rule": "unsafe-deserialization",
+			"classSha1": "a6235155894ed52f993c9af570d8f8d4d062aa45",
+			"class": "org/apache/http/impl/client/BasicAuthCache",
+			"method": "get",
+			"descriptor": "(Lorg/apache/http/HttpHost;)Lorg/apache/http/auth/AuthScheme;",
+			"severity": "notice",
+			"origin": "serialized",
+			"verdict": "accurate",
+			"reason": "Origin serialized is right. put serializes each AuthScheme with ObjectOutputStream into the cache's map, and get deserializes the bytes it finds there, so the stream only names the cached schemes' classes.",
+			"tiers": ["extended"],
+			"example": {
+				"file": "modrinth-5dT3oeRO-authme-neoforge-9.3.0+26.3.jar",
+				"archivePath": ["META-INF/jars/httpclient-4.5.14.jar"],
+				"entry": "org/apache/http/impl/client/BasicAuthCache.class"
+			}
+		},
+		{
+			"rule": "unsafe-deserialization",
+			"classSha1": "b7ed5ad09c1548160e4246613a3024508c01b959",
+			"class": "thecodex6824/thaumicaugmentation/common/world/biome/BiomeUtil",
+			"method": "copyRand",
+			"descriptor": "(Ljava/util/Random;)Ljava/util/Random;",
+			"severity": "notice",
+			"origin": "serialized",
+			"verdict": "accurate",
+			"reason": "Origin serialized is right. copyRand writes the Random with ObjectOutputStream and reads the same bytes back to copy it, so the stream only names the Random's own classes.",
+			"tiers": ["extended"],
+			"example": {
+				"file": "curseforge-6047659-ThaumicAugmentation-1.12.2-2.1.14.jar",
+				"entry": "thecodex6824/thaumicaugmentation/common/world/biome/BiomeUtil.class"
+			}
+		},
+		{
+			"rule": "unsafe-deserialization",
+			"classSha1": "c0b4b56ea8573979e85a78adf590dc62801f4d8d",
+			"class": "com/gitlab/srcmc/rctmod/network/BatchedPayload",
+			"method": "from",
+			"descriptor": "([Lcom/gitlab/srcmc/rctmod/network/BatchedPayload$Payload;)Ljava/io/Serializable;",
+			"severity": "critical",
+			"origin": "network",
+			"exposure": "anyServer",
+			"verdict": "true-positive",
+			"reason": "Decoded file download payloads are queued, and from collects their bytes through a stream map over Payload::bytes, then deserializes them with a plain ObjectInputStream. The payload bytes come from the codec lambda reading the packet buffer. Exposure anyServer is right. ModClient registers the receiver for S2C only.",
+			"tiers": ["extended"],
+			"example": {
+				"file": "modrinth-rgfBfnW9-rctmod-fabric-1.21.1-0.19.2-beta.jar",
+				"entry": "com/gitlab/srcmc/rctmod/network/BatchedPayload.class"
 			}
 		}
 	]

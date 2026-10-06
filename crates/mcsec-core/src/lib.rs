@@ -22,7 +22,9 @@ pub use analysis::{Hierarchy, ParsedArchive, ParsedClass};
 pub use archive::{Anomaly, Archive, Entry, EntryKind, UnreadableEntry, read_archive};
 pub use class_file::{ClassFile, ClassParseError};
 pub use error::ScanError;
-pub use finding::{DataOrigin, EvidenceStep, Finding, Location, MethodRef, Safeguard, Severity};
+pub use finding::{
+    DataOrigin, EvidenceStep, Exposure, Finding, Location, MethodRef, Safeguard, Severity,
+};
 pub use hash::FileHashes;
 pub use limits::ScanLimits;
 pub use report::{ArchiveSummary, ScanReport};

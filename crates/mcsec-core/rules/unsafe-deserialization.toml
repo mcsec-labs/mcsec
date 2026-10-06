@@ -16,13 +16,17 @@ fix = "Use a format that only produces plain data, such as JSON into fixed types
 origin = "network"
 # Minecraft classes appear under different names per loader generation: MCP
 # names on Forge up to 1.16, Mojang names on later Forge and NeoForge, and
-# intermediary names on Fabric and Quilt.
+# intermediary names on Fabric and Quilt. A buffer class from outside the jar
+# is matched by name alone, since the jar does not show what it extends, so
+# subclasses such as RegistryFriendlyByteBuf are listed too.
 types = [
     "io/netty/buffer/ByteBuf",
     "io/netty/buffer/ByteBufInputStream",
     "net/minecraft/network/PacketBuffer",
     "net/minecraft/network/FriendlyByteBuf",
+    "net/minecraft/network/RegistryFriendlyByteBuf",
     "net/minecraft/class_2540",
+    "net/minecraft/class_9129",
     "net/minecraftforge/fml/common/network/internal/FMLProxyPacket",
     "cpw/mods/fml/common/network/internal/FMLProxyPacket",
 ]
@@ -70,6 +74,19 @@ origin = "embedded-template"
 constant-prefix = "aced0005"
 copies = "Copies {owner}.{name}, a serialized object embedded in the class, which fixes the classes the stream names"
 
+# Bytes the mod writes itself with a Java serializer. The stream names only
+# the classes of the objects written, which the mod already had, so reading
+# it back cannot create a class an attacker picked, whatever data those
+# objects hold.
+[sources.serialized-locally]
+origin = "serialized"
+serializes = [
+    "java/io/ObjectOutputStream.writeObject(Ljava/lang/Object;)V",
+    "java/io/ObjectOutputStream.writeUnshared(Ljava/lang/Object;)V",
+    "java/io/ObjectOutput.writeObject(Ljava/lang/Object;)V",
+]
+writes = "Serializes an object the mod already has with {owner}.{name}, so the stream only names that object's classes"
+
 # Sink kinds:
 #
 # A stream sink is an object the method creates over some data, then reads
@@ -84,8 +101,8 @@ copies = "Copies {owner}.{name}, a serialized object embedded in the class, whic
 #
 # Severity follows from each source's origin. Network data with no
 # safeguard is Critical, data the analysis cannot trace is Warning, and
-# local files, embedded templates, and the caller's own arguments are
-# Notices that name their origin.
+# local files, embedded templates, objects the mod serialized itself, and the
+# caller's own arguments are Notices that name their origin.
 #
 # A library table names a library whose defaults became safe in a later
 # version. A copy bundled in the jar decides which default applies.

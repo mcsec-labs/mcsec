@@ -15,6 +15,10 @@ use sha2::{Digest, Sha256};
 use crate::dataflow::Labels;
 use crate::finding::DataOrigin;
 
+/// How many sources a rule can declare. Each takes one label bit from the
+/// lowest up, and the bits above them carry which side sent packet data.
+pub(crate) const MAX_SOURCES: usize = 32;
+
 /// Rule files compiled into the scanner, as (file name, contents).
 const RULE_FILES: &[(&str, &str)] = &[(
     "unsafe-deserialization.toml",
@@ -51,6 +55,9 @@ struct SourceFile {
     opens: Option<String>,
     constant_prefix: Option<String>,
     copies: Option<String>,
+    #[serde(default)]
+    serializes: Vec<String>,
+    writes: Option<String>,
 }
 
 /// The origins a rule's sources can declare. Caller and untraced data are
@@ -61,6 +68,7 @@ enum SourceOrigin {
     Network,
     LocalFile,
     EmbeddedTemplate,
+    Serialized,
 }
 
 #[derive(Debug, Deserialize)]
@@ -286,6 +294,11 @@ pub struct Source {
     /// Static byte arrays in the jar whose contents start with this prefix.
     pub constant_prefix: Vec<u8>,
     pub copies: String,
+    /// Calls that write an object into the receiver's stream in a format
+    /// that names its classes. What the stream holds afterward carries this
+    /// source in place of what the object carried.
+    pub serializes: Vec<MethodSig>,
+    pub writes: String,
 }
 
 impl Source {
@@ -309,6 +322,7 @@ impl Source {
                 SourceOrigin::Network => DataOrigin::Network,
                 SourceOrigin::LocalFile => DataOrigin::LocalFile,
                 SourceOrigin::EmbeddedTemplate => DataOrigin::EmbeddedTemplate,
+                SourceOrigin::Serialized => DataOrigin::Serialized,
             },
             parameter: text(typed, file.parameter, "parameter", "types")?,
             receiver: text(typed, file.receiver, "receiver", "types")?,
@@ -327,6 +341,17 @@ impl Source {
                 "copies",
                 "constant-prefix",
             )?,
+            writes: text(
+                !file.serializes.is_empty(),
+                file.writes,
+                "writes",
+                "serializes",
+            )?,
+            serializes: file
+                .serializes
+                .iter()
+                .map(|c| MethodSig::parse(c))
+                .collect::<Result<_, _>>()?,
             types: file.types,
             calls: file
                 .calls
@@ -342,10 +367,11 @@ impl Source {
             !source.calls.is_empty(),
             !source.allocations.is_empty(),
             !source.constant_prefix.is_empty(),
+            !source.serializes.is_empty(),
         ];
         if !routes.contains(&true) {
             return Err(format!(
-                "source {id} needs at least one of types, calls, allocations, or constant-prefix"
+                "source {id} needs at least one of types, calls, allocations, constant-prefix, or serializes"
             ));
         }
         Ok(source)
@@ -475,8 +501,10 @@ impl Sink {
 
 impl Rule {
     fn compile(file: RuleFile) -> Result<Self, String> {
-        if file.sources.len() > 32 {
-            return Err("a rule can declare at most 32 sources, one per label bit".to_owned());
+        if file.sources.len() > MAX_SOURCES {
+            return Err(format!(
+                "a rule can declare at most {MAX_SOURCES} sources, one per label bit"
+            ));
         }
         let sources: Vec<Source> = file
             .sources

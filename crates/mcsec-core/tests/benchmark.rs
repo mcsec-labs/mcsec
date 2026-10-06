@@ -11,7 +11,7 @@
 //!
 //! A label covers one piece of code, not one jar, identified by the class
 //! file's SHA-1, the method, the rule, and what the finding claims, its
-//! severity, origin, and safeguard. The same library bundled in many jars is reviewed once,
+//! severity, origin, safeguard, and exposure. The same library bundled in many jars is reviewed once,
 //! and a finding whose claim changes needs a new review.
 //!
 //! Prints precision per rule over distinct labeled code, and for the gate
@@ -82,6 +82,8 @@ struct Label {
     severity: String,
     origin: Option<String>,
     safeguard: Option<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    exposure: Option<String>,
     verdict: String,
     reason: String,
     /// The benchmark tiers this code appears in.
@@ -101,6 +103,8 @@ struct Key {
     severity: String,
     origin: Option<String>,
     safeguard: Option<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    exposure: Option<String>,
 }
 
 fn name_of<T: Serialize>(value: T) -> String {
@@ -124,6 +128,7 @@ impl Key {
             severity: name_of(finding.severity),
             origin: finding.origin.map(name_of),
             safeguard: finding.safeguard.map(name_of),
+            exposure: finding.exposure.map(name_of),
         }
     }
 
@@ -137,6 +142,7 @@ impl Key {
             severity: label.severity.clone(),
             origin: label.origin.clone(),
             safeguard: label.safeguard.clone(),
+            exposure: label.exposure.clone(),
         }
     }
 
@@ -145,6 +151,7 @@ impl Key {
             Some(&self.severity),
             self.origin.as_ref(),
             self.safeguard.as_ref(),
+            self.exposure.as_ref(),
         ]
         .into_iter()
         .flatten()
