@@ -28,7 +28,7 @@ public class KryoVariants {
         return kryo.readClassAndObject(new Input(new ByteBufInputStream(buf)));
     }
 
-    // EXPECT notice
+    // EXPECT notice setting
     public static Message registrationOn(ByteBuf buf) {
         byte[] bytes = new byte[buf.readableBytes()];
         buf.readBytes(bytes);

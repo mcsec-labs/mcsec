@@ -13,7 +13,7 @@
 mod cfg;
 mod descriptor;
 
-use std::collections::VecDeque;
+use std::collections::{HashMap, VecDeque};
 use std::rc::Rc;
 
 pub use descriptor::{JvmType, MethodType, field_type};
@@ -69,6 +69,9 @@ pub enum Known {
 #[derive(Debug, Clone, Default, PartialEq, Eq)]
 pub struct Value {
     pub labels: Labels,
+    /// The method's own parameters this value is computed from, one bit per
+    /// declared parameter index. Parameters past the 64th are not tracked.
+    pub params: u64,
     pub origin: Option<Origin>,
     pub alloc: Option<Alloc>,
     /// Kept only while every path that reaches this point agrees on it.
@@ -92,13 +95,25 @@ impl Value {
         }
     }
 
-    /// A new value computed from `inputs`, carrying all of their labels.
+    /// A new value computed from `inputs`, carrying all of their labels and
+    /// parameters.
     fn derived<'v>(inputs: impl IntoIterator<Item = &'v Value>, wide: bool) -> Self {
         let mut out = Self::of_width(wide);
         for input in inputs {
-            out.add(input.labels, input.origin.as_ref());
+            out.absorb(input);
         }
         out
+    }
+
+    /// Adds another value's labels and parameters to this one.
+    fn absorb(&mut self, other: &Value) {
+        self.add(other.labels, other.origin.as_ref());
+        self.params |= other.params;
+    }
+
+    /// True when the value carries labels or comes from a parameter.
+    fn carries_anything(&self) -> bool {
+        !self.labels.is_empty() || self.params != 0
     }
 
     fn add(&mut self, labels: Labels, origin: Option<&Origin>) {
@@ -115,12 +130,13 @@ impl Value {
     fn merge(&mut self, other: &Value) -> bool {
         let before = (
             self.labels,
+            self.params,
             self.origin.is_some(),
             self.alloc.is_some(),
             self.known.is_some(),
             self.wide,
         );
-        self.add(other.labels, other.origin.as_ref());
+        self.absorb(other);
         if self.alloc.is_none() {
             self.alloc = other.alloc.clone();
         }
@@ -131,6 +147,7 @@ impl Value {
         before
             != (
                 self.labels,
+                self.params,
                 self.origin.is_some(),
                 self.alloc.is_some(),
                 self.known.is_some(),
@@ -144,6 +161,10 @@ impl Value {
 pub struct Frame {
     pub locals: Vec<Value>,
     pub stack: Vec<Value>,
+    /// Objects built around other objects, as (wrapper, wrapped) allocation
+    /// offsets, such as an ObjectOutputStream over a ByteArrayOutputStream.
+    /// Data written into a wrapper also reaches what it wraps.
+    pub wraps: Vec<(u32, u32)>,
 }
 
 impl Frame {
@@ -180,12 +201,28 @@ impl Frame {
         self.stack.last().is_some_and(|v| v.wide)
     }
 
-    /// Adds labels to every copy of the object created at `alloc`.
-    fn taint_alloc(&mut self, alloc: u32, labels: Labels, origin: Option<&Origin>) {
-        for value in self.locals.iter_mut().chain(self.stack.iter_mut()) {
-            if value.alloc.as_ref().is_some_and(|a| a.offset == alloc) {
-                value.add(labels, origin);
+    /// Adds the labels and parameters of `from` to every copy of the object
+    /// created at `alloc`.
+    fn taint_alloc(&mut self, alloc: u32, from: &Value) {
+        // Each object is tainted once, so cycles in the links end.
+        let mut pending = vec![alloc];
+        let mut done = Vec::new();
+        while let Some(current) = pending.pop() {
+            if done.contains(&current) {
+                continue;
             }
+            done.push(current);
+            for value in self.locals.iter_mut().chain(self.stack.iter_mut()) {
+                if value.alloc.as_ref().is_some_and(|a| a.offset == current) {
+                    value.absorb(from);
+                }
+            }
+            pending.extend(
+                self.wraps
+                    .iter()
+                    .filter(|(wrapper, _)| *wrapper == current)
+                    .map(|(_, wrapped)| *wrapped),
+            );
         }
     }
 
@@ -207,6 +244,12 @@ impl Frame {
         for (mine, theirs) in self.stack.iter_mut().zip(&other.stack) {
             changed |= mine.merge(theirs);
         }
+        for link in &other.wraps {
+            if !self.wraps.contains(link) {
+                self.wraps.push(*link);
+                changed = true;
+            }
+        }
         changed
     }
 }
@@ -214,13 +257,27 @@ impl Frame {
 /// Decides which values are sources and with which labels.
 pub trait Policy {
     /// Labels for a parameter of type `ty`, an internal name or array
-    /// descriptor. `receiver` is set for `this`, whose type is the class
-    /// being analyzed.
-    fn parameter(&self, ty: &str, receiver: bool) -> Option<(Labels, String)>;
+    /// descriptor. `index` counts declared parameters from zero and is
+    /// `None` for `this`, whose type is the class being analyzed.
+    fn parameter(&self, index: Option<usize>, ty: &str) -> Option<(Labels, String)>;
     /// Labels added to the result of calling a method.
-    fn call(&self, owner: &str, name: &str, descriptor: &str) -> Option<(Labels, String)>;
+    fn call(&self, _owner: &str, _name: &str, _descriptor: &str) -> Option<(Labels, String)> {
+        None
+    }
     /// Labels for an object created with `new`.
-    fn allocation(&self, class: &str) -> Option<(Labels, String)>;
+    fn allocation(&self, _class: &str) -> Option<(Labels, String)> {
+        None
+    }
+    /// Labels for a value read from a static field because of what the field
+    /// was initialized with, such as an embedded constant.
+    fn static_field(&self, _owner: &str, _name: &str) -> Option<(Labels, String)> {
+        None
+    }
+    /// Labels for a value read from a field, static or not, because of its
+    /// declared type or what code elsewhere stores in it.
+    fn field(&self, _owner: &str, _name: &str, _descriptor: &str) -> Option<(Labels, String)> {
+        None
+    }
 }
 
 /// The method and class an observer is looking at.
@@ -238,19 +295,69 @@ pub fn analyze(
     policy: &dyn Policy,
     observe: &mut dyn FnMut(&Site, &Frame),
 ) -> bool {
-    let pool = &class.constant_pool;
-    let Ok(Some(code)) = method.code(pool) else {
+    let Some(settled) = settle(class, method, policy) else {
         return false;
     };
-    let Ok(instructions) = code.instructions().collect::<Result<Vec<_>, _>>() else {
-        return false;
-    };
-    if instructions.is_empty() {
-        return false;
+    settled.replay(policy, &mut |site, frame| observe(site, frame));
+    true
+}
+
+/// A method's instructions and control flow, with the settled state at the
+/// start of every reachable block.
+struct Settled<'p, 'a> {
+    pool: &'p ConstantPool<'a>,
+    instructions: Vec<Instruction>,
+    cfg: Cfg,
+    block_in: Vec<Option<Frame>>,
+}
+
+impl Settled<'_, '_> {
+    /// Steps through each reachable block from its settled entry state,
+    /// calling `observe` before every instruction. Returns the state at the
+    /// end of each block.
+    fn replay(
+        &self,
+        policy: &dyn Policy,
+        observe: &mut dyn FnMut(&Site, &Frame),
+    ) -> Vec<Option<Frame>> {
+        let engine = Engine {
+            pool: self.pool,
+            policy,
+        };
+        let mut block_out = vec![None; self.cfg.blocks.len()];
+        for (b, block) in self.cfg.blocks.iter().enumerate() {
+            let Some(mut frame) = self.block_in[b].clone() else {
+                continue;
+            };
+            for instruction in &self.instructions[block.start..block.end] {
+                observe(
+                    &Site {
+                        pool: self.pool,
+                        instruction,
+                    },
+                    &frame,
+                );
+                engine.step(instruction, &mut frame);
+            }
+            block_out[b] = Some(frame);
+        }
+        block_out
     }
-    let Ok(descriptor) = method.descriptor(pool) else {
-        return false;
-    };
+}
+
+/// Runs the data flow over one method until its state stops changing.
+fn settle<'p, 'a>(
+    class: &'p ClassFile<'a>,
+    method: &Member,
+    policy: &dyn Policy,
+) -> Option<Settled<'p, 'a>> {
+    let pool = &class.constant_pool;
+    let code = method.code(pool).ok()??;
+    let instructions = code.instructions().collect::<Result<Vec<_>, _>>().ok()?;
+    if instructions.is_empty() {
+        return None;
+    }
+    let descriptor = method.descriptor(pool).ok()?;
     let class_name = class.name().map(|n| n.into_owned()).unwrap_or_default();
 
     let cfg = Cfg::build(&instructions, &code.exception_table);
@@ -307,17 +414,419 @@ pub fn analyze(
         }
     }
 
-    // Replay each block from its settled entry state for the observer.
-    for (b, block) in cfg.blocks.iter().enumerate() {
-        let Some(mut frame) = block_in[b].clone() else {
+    Some(Settled {
+        pool,
+        instructions,
+        cfg,
+        block_in,
+    })
+}
+
+/// Where one outcome of a branch can lead along normal control flow.
+#[derive(Debug, Clone, Copy, Default, PartialEq, Eq)]
+pub struct Reach {
+    pub throws: bool,
+    pub returns: bool,
+}
+
+/// A conditional branch on a value carrying the labels asked for, read as a
+/// lookup. Comparisons that come out false or zero, null results, negative
+/// indexes, inequality, and the default of a switch count as not found.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct Decision {
+    pub offset: u32,
+    pub found: Reach,
+    pub not_found: Reach,
+}
+
+/// A call whose arguments carry the labels asked for.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct LabeledCall {
+    pub owner: String,
+    pub name: String,
+    pub descriptor: String,
+    /// Indexes of the labeled arguments, counting declared parameters.
+    pub arguments: Vec<usize>,
+}
+
+/// A method settled under a policy, with the branches, calls, and returns
+/// that involve one set of labels.
+struct Lookups<'p, 'a> {
+    settled: Settled<'p, 'a>,
+    /// Offsets of conditional branches that test labeled values.
+    tested: Vec<u32>,
+    /// Offsets of returns that return a labeled value, or any value for
+    /// returns of primitives and `void`.
+    exits: Vec<u32>,
+    calls: Vec<(u32, LabeledCall)>,
+    /// Edges rerouted by jump threading, from (block, successor) to the
+    /// block the edge really continues in.
+    threaded: HashMap<(usize, usize), usize>,
+}
+
+impl<'p, 'a> Lookups<'p, 'a> {
+    fn new(
+        class: &'p ClassFile<'a>,
+        method: &Member,
+        policy: &dyn Policy,
+        labels: Labels,
+    ) -> Option<Self> {
+        let settled = settle(class, method, policy)?;
+        let labeled = |value: Option<&Value>| value.is_some_and(|v| v.labels.0 & labels.0 != 0);
+        let (mut tested, mut exits, mut calls) = (Vec::new(), Vec::new(), Vec::new());
+        let block_out = settled.replay(policy, &mut |site, frame| {
+            let ins = site.instruction;
+            match ins.opcode {
+                op::IFEQ..=op::IFLE
+                | op::IFNULL
+                | op::IFNONNULL
+                | op::TABLESWITCH
+                | op::LOOKUPSWITCH
+                    if labeled(frame.peek(0)) =>
+                {
+                    tested.push(ins.offset)
+                }
+                op::IF_ICMPEQ..=op::IF_ACMPNE
+                    if labeled(frame.peek(0)) || labeled(frame.peek(1)) =>
+                {
+                    tested.push(ins.offset)
+                }
+                op::ARETURN if labeled(frame.peek(0)) => exits.push(ins.offset),
+                op::IRETURN..=op::DRETURN | op::RETURN => exits.push(ins.offset),
+                op::INVOKEVIRTUAL | op::INVOKESPECIAL | op::INVOKESTATIC | op::INVOKEINTERFACE => {
+                    let index = match ins.operand {
+                        Operand::Constant(index) | Operand::InvokeInterface { index, .. } => index,
+                        _ => return,
+                    };
+                    let Ok(target) = site.pool.member_ref(index) else {
+                        return;
+                    };
+                    let count = MethodType::parse(&target.descriptor).params.len();
+                    let arguments: Vec<usize> = (0..count)
+                        .filter(|i| labeled(frame.peek(count - 1 - i)))
+                        .collect();
+                    if !arguments.is_empty() {
+                        calls.push((
+                            ins.offset,
+                            LabeledCall {
+                                owner: target.class_name.into_owned(),
+                                name: target.name.into_owned(),
+                                descriptor: target.descriptor.into_owned(),
+                                arguments,
+                            },
+                        ));
+                    }
+                }
+                _ => {}
+            }
+        });
+        let threaded = thread_edges(&settled, policy, &block_out);
+        Some(Self {
+            settled,
+            tested,
+            exits,
+            calls,
+            threaded,
+        })
+    }
+
+    fn block_at(&self, offset: i64) -> Option<usize> {
+        let instructions = &self.settled.instructions;
+        self.settled
+            .cfg
+            .blocks
+            .iter()
+            .position(|b| i64::from(instructions[b.start].offset) == offset)
+    }
+
+    fn thread(&self, from: usize, to: usize) -> usize {
+        self.threaded.get(&(from, to)).copied().unwrap_or(to)
+    }
+
+    /// For a block ending in a branch on a labeled value, the blocks each
+    /// outcome continues in, as (found, not found).
+    fn outcomes(&self, b: usize) -> Option<(Vec<usize>, Vec<usize>)> {
+        let (instructions, cfg) = (&self.settled.instructions, &self.settled.cfg);
+        let block = &cfg.blocks[b];
+        let ins = &instructions[block.end - 1];
+        if !self.tested.contains(&ins.offset) {
+            return None;
+        }
+        let next = (block.end < instructions.len()).then_some(b + 1);
+        let (found, not_found): (Vec<Option<usize>>, Vec<Option<usize>>) =
+            match (ins.opcode, &ins.operand) {
+                (
+                    op::TABLESWITCH,
+                    Operand::TableSwitch {
+                        default, targets, ..
+                    },
+                ) => (
+                    targets.iter().map(|t| self.block_at(*t)).collect(),
+                    vec![self.block_at(*default)],
+                ),
+                (op::LOOKUPSWITCH, Operand::LookupSwitch { default, pairs }) => (
+                    pairs.iter().map(|(_, t)| self.block_at(*t)).collect(),
+                    vec![self.block_at(*default)],
+                ),
+                (opcode, Operand::Branch(target)) => {
+                    let taken = self.block_at(*target);
+                    match opcode {
+                        op::IFNE | op::IFGE | op::IFNONNULL | op::IF_ICMPEQ | op::IF_ACMPEQ => {
+                            (vec![taken], vec![next])
+                        }
+                        op::IFEQ | op::IFLT | op::IFNULL | op::IF_ICMPNE | op::IF_ACMPNE => {
+                            (vec![next], vec![taken])
+                        }
+                        _ => return None,
+                    }
+                }
+                _ => return None,
+            };
+        let resolve = |blocks: Vec<Option<usize>>| -> Vec<usize> {
+            blocks
+                .into_iter()
+                .flatten()
+                .map(|to| self.thread(b, to))
+                .collect()
+        };
+        Some((resolve(found), resolve(not_found)))
+    }
+}
+
+/// Jump threading. Compilers turn a string switch, and code that sets a flag
+/// and tests it later, into branches that store constants and a later block
+/// that branches on them. The merged state at that block loses the constant,
+/// so each edge is replayed through its target block from the state at the
+/// end of its source, and when the tested value comes out constant the edge
+/// goes straight to the branch it picks.
+fn thread_edges(
+    settled: &Settled,
+    policy: &dyn Policy,
+    block_out: &[Option<Frame>],
+) -> HashMap<(usize, usize), usize> {
+    let (instructions, cfg) = (&settled.instructions, &settled.cfg);
+    let engine = Engine {
+        pool: settled.pool,
+        policy,
+    };
+    let block_at = |offset: i64| {
+        cfg.blocks
+            .iter()
+            .position(|b| i64::from(instructions[b.start].offset) == offset)
+    };
+    let thread_edge = |from: usize, to: usize| -> usize {
+        let Some(mut frame) = block_out[from].clone() else {
+            return to;
+        };
+        let block = &cfg.blocks[to];
+        for ins in &instructions[block.start..block.end - 1] {
+            engine.step(ins, &mut frame);
+        }
+        let int = |depth: usize| match frame.peek(depth).map(|v| &v.known) {
+            Some(Some(Known::Int(value))) => Some(*value),
+            _ => None,
+        };
+        let test = &instructions[block.end - 1];
+        let target = match (test.opcode, &test.operand) {
+            (
+                op::TABLESWITCH,
+                Operand::TableSwitch {
+                    default,
+                    low,
+                    targets,
+                },
+            ) => {
+                let Some(value) = int(0) else {
+                    return to;
+                };
+                usize::try_from(i64::from(value) - i64::from(*low))
+                    .ok()
+                    .and_then(|i| targets.get(i))
+                    .copied()
+                    .unwrap_or(*default)
+            }
+            (op::LOOKUPSWITCH, Operand::LookupSwitch { default, pairs }) => {
+                let Some(value) = int(0) else {
+                    return to;
+                };
+                pairs
+                    .iter()
+                    .find(|(key, _)| *key == value)
+                    .map_or(*default, |(_, target)| *target)
+            }
+            (opcode, Operand::Branch(target)) => {
+                let taken = match opcode {
+                    op::IFEQ..=op::IFLE => {
+                        let Some(value) = int(0) else {
+                            return to;
+                        };
+                        compare(opcode - op::IFEQ, value, 0)
+                    }
+                    op::IF_ICMPEQ..=op::IF_ICMPLE => {
+                        let (Some(left), Some(right)) = (int(1), int(0)) else {
+                            return to;
+                        };
+                        compare(opcode - op::IF_ICMPEQ, left, right)
+                    }
+                    _ => return to,
+                };
+                if !taken {
+                    return if to + 1 < cfg.blocks.len() {
+                        to + 1
+                    } else {
+                        to
+                    };
+                }
+                *target
+            }
+            _ => return to,
+        };
+        block_at(target).unwrap_or(to)
+    };
+    cfg.blocks
+        .iter()
+        .enumerate()
+        .flat_map(|(b, block)| block.successors.iter().map(move |&to| (b, to)))
+        .map(|(b, to)| ((b, to), thread_edge(b, to)))
+        .collect()
+}
+
+/// The conditional branches in a method that test values carrying any of
+/// `labels`, with whether each outcome can end in a throw or a return.
+/// Branches whose outcomes cannot be read as found or not found, such as
+/// `ifgt`, are left out.
+pub fn decisions(
+    class: &ClassFile,
+    method: &Member,
+    policy: &dyn Policy,
+    labels: Labels,
+) -> Vec<Decision> {
+    let Some(lookups) = Lookups::new(class, method, policy, labels) else {
+        return Vec::new();
+    };
+    let (instructions, cfg) = (&lookups.settled.instructions, &lookups.settled.cfg);
+    let thread = |from: usize, to: usize| lookups.thread(from, to);
+    let mut out = Vec::new();
+    for b in 0..cfg.blocks.len() {
+        let Some((found, not_found)) = lookups.outcomes(b) else {
             continue;
         };
-        for instruction in &instructions[block.start..block.end] {
-            observe(&Site { pool, instruction }, &frame);
-            engine.step(instruction, &mut frame);
+        // An outcome is judged without passing this branch again, so a loop
+        // that tries the next candidate after a miss does not count the
+        // next candidate's hit as part of the miss.
+        let reach = cfg.reach(instructions, &thread, b);
+        let combine = |blocks: &[usize]| {
+            blocks.iter().fold(Reach::default(), |acc, &to| Reach {
+                throws: acc.throws || reach[to].throws,
+                returns: acc.returns || reach[to].returns,
+            })
+        };
+        out.push(Decision {
+            offset: instructions[cfg.blocks[b].end - 1].offset,
+            found: combine(&found),
+            not_found: combine(&not_found),
+        });
+    }
+    out
+}
+
+/// True when the method can finish normally without any lookup on a labeled
+/// value succeeding. That holds when some path from entry, taking only the
+/// not found outcomes of branches on labeled values and including paths
+/// through exception handlers, reaches a return of a labeled value, or any
+/// return when the method returns a primitive or nothing. Calls that
+/// `guards` accepts stop a path, as they cannot return without their own
+/// lookup succeeding.
+pub fn finishes_unguarded(
+    class: &ClassFile,
+    method: &Member,
+    policy: &dyn Policy,
+    labels: Labels,
+    guards: &mut dyn FnMut(&LabeledCall) -> bool,
+) -> bool {
+    finishes(class, method, policy, labels, guards, true)
+}
+
+/// True when the method can finish normally without any branch on a
+/// labeled value on the way, so it never looks at the value at all. Calls
+/// that `guards` accepts stop a path, as in [`finishes_unguarded`].
+pub fn finishes_unchecked(
+    class: &ClassFile,
+    method: &Member,
+    policy: &dyn Policy,
+    labels: Labels,
+    guards: &mut dyn FnMut(&LabeledCall) -> bool,
+) -> bool {
+    finishes(class, method, policy, labels, guards, false)
+}
+
+/// The path search behind [`finishes_unguarded`] and [`finishes_unchecked`].
+/// `through_misses` decides whether a branch on a labeled value lets a path
+/// continue through its not found outcome, or stops it.
+fn finishes(
+    class: &ClassFile,
+    method: &Member,
+    policy: &dyn Policy,
+    labels: Labels,
+    guards: &mut dyn FnMut(&LabeledCall) -> bool,
+    through_misses: bool,
+) -> bool {
+    let Some(lookups) = Lookups::new(class, method, policy, labels) else {
+        return false;
+    };
+    let guard_offsets: Vec<u32> = lookups
+        .calls
+        .iter()
+        .filter(|(_, call)| guards(call))
+        .map(|(offset, _)| *offset)
+        .collect();
+    let (instructions, cfg) = (&lookups.settled.instructions, &lookups.settled.cfg);
+
+    let mut visited = vec![false; cfg.blocks.len()];
+    let mut queue = vec![0usize];
+    while let Some(b) = queue.pop() {
+        if std::mem::replace(&mut visited[b], true) {
+            continue;
+        }
+        let block = &cfg.blocks[b];
+        let mut stopped = false;
+        let span = block.start..block.end;
+        for (ins, handlers) in instructions[span.clone()].iter().zip(&cfg.handlers[span]) {
+            // An exception at any instruction, a guard included, leaves for
+            // the handlers covering it.
+            queue.extend(handlers.iter().copied());
+            let offset = ins.offset;
+            if lookups.exits.contains(&offset) {
+                return true;
+            }
+            if guard_offsets.contains(&offset) {
+                stopped = true;
+                break;
+            }
+        }
+        if stopped {
+            continue;
+        }
+        match lookups.outcomes(b) {
+            Some((_, not_found)) if through_misses => queue.extend(not_found),
+            Some(_) => {}
+            None => queue.extend(block.successors.iter().map(|&s| lookups.thread(b, s))),
         }
     }
-    true
+    false
+}
+
+/// Applies one of the six int comparisons, in opcode order: equal, not
+/// equal, less, greater or equal, greater, less or equal.
+fn compare(which: u8, left: i32, right: i32) -> bool {
+    match which {
+        0 => left == right,
+        1 => left != right,
+        2 => left < right,
+        3 => left >= right,
+        4 => left > right,
+        _ => left <= right,
+    }
 }
 
 fn entry_frame(
@@ -327,9 +836,9 @@ fn entry_frame(
     max_locals: usize,
     policy: &dyn Policy,
 ) -> Frame {
-    let source = |ty: &str, receiver: bool| {
+    let source = |index: Option<usize>, ty: &str| {
         let mut value = Value::default();
-        if let Some((labels, description)) = policy.parameter(ty, receiver) {
+        if let Some((labels, description)) = policy.parameter(index, ty) {
             let origin = Origin {
                 offset: 0,
                 description: description.into(),
@@ -341,14 +850,17 @@ fn entry_frame(
     let mut frame = Frame::default();
     let mut slot = 0;
     if !is_static {
-        frame.set_local(0, source(class_name, true));
+        frame.set_local(0, source(None, class_name));
         slot = 1;
     }
-    for param in MethodType::parse(descriptor).params {
+    for (index, param) in MethodType::parse(descriptor).params.into_iter().enumerate() {
         let mut value = match &param.reference {
-            Some(ty) => source(ty, false),
+            Some(ty) => source(Some(index), ty),
             None => Value::default(),
         };
+        if index < 64 {
+            value.params = 1 << index;
+        }
         value.wide = param.wide;
         frame.set_local(slot, value);
         slot += if param.wide { 2 } else { 1 };
@@ -365,6 +877,7 @@ fn handler_frame(frame: &Frame) -> Frame {
     Frame {
         locals: frame.locals.clone(),
         stack: vec![Value::default()],
+        wraps: frame.wraps.clone(),
     }
 }
 
@@ -443,7 +956,7 @@ impl Engine<'_, '_> {
                 f.pop();
                 let array = f.pop();
                 if let Some(alloc) = &array.alloc {
-                    f.taint_alloc(alloc.offset, value.labels, value.origin.as_ref());
+                    f.taint_alloc(alloc.offset, &value);
                 }
             }
 
@@ -577,6 +1090,12 @@ impl Engine<'_, '_> {
                 {
                     let name = format!("{}.{}", field.class_name, field.name);
                     value.known = Some(Known::Static(name.into()));
+                    let found = self.policy.static_field(&field.class_name, &field.name);
+                    self.source(found, ins.offset, &mut value);
+                    let stored =
+                        self.policy
+                            .field(&field.class_name, &field.name, &field.descriptor);
+                    self.source(stored, ins.offset, &mut value);
                 }
                 f.push(value);
             }
@@ -584,15 +1103,26 @@ impl Engine<'_, '_> {
                 f.pop();
             }
             op::GETFIELD => {
-                // A field read from a labeled object carries its labels.
+                // A field read from a labeled object carries its labels, and
+                // a field the policy knows to hold untrusted data carries
+                // those too.
                 let object = f.pop();
-                f.push(Value::derived([&object], self.field_is_wide(ins)));
+                let mut value = Value::derived([&object], self.field_is_wide(ins));
+                if let Operand::Constant(index) = ins.operand
+                    && let Ok(field) = self.pool.member_ref(index)
+                {
+                    let stored =
+                        self.policy
+                            .field(&field.class_name, &field.name, &field.descriptor);
+                    self.source(stored, ins.offset, &mut value);
+                }
+                f.push(value);
             }
             op::PUTFIELD => {
                 let value = f.pop();
                 let object = f.pop();
                 if let Some(alloc) = &object.alloc {
-                    f.taint_alloc(alloc.offset, value.labels, value.origin.as_ref());
+                    f.taint_alloc(alloc.offset, &value);
                 }
             }
 
@@ -697,27 +1227,39 @@ impl Engine<'_, '_> {
 
         if ins.opcode == op::INVOKESPECIAL && name == "<init>" {
             // A constructor fills in the object `new` created, so its
-            // arguments' labels go to every copy of that object.
+            // arguments' labels go to every copy of that object. An object
+            // built around another one wraps it from then on.
             if let Some(alloc) = receiver.as_ref().and_then(|r| r.alloc.clone()) {
                 for arg in &args {
-                    f.taint_alloc(alloc.offset, arg.labels, arg.origin.as_ref());
+                    f.taint_alloc(alloc.offset, arg);
+                    if let Some(inner) = &arg.alloc {
+                        let link = (alloc.offset, inner.offset);
+                        if inner.offset != alloc.offset && !f.wraps.contains(&link) {
+                            f.wraps.push(link);
+                        }
+                    }
                 }
             }
             return;
         }
 
-        // A call can fill an array argument from any of its other inputs, as
-        // in `buf.readBytes(bytes)` from the receiver or
-        // `System.arraycopy(source, 0, bytes, 0, n)` from another argument.
+        // A call can fill any object it is handed from its other inputs, as
+        // in `buf.readBytes(bytes)` from the receiver,
+        // `System.arraycopy(source, 0, bytes, 0, n)` from another argument,
+        // or `out.write(data)` into the receiver.
         let inputs = Value::derived(receiver.iter().chain(&args), false);
-        if !inputs.labels.is_empty() {
-            // Judged by what was passed rather than the declared type, since
-            // `arraycopy` declares its arrays as Object.
+        if inputs.carries_anything() {
             for arg in &args {
-                if let Some(alloc) = arg.alloc.as_ref().filter(|a| a.class.starts_with('[')) {
-                    f.taint_alloc(alloc.offset, inputs.labels, inputs.origin.as_ref());
+                if let Some(alloc) = &arg.alloc {
+                    f.taint_alloc(alloc.offset, &inputs);
                 }
             }
+        }
+        let arguments = Value::derived(&args, false);
+        if let Some(alloc) = receiver.as_ref().and_then(|r| r.alloc.as_ref())
+            && arguments.carries_anything()
+        {
+            f.taint_alloc(alloc.offset, &arguments);
         }
 
         if let Some(returns) = method.returns {

@@ -13,6 +13,7 @@ fix = "Use a format that only produces plain data, such as JSON into fixed types
 # Where untrusted data enters. Each source gets its own label in the data
 # flow engine. Types match themselves and any class in the jar extending them.
 [sources.network]
+origin = "network"
 # Minecraft classes appear under different names per loader generation: MCP
 # names on Forge up to 1.16, Mojang names on later Forge and NeoForge, and
 # intermediary names on Fabric and Quilt.
@@ -28,6 +29,46 @@ types = [
 parameter = "Receives network data as a parameter of type {type}"
 receiver = "Runs on network data, as {type} is a network type"
 call = "Reads network data through {owner}.{name}"
+field = "Reads {field}, which holds network data as {type} is a network type"
+# Network reads outside Minecraft's own networking.
+calls = [
+    "java/net/URL.openStream()Ljava/io/InputStream;",
+    "java/net/URLConnection.getInputStream()Ljava/io/InputStream;",
+    "java/net/HttpURLConnection.getInputStream()Ljava/io/InputStream;",
+    "javax/net/ssl/HttpsURLConnection.getInputStream()Ljava/io/InputStream;",
+    "java/net/Socket.getInputStream()Ljava/io/InputStream;",
+    "java/nio/channels/SocketChannel.read(*)",
+]
+read = "Reads network data through {owner}.{name}"
+
+# Files on the player's or server's own disk.
+[sources.local-file]
+origin = "local-file"
+allocations = [
+    "java/io/FileInputStream",
+    "java/io/RandomAccessFile",
+    "java/io/FileReader",
+]
+opens = "Opens a local file with {type}"
+calls = [
+    "java/nio/file/Files.readAllBytes(*)",
+    "java/nio/file/Files.newInputStream(*)",
+    "java/nio/file/Files.newBufferedReader(*)",
+    "java/nio/file/Files.readString(*)",
+    "org/apache/commons/io/FileUtils.readFileToByteArray(*)",
+    "org/apache/commons/io/FileUtils.openInputStream(*)",
+]
+read = "Reads a local file through {owner}.{name}"
+
+# A serialized object embedded in the mod as a constant, which code copies
+# and fills in to build an object without calling its constructor. The
+# template fixes which classes the stream names, so data built from one
+# with nothing untrusted mixed in cannot choose its own.
+[sources.serialized-template]
+origin = "embedded-template"
+# The Java serialization stream magic and version.
+constant-prefix = "aced0005"
+copies = "Copies {owner}.{name}, a serialized object embedded in the class, which fixes the classes the stream names"
 
 # Sink kinds:
 #
@@ -37,9 +78,14 @@ call = "Reads network data through {owner}.{name}"
 # with Java's own readObject(ObjectInputStream) serialization hooks.
 #
 # A call sink takes the data as an argument. When it has receiver types, the
-# receiver is a configured deserializer: settings applied to one the method
+# receiver is a configured deserializer. Settings applied to one the method
 # creates decide whether it is safe, and one from elsewhere is only reported
 # for network data, since its settings are not visible.
+#
+# Severity follows from each source's origin. Network data with no
+# safeguard is Critical, data the analysis cannot trace is Warning, and
+# local files, embedded templates, and the caller's own arguments are
+# Notices that name their origin.
 #
 # A library table names a library whose defaults became safe in a later
 # version. A copy bundled in the jar decides which default applies.
@@ -55,17 +101,24 @@ calls = [
     # interface instead.
     "java/io/ObjectInput.readObject()Ljava/lang/Object;",
 ]
-critical-sources = ["network"]
 creates = "Creates {type}"
 read = "Calls readObject, which instantiates any serializable class the data names"
-# Subclasses usually exist to override resolveClass with an allowlist, the
-# way EnderCore and BdLib fixed BleedingPipe.
-subclass = "{type} extends ObjectInputStream and may restrict the classes it resolves"
+
+# Subclasses are judged by their resolveClass override, the hook an
+# allowlist uses, as in the EnderCore and BdLib fixes for BleedingPipe.
+[sinks.restriction]
+method = "resolveClass(Ljava/io/ObjectStreamClass;)Ljava/lang/Class;"
+allowlist = "{type} overrides resolveClass and throws for any class it does not find in its allowed set"
+conditional = "{type} overrides resolveClass and checks every class against its allowed set, but throws for one it does not find only when a setting or other condition allows"
+blocklist = "{type} overrides resolveClass but only rejects classes it lists, so any gadget class missing from the list gets through"
+open = "{type} overrides resolveClass without ever rejecting a class by name, so it restricts nothing"
+inherits = "{type} extends ObjectInputStream without overriding resolveClass, so it restricts nothing"
+unseen = "{type} extends ObjectInputStream through a class outside this jar, which may restrict the classes it resolves"
 
 [sinks.title]
 critical = "Deserializes network data with ObjectInputStream"
 warning = "Deserializes data with ObjectInputStream"
-notice = "Deserializes with a filtered or custom ObjectInputStream"
+notice = "Deserializes with a restricted ObjectInputStream or an embedded serialized object"
 
 # Java 9 and later only have this instance form.
 [[sinks.settings]]
@@ -88,7 +141,6 @@ id = "xml-decoder"
 kind = "stream"
 types = ["java/beans/XMLDecoder"]
 calls = ["java/beans/XMLDecoder.readObject()Ljava/lang/Object;"]
-critical-sources = ["network"]
 creates = "Creates {type}"
 read = "Calls XMLDecoder.readObject, which creates any class and calls any method the XML names"
 
@@ -108,7 +160,6 @@ calls = [
     "com/caucho/hessian/io/HessianInput.readObject(*)",
     "com/caucho/hessian/io/Hessian2Input.readObject(*)",
 ]
-critical-sources = ["network"]
 creates = "Creates {type}"
 read = "Calls Hessian readObject, which instantiates any class the data names"
 subclass = "{type} extends a Hessian reader and may restrict the classes it resolves"
@@ -131,13 +182,12 @@ calls = [
     "org/springframework/util/SerializationUtils.deserialize([B)Ljava/lang/Object;",
 ]
 data = "argument 0"
-critical-sources = ["network"]
 read = "Calls SerializationUtils.deserialize, which reads the data with an unfiltered ObjectInputStream"
 
 [sinks.title]
 critical = "Deserializes network data with SerializationUtils"
 warning = "Deserializes data with SerializationUtils"
-notice = "Deserializes data with SerializationUtils"
+notice = "Deserializes an embedded serialized object with SerializationUtils"
 
 [[sinks]]
 id = "xstream"
@@ -145,7 +195,6 @@ kind = "call"
 types = ["com/thoughtworks/xstream/XStream"]
 calls = ["com/thoughtworks/xstream/XStream.fromXML(*)"]
 data = "argument 0"
-critical-sources = ["network"]
 creates = "Creates {type}"
 read = "Calls XStream.fromXML, which creates the classes the XML names"
 outside = "The {type} instance comes from outside this method, so its permissions are not visible here"
@@ -190,7 +239,6 @@ calls = [
     "org/yaml/snakeyaml/Yaml.loadAll(*)",
 ]
 data = "argument 0"
-critical-sources = ["network"]
 creates = "Creates {type}"
 read = "Calls Yaml.load, which creates the classes that global tags in the YAML name"
 outside = "The {type} instance comes from outside this method, so its constructor is not visible here"
@@ -224,7 +272,6 @@ calls = [
     "com/esotericsoftware/kryo/Kryo.readObjectOrNull(*)",
 ]
 data = "argument 0"
-critical-sources = ["network"]
 creates = "Creates {type}"
 read = "Calls Kryo to read objects, which creates any class the data names unless registration is required"
 outside = "The {type} instance comes from outside this method, so its registration setting is not visible here"
@@ -265,7 +312,6 @@ calls = [
 ]
 data = "argument 0"
 default = "safe"
-critical-sources = ["network"]
 creates = "Creates {type}"
 read = "Calls ObjectMapper.readValue, which creates the classes the JSON names when default typing is on"
 

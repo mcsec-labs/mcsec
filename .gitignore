@@ -2,3 +2,5 @@ planning/
 /target
 /corpus/cache/
 /corpus/variants/build/
+/benchmark/cache/
+/benchmark/extended/cache/

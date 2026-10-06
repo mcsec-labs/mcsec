@@ -8,7 +8,7 @@ use std::collections::HashMap;
 
 use common::{ClassBuilder, jar};
 use mcsec_core::class_file::op;
-use mcsec_core::{Finding, ScanLimits, Severity, scan_bytes};
+use mcsec_core::{DataOrigin, Finding, ScanLimits, Severity, scan_bytes};
 
 const OIS: &str = "java/io/ObjectInputStream";
 const BAIS: &str = "java/io/ByteArrayInputStream";
@@ -179,7 +179,7 @@ fn network_parameter_reaching_the_stream_is_critical() {
 }
 
 #[test]
-fn network_parameter_not_reaching_the_stream_is_warning() {
+fn network_parameter_not_reaching_the_stream_is_judged_by_the_other() {
     // static void fromBytes(ByteBuf buf, InputStream file) {
     //     new ObjectInputStream(file).readObject(); }
     let mut b = ClassBuilder::new();
@@ -196,7 +196,12 @@ fn network_parameter_not_reaching_the_stream_is_warning() {
         &code,
     );
 
-    assert_eq!(only(&scan_one(b)).severity, Severity::Warning);
+    // The stream comes from the second parameter, so the network buffer
+    // in the first does not make it Critical.
+    let findings = scan_one(b);
+    let finding = only(&findings);
+    assert_eq!(finding.severity, Severity::Notice);
+    assert_eq!(finding.origin, Some(DataOrigin::Caller));
 }
 
 #[test]
@@ -373,7 +378,7 @@ fn network_data_reaching_an_exception_handler_is_critical() {
 }
 
 #[test]
-fn unknown_source_is_warning() {
+fn stream_from_the_caller_is_notice() {
     let mut b = ClassBuilder::new();
     let pool = Pool::new(&mut b);
     let mut asm = Asm::default();
@@ -388,7 +393,10 @@ fn unknown_source_is_warning() {
         &code,
     );
 
-    assert_eq!(only(&scan_one(b)).severity, Severity::Warning);
+    let findings = scan_one(b);
+    let finding = only(&findings);
+    assert_eq!(finding.severity, Severity::Notice);
+    assert_eq!(finding.origin, Some(DataOrigin::Caller));
 }
 
 #[test]
@@ -501,7 +509,9 @@ fn creating_a_stream_without_reading_is_not_flagged() {
 }
 
 #[test]
-fn allowlisting_subclass_is_notice() {
+fn subclass_without_a_resolve_class_override_is_judged_as_plain() {
+    // A subclass that overrides nothing restricts nothing, however it is
+    // named. Allowlisting overrides are covered by the variant corpus.
     let safe_stream = ClassBuilder::new().build_extending("net/example/SafeStream", OIS);
     let mut b = ClassBuilder::new();
     let pool = Pool::new(&mut b);
@@ -536,13 +546,8 @@ fn allowlisting_subclass_is_notice() {
         ("net/example/Packet.class", &packet),
     ]);
     let finding = only(&findings);
-    assert_eq!(finding.severity, Severity::Notice);
-    assert!(
-        finding
-            .evidence
-            .iter()
-            .any(|e| e.description.contains("may restrict the classes"))
-    );
+    assert_eq!(finding.severity, Severity::Critical);
+    assert!(has_evidence(finding, "without overriding resolveClass"));
 }
 
 /// `ObjectInputStream` over network data in slot 2 and one over a parameter

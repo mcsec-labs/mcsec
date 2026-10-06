@@ -7,11 +7,14 @@ use crate::analysis::ParsedArchive;
 use crate::archive::{Anomaly, EntryKind, UnreadableEntry};
 use crate::finding::Finding;
 use crate::hash::FileHashes;
+use crate::rules::spec::rules_version;
 
 #[derive(Debug, Clone, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ScanReport {
     pub scanner_version: String,
+    /// The embedded rule set that produced the findings.
+    pub rules_version: String,
     pub archive: ArchiveSummary,
     pub findings: Vec<Finding>,
 }
@@ -20,6 +23,7 @@ impl ScanReport {
     pub fn new(parsed: &ParsedArchive, findings: Vec<Finding>) -> Self {
         Self {
             scanner_version: SCANNER_VERSION.to_owned(),
+            rules_version: rules_version().to_owned(),
             archive: ArchiveSummary::from(parsed),
             findings,
         }

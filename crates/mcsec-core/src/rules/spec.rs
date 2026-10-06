@@ -10,8 +10,10 @@ use std::collections::BTreeMap;
 use std::sync::OnceLock;
 
 use serde::Deserialize;
+use sha2::{Digest, Sha256};
 
 use crate::dataflow::Labels;
+use crate::finding::DataOrigin;
 
 /// Rule files compiled into the scanner, as (file name, contents).
 const RULE_FILES: &[(&str, &str)] = &[(
@@ -34,10 +36,31 @@ struct RuleFile {
 #[derive(Debug, Deserialize)]
 #[serde(deny_unknown_fields, rename_all = "kebab-case")]
 struct SourceFile {
+    origin: SourceOrigin,
+    #[serde(default)]
     types: Vec<String>,
-    parameter: String,
-    receiver: String,
-    call: String,
+    parameter: Option<String>,
+    receiver: Option<String>,
+    call: Option<String>,
+    field: Option<String>,
+    #[serde(default)]
+    calls: Vec<String>,
+    read: Option<String>,
+    #[serde(default)]
+    allocations: Vec<String>,
+    opens: Option<String>,
+    constant_prefix: Option<String>,
+    copies: Option<String>,
+}
+
+/// The origins a rule's sources can declare. Caller and untraced data are
+/// recognized by the engine rather than declared.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Deserialize)]
+#[serde(rename_all = "kebab-case")]
+enum SourceOrigin {
+    Network,
+    LocalFile,
+    EmbeddedTemplate,
 }
 
 #[derive(Debug, Deserialize)]
@@ -51,10 +74,10 @@ struct SinkFile {
     data: Option<String>,
     #[serde(default)]
     default: Effect,
-    critical_sources: Vec<String>,
     creates: Option<String>,
     read: String,
     subclass: Option<String>,
+    restriction: Option<Restriction>,
     outside: Option<String>,
     library: Option<Library>,
     title: Titles,
@@ -106,6 +129,32 @@ pub struct Titles {
     pub critical: String,
     pub warning: String,
     pub notice: String,
+}
+
+/// How to judge a subclass of a stream type by the method that decides
+/// which classes it resolves. Each text takes `{type}`, the class judged.
+#[derive(Debug, Clone, Deserialize)]
+#[serde(deny_unknown_fields, rename_all = "kebab-case")]
+pub struct Restriction {
+    /// The deciding method, as `name(descriptor)`. Its first parameter
+    /// carries the class being resolved.
+    pub method: String,
+    /// The override throws unless the class is one it looks up and finds.
+    pub allowlist: String,
+    /// The override checks every class against its allowed set, but throws
+    /// for a missing one only on some paths, such as when a setting allows.
+    pub conditional: String,
+    /// The override throws only for classes it finds, so any class it does
+    /// not know gets through.
+    pub blocklist: String,
+    /// The override never rejects a class based on which class it is.
+    pub open: String,
+    /// No class in the jar between the subclass and the stream type
+    /// overrides the method.
+    pub inherits: String,
+    /// The subclass extends the stream type through a class outside the
+    /// jar, whose code cannot be checked.
+    pub unseen: String,
 }
 
 /// A library whose defaults became safe in a later version.
@@ -214,14 +263,93 @@ pub struct Condition {
     pub not_extends: Option<String>,
 }
 
+/// Where untrusted data enters, by any of four routes. A route is used when
+/// its list is not empty, and each route has its own evidence text.
 #[derive(Debug)]
 pub struct Source {
     pub id: String,
     pub label: Labels,
+    pub origin: DataOrigin,
+    /// Values of these types or classes extending them, as parameters,
+    /// receivers, fields, or results of calls on them.
     pub types: Vec<String>,
     pub parameter: String,
     pub receiver: String,
     pub call: String,
+    pub field: String,
+    /// Results of these calls.
+    pub calls: Vec<MethodSig>,
+    pub read: String,
+    /// Objects of these classes, once created.
+    pub allocations: Vec<String>,
+    pub opens: String,
+    /// Static byte arrays in the jar whose contents start with this prefix.
+    pub constant_prefix: Vec<u8>,
+    pub copies: String,
+}
+
+impl Source {
+    fn compile(id: String, label: Labels, file: SourceFile) -> Result<Self, String> {
+        let text =
+            |present: bool, text: Option<String>, key: &str, route: &str| match (present, text) {
+                (true, Some(text)) => Ok(text),
+                (false, None) => Ok(String::new()),
+                (true, None) => Err(format!("source {id} lists {route} but has no {key} text")),
+                (false, Some(_)) => Err(format!("source {id} has a {key} text but no {route}")),
+            };
+        let typed = !file.types.is_empty();
+        let constant_prefix = match &file.constant_prefix {
+            Some(prefix) => hex::decode(prefix)
+                .map_err(|e| format!("source {id} has a bad constant-prefix: {e}"))?,
+            None => Vec::new(),
+        };
+        let source = Self {
+            label,
+            origin: match file.origin {
+                SourceOrigin::Network => DataOrigin::Network,
+                SourceOrigin::LocalFile => DataOrigin::LocalFile,
+                SourceOrigin::EmbeddedTemplate => DataOrigin::EmbeddedTemplate,
+            },
+            parameter: text(typed, file.parameter, "parameter", "types")?,
+            receiver: text(typed, file.receiver, "receiver", "types")?,
+            call: text(typed, file.call, "call", "types")?,
+            field: text(typed, file.field, "field", "types")?,
+            read: text(!file.calls.is_empty(), file.read, "read", "calls")?,
+            opens: text(
+                !file.allocations.is_empty(),
+                file.opens,
+                "opens",
+                "allocations",
+            )?,
+            copies: text(
+                file.constant_prefix.is_some(),
+                file.copies,
+                "copies",
+                "constant-prefix",
+            )?,
+            types: file.types,
+            calls: file
+                .calls
+                .iter()
+                .map(|c| MethodSig::parse(c))
+                .collect::<Result<_, _>>()?,
+            allocations: file.allocations,
+            constant_prefix,
+            id: id.clone(),
+        };
+        let routes = [
+            !source.types.is_empty(),
+            !source.calls.is_empty(),
+            !source.allocations.is_empty(),
+            !source.constant_prefix.is_empty(),
+        ];
+        if !routes.contains(&true) {
+            return Err(format!(
+                "source {id} needs at least one of types, calls, allocations, or constant-prefix"
+            ));
+        }
+        Ok(source)
+    }
 }
 
 /// A call that configures a deserializer.
@@ -245,11 +373,10 @@ pub struct Sink {
     /// Call sinks: the argument carrying the data.
     pub data: Option<Target>,
     pub default: Effect,
-    /// Labels that make a use Critical.
-    pub critical: Labels,
     pub creates: Option<String>,
     pub read: String,
     pub subclass: Option<String>,
+    pub restriction: Option<Restriction>,
     pub outside: Option<String>,
     pub library: Option<Library>,
     pub title: Titles,
@@ -291,15 +418,10 @@ impl Setting {
 }
 
 impl Sink {
-    fn compile(file: SinkFile, sources: &[Source]) -> Result<Self, String> {
+    fn compile(file: SinkFile) -> Result<Self, String> {
         let id = &file.id;
-        let mut critical = Labels::default();
-        for source_id in &file.critical_sources {
-            let source = sources
-                .iter()
-                .find(|s| &s.id == source_id)
-                .ok_or_else(|| format!("sink {id} names unknown source {source_id:?}"))?;
-            critical.0 |= source.label.0;
+        if file.subclass.is_some() && file.restriction.is_some() {
+            return Err(format!("sink {id} has both subclass and restriction"));
         }
         if file.calls.is_empty() {
             return Err(format!("sink {id} lists no calls"));
@@ -340,10 +462,10 @@ impl Sink {
             types: file.types,
             data,
             default: file.default,
-            critical,
             creates: file.creates,
             read: file.read,
             subclass: file.subclass,
+            restriction: file.restriction,
             outside: file.outside,
             library: file.library,
             title: file.title,
@@ -360,19 +482,12 @@ impl Rule {
             .sources
             .into_iter()
             .enumerate()
-            .map(|(bit, (id, source))| Source {
-                label: Labels(1 << bit),
-                id,
-                types: source.types,
-                parameter: source.parameter,
-                receiver: source.receiver,
-                call: source.call,
-            })
-            .collect();
+            .map(|(bit, (id, source))| Source::compile(id, Labels(1 << bit), source))
+            .collect::<Result<_, _>>()?;
         let sinks = file
             .sinks
             .into_iter()
-            .map(|sink| Sink::compile(sink, &sources))
+            .map(Sink::compile)
             .collect::<Result<_, _>>()?;
         Ok(Self {
             id: file.id,
@@ -404,6 +519,23 @@ pub fn embedded() -> &'static [Rule] {
     // failure here can only come from an edit that never passed tests.
     RULES.get_or_init(|| {
         compile_all(RULE_FILES).unwrap_or_else(|e| panic!("invalid embedded rule {e}"))
+    })
+}
+
+/// Identifies the embedded rule set, as the start of a SHA-256 over every
+/// rule file's name and contents in hex. Any edit to a rule changes it,
+/// so benchmark results and reports can name the exact rules behind them.
+pub fn rules_version() -> &'static str {
+    static VERSION: OnceLock<String> = OnceLock::new();
+    VERSION.get_or_init(|| {
+        let mut hasher = Sha256::new();
+        for (name, text) in RULE_FILES {
+            for part in [name.as_bytes(), text.as_bytes()] {
+                hasher.update((part.len() as u64).to_be_bytes());
+                hasher.update(part);
+            }
+        }
+        hex::encode(hasher.finalize())[..16].to_owned()
     })
 }
 
@@ -469,10 +601,32 @@ mod tests {
 
         let call_without_data = format!(
             "{header}[sources]\n[[sinks]]\nid='s'\nkind='call'\ncalls=['a/B.c(*)']\n\
-             critical-sources=[]\nread='r'\ntitle={{critical='c',warning='w',notice='n'}}\n"
+             read='r'\ntitle={{critical='c',warning='w',notice='n'}}\n"
         );
         let error = compile_all(&[("bad.toml", &call_without_data)]).unwrap_err();
         assert!(error.contains("needs data"), "{error}");
+    }
+
+    #[test]
+    fn sources_need_matching_routes_and_texts() {
+        let header = "id='x'\nname='x'\ncwe='x'\nexplanation='x'\nfix='x'\nsinks=[]\n";
+        let compile =
+            |source: &str| compile_all(&[("x.toml", &format!("{header}[sources.s]\n{source}"))]);
+
+        let missing_text =
+            compile("origin='network'\ntypes=['a/B']\nparameter='p'\nreceiver='r'\nfield='f'\n");
+        assert!(missing_text.unwrap_err().contains("no call text"));
+        let stray_text = compile("origin='local-file'\ncalls=['a/B.c(*)']\nread='r'\nopens='o'\n");
+        assert!(stray_text.unwrap_err().contains("no allocations"));
+        let no_route = compile("origin='network'\n");
+        assert!(no_route.unwrap_err().contains("at least one"));
+        assert!(compile("origin='embedded-template'\nconstant-prefix='zz'\ncopies='c'\n").is_err());
+
+        let rules = compile("origin='embedded-template'\nconstant-prefix='aced0005'\ncopies='c'\n")
+            .unwrap();
+        let source = &rules[0].sources[0];
+        assert_eq!(source.origin, DataOrigin::EmbeddedTemplate);
+        assert_eq!(source.constant_prefix, [0xac, 0xed, 0x00, 0x05]);
     }
 
     #[test]

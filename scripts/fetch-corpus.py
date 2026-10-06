@@ -1,5 +1,8 @@
-"""Downloads the ground truth jars listed in corpus/manifest.json into
-corpus/cache and checks each one's SHA-1.
+"""Downloads the jars a manifest lists into a cache directory beside it and
+checks each one's SHA-1. The manifest defaults to corpus/manifest.json, the
+ground truth corpus. The benchmark uses benchmark/manifest.json.
+
+Usage: python scripts/fetch-corpus.py [manifest]
 
 Uses only the Python standard library. CurseForge entries need an API key,
 read from the MCSEC_CURSEFORGE_KEY environment variable or from
@@ -18,8 +21,7 @@ import urllib.request
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-MANIFEST = ROOT / "corpus" / "manifest.json"
-CACHE = ROOT / "corpus" / "cache"
+DEFAULT_MANIFEST = ROOT / "corpus" / "manifest.json"
 USER_AGENT = "mcsec-labs/mcsec corpus fetch"
 
 
@@ -60,14 +62,18 @@ def download_url(source, key):
 
 
 def main():
-    entries = json.loads(MANIFEST.read_text(encoding="utf-8"))["entries"]
-    CACHE.mkdir(parents=True, exist_ok=True)
+    # Mod names can hold characters the Windows console encoding lacks.
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    manifest = Path(sys.argv[1]).resolve() if len(sys.argv) > 1 else DEFAULT_MANIFEST
+    entries = json.loads(manifest.read_text(encoding="utf-8"))["entries"]
+    cache = manifest.parent / "cache"
+    cache.mkdir(parents=True, exist_ok=True)
     key = curseforge_key()
     fetched = present = skipped = 0
     failed = []
 
     for entry in entries:
-        path = CACHE / entry["file"]
+        path = cache / entry["file"]
         if path.exists() and hashlib.sha1(path.read_bytes()).hexdigest() == entry["sha1"]:
             present += 1
             continue

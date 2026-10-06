@@ -14,7 +14,7 @@ import java.io.FileInputStream;
  */
 public class StreamReaderVariants {
 
-    // EXPECT critical
+    // EXPECT critical network
     public static Object xmlFromNetwork(ByteBuf buf) {
         return new XMLDecoder(new ByteBufInputStream(buf)).readObject();
     }
@@ -31,7 +31,7 @@ public class StreamReaderVariants {
         }
     }
 
-    // EXPECT warning
+    // EXPECT notice localFile
     public static Object xmlFromFile(File file) throws Exception {
         return new XMLDecoder(new FileInputStream(file)).readObject();
     }
@@ -52,7 +52,7 @@ public class StreamReaderVariants {
         return in.readObject(String.class);
     }
 
-    // EXPECT warning
+    // EXPECT notice localFile
     public static Object hessian2FromFile(File file) throws Exception {
         return new Hessian2Input(new FileInputStream(file)).readObject();
     }

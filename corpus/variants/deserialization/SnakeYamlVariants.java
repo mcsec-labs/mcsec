@@ -29,7 +29,7 @@ public class SnakeYamlVariants {
         return yaml.loadAs(new ByteBufInputStream(buf), Settings.class);
     }
 
-    // EXPECT notice
+    // EXPECT notice setting
     public static Object safeConstructor(ByteBuf buf) {
         return new Yaml(new SafeConstructor()).load(new ByteBufInputStream(buf));
     }
@@ -41,12 +41,12 @@ public class SnakeYamlVariants {
         return yaml.load(new ByteBufInputStream(buf));
     }
 
-    // EXPECT warning
+    // EXPECT notice caller
     public static Object configFile(Reader reader) {
         return new Yaml().load(reader);
     }
 
-    // EXPECT warning
+    // EXPECT warning network
     public static Object sharedInstance(ByteBuf buf) {
         return SHARED.load(new ByteBufInputStream(buf));
     }

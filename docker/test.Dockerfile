@@ -16,14 +16,18 @@ RUN cargo test --release --locked --workspace --no-run --message-format=json \
     && xargs -I '{}' cp '{}' /tests/ < /tmp/test-binaries
 
 FROM alpine:3@sha256:294b683cb724975bec92580e1e685676bd4b50bda910ddb8c51d4cabeaec77e6
-# The corpus and variant tests find their files relative to the crate
-# directory they were compiled in, so that path has to exist here too. The
-# variant sources carry the expected results. The compiled variants and the
-# corpus jars are mounted read-only at run time.
-RUN mkdir -p /src/crates/mcsec-core /src/corpus/cache /src/corpus/variants/build
+# The corpus, variant, and benchmark tests find their files relative to the
+# crate directory they were compiled in, so that path has to exist here too.
+# The variant sources carry the expected results and the benchmark labels
+# carry the reviewed findings. The compiled variants and the corpus and
+# benchmark jars are mounted read-only at run time.
+RUN mkdir -p /src/crates/mcsec-core /src/corpus/cache /src/corpus/variants/build /src/benchmark/cache \
+    /src/benchmark/extended/cache
 COPY --from=build /tests /tests
 COPY corpus/manifest.json /src/corpus/manifest.json
 COPY corpus/variants /src/corpus/variants
+COPY benchmark/manifest.json benchmark/labels.json /src/benchmark/
+COPY benchmark/extended/manifest.json /src/benchmark/extended/
 COPY docker/run-tests.sh /run-tests.sh
 USER 65534:65534
 ENTRYPOINT ["/bin/sh", "/run-tests.sh"]

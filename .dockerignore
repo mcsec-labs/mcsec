@@ -5,3 +5,5 @@ corpus/variants/build
 planning
 .vscode
 .history
+benchmark/cache
+benchmark/extended/cache

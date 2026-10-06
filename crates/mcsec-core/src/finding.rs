@@ -15,6 +15,44 @@ pub enum Severity {
     Critical,
 }
 
+/// Where the data a data flow finding is about comes from. Together with
+/// [`Safeguard`] it decides the severity. Network data with no safeguard is
+/// Critical, untraced data with no safeguard is Warning, and everything else
+/// is a Notice whose origin and safeguard say why.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub enum DataOrigin {
+    /// Data a remote party controls, such as a packet.
+    Network,
+    /// Data whose source the analysis could not follow, such as a field set
+    /// elsewhere.
+    Untraced,
+    /// A file on the player's or server's own disk.
+    LocalFile,
+    /// Whatever the method's caller passes in, where no caller in the jar
+    /// passes untrusted data.
+    Caller,
+    /// A constant the mod embeds in its own code.
+    EmbeddedTemplate,
+}
+
+/// What limits a dangerous operation, when something does.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub enum Safeguard {
+    /// The code checks each class against an allowed set and rejects the
+    /// rest, as judged from its bytecode.
+    Allowlist,
+    /// A call configures the operation to be safe, such as installing a
+    /// filter.
+    Setting,
+    /// The bundled library version is safe by default.
+    LibraryVersion,
+    /// A subclass from outside the jar, whose code cannot be checked, may
+    /// restrict it.
+    UncheckedSubclass,
+}
+
 /// A method identified by name and JVM descriptor, since overloads share a name.
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Serialize)]
 #[serde(rename_all = "camelCase")]
@@ -59,6 +97,14 @@ pub struct Finding {
     pub severity: Severity,
     pub title: String,
     pub location: Location,
+    /// SHA-1 of the class file holding the location, so the same library
+    /// code bundled in many jars can be recognized as one.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub class_sha1: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub origin: Option<DataOrigin>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub safeguard: Option<Safeguard>,
     /// Source to sink steps for data flow rules. Empty for single location rules.
     #[serde(skip_serializing_if = "Vec::is_empty")]
     pub evidence: Vec<EvidenceStep>,

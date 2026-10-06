@@ -189,7 +189,7 @@
 		{
 			"name": "JourneyMap 1.16.5 5.7.1",
 			"role": "vulnerable",
-			"note": "The packet handler passes bytes to a separate deserialize method, so a single method check rates it Warning. Tracking across methods should raise it to Critical.",
+			"note": "The Message constructor stores the packet bytes in a field, and getData passes that field to a private deserialize method. Critical in getData, where the network data reaches the deserializer. deserialize itself takes whatever its caller passes.",
 			"file": "curseforge-3222876-journeymap-1.16.5-5.7.1.jar",
 			"sha1": "64290d7d59001d7ebea9593216ce1d25c43f8ad7",
 			"source": { "curseforge": { "modId": 32274, "fileId": 3222876 } },
@@ -198,7 +198,13 @@
 					"rule": "unsafe-deserialization",
 					"class": "journeymap/common/network/impl/Message",
 					"method": "deserialize",
-					"severity": "warning"
+					"severity": "notice"
+				},
+				{
+					"rule": "unsafe-deserialization",
+					"class": "journeymap/common/network/impl/Message",
+					"method": "getData",
+					"severity": "critical"
 				}
 			]
 		},
@@ -251,7 +257,7 @@
 		{
 			"name": "Logistics Pipes GTNH 1.0.5",
 			"role": "vulnerable",
-			"note": "BleedingPipe. Reads through the ObjectInput interface. The packet stream is a parameter of the mod's own type, so it rates Warning until tracking across methods.",
+			"note": "BleedingPipe. PacketHandler.decode wraps the packet buffer in the mod's own stream type and passes it to the abstract readData, and the overrides deserialize it through the ObjectInput interface. Critical in decode, where the network data enters. The overrides take whatever their caller passes.",
 			"file": "github-logisticspipes-1.0.5-GTNH.jar",
 			"sha1": "d5843ed7806ac4e9d5c0248b96d19c63eab170f1",
 			"source": {
@@ -264,21 +270,27 @@
 			"expect": [
 				{
 					"rule": "unsafe-deserialization",
+					"class": "logisticspipes/network/PacketHandler",
+					"method": "decode",
+					"severity": "critical"
+				},
+				{
+					"rule": "unsafe-deserialization",
 					"class": "logisticspipes/network/abstractpackets/GenericPacket",
 					"method": "readData",
-					"severity": "warning"
+					"severity": "notice"
 				},
 				{
 					"rule": "unsafe-deserialization",
 					"class": "logisticspipes/network/packets/debuggui/DebugTargetResponse",
 					"method": "readData",
-					"severity": "warning"
+					"severity": "notice"
 				},
 				{
 					"rule": "unsafe-deserialization",
 					"class": "logisticspipes/network/packets/routingdebug/RoutingUpdateTargetResponse",
 					"method": "readData",
-					"severity": "warning"
+					"severity": "notice"
 				}
 			]
 		},
@@ -332,7 +344,7 @@
 		{
 			"name": "Gadomancy 1.7.10 1.0.7.3",
 			"role": "unfixed",
-			"note": "Newest build, never patched. ModData.load reads a local file, so it rates Warning.",
+			"note": "Newest build, never patched. ModData.load deserializes a local file, a Notice with that origin.",
 			"file": "curseforge-2338768-gadomancy-1.7.10-1.0.7.3.jar",
 			"sha1": "7d897c6a50b6381ea294dfbec74911f23f924a39",
 			"source": { "curseforge": { "modId": 237271, "fileId": 2338768 } },
@@ -341,7 +353,7 @@
 					"rule": "unsafe-deserialization",
 					"class": "makeo/gadomancy/common/data/config/ModData",
 					"method": "load",
-					"severity": "warning"
+					"severity": "notice"
 				},
 				{
 					"rule": "unsafe-deserialization",
@@ -381,7 +393,7 @@
 					"rule": "unsafe-deserialization",
 					"class": "net/tslat/aoa3/library/leaderboard/LeaderboardDataHandler",
 					"method": "loadLeaderboard",
-					"severity": "warning"
+					"severity": "notice"
 				}
 			]
 		},
@@ -402,7 +414,7 @@
 		{
 			"name": "JourneyMap 1.12.2 6.0.10",
 			"role": "control",
-			"note": "Bundles Mixin's annotation processor, which deserializes a local build file. Must stay Warning, never Critical.",
+			"note": "Bundles Mixin's annotation processor, which deserializes a local build file. A Notice with that origin, never Critical.",
 			"file": "curseforge-9049805-journeymap-forge-1.12.2-6.0.10.jar",
 			"sha1": "6455be4d12b507878067738ccb23cfa02992c719",
 			"source": { "curseforge": { "modId": 32274, "fileId": 9049805 } },
@@ -411,7 +423,7 @@
 					"rule": "unsafe-deserialization",
 					"class": "org/spongepowered/tools/obfuscation/TargetMap",
 					"method": "read",
-					"severity": "warning"
+					"severity": "notice"
 				}
 			]
 		},

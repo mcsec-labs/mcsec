@@ -8,9 +8,12 @@
 /// recursive zip bomb exhausts the budget quickly.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct ScanLimits {
-    /// Largest input file accepted.
+    /// Largest input file accepted. Mods that bundle music, textures, or
+    /// models run to several hundred megabytes.
     pub max_input_size: u64,
-    /// Largest uncompressed size of a single entry.
+    /// Largest uncompressed size of a single entry. Mods ship single native
+    /// libraries far larger than any class file, so this sits well above
+    /// them.
     pub max_entry_size: u64,
     /// Largest uncompressed size of all entries combined, across every nesting level.
     pub max_total_size: u64,
@@ -24,8 +27,8 @@ impl Default for ScanLimits {
     fn default() -> Self {
         const MIB: u64 = 1024 * 1024;
         Self {
-            max_input_size: 256 * MIB,
-            max_entry_size: 64 * MIB,
+            max_input_size: 512 * MIB,
+            max_entry_size: 256 * MIB,
             max_total_size: 1024 * MIB,
             max_entries: 250_000,
             max_nesting_depth: 8,

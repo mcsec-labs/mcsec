@@ -28,7 +28,7 @@ public class XStreamVariants {
         return new XStream().fromXML(xml);
     }
 
-    // EXPECT notice
+    // EXPECT notice setting
     public static Object defaultSecurity(ByteBuf buf) {
         XStream xstream = new XStream();
         XStream.setupDefaultSecurity(xstream);
@@ -51,12 +51,12 @@ public class XStreamVariants {
         return xstream.fromXML(new ByteBufInputStream(buf));
     }
 
-    // EXPECT warning
+    // EXPECT notice caller
     public static Object fromString(String xml) {
         return new XStream().fromXML(xml);
     }
 
-    // EXPECT warning
+    // EXPECT warning network
     public static Object sharedInstance(ByteBuf buf) {
         return SHARED.fromXML(new ByteBufInputStream(buf));
     }

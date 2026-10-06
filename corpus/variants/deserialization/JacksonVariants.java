@@ -71,7 +71,7 @@ public class JacksonVariants {
         return mapper.readValue(bytes, Object.class);
     }
 
-    // EXPECT warning
+    // EXPECT notice caller
     public static Object defaultTypingFromString(String json) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.enableDefaultTyping();

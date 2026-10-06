@@ -14,7 +14,7 @@ import org.apache.commons.lang3.SerializationUtils;
  */
 public class SerializationUtilsVariants {
 
-    // EXPECT critical
+    // EXPECT critical network
     public static Object copiedBytes(ByteBuf buf) {
         byte[] bytes = new byte[buf.readableBytes()];
         buf.readBytes(bytes);
@@ -38,7 +38,7 @@ public class SerializationUtilsVariants {
         return org.apache.commons.lang.SerializationUtils.deserialize(bytes);
     }
 
-    // EXPECT warning
+    // EXPECT notice localFile
     public static Object fromFile(Path path) throws Exception {
         return SerializationUtils.deserialize(Files.readAllBytes(path));
     }

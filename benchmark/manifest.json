@@ -1,0 +1,6570 @@
+{
+	"description": "Jars for measuring false positives, drawn from Modrinth and CurseForge in four groups: the most downloaded mods at their newest release, the most downloaded for Minecraft 1.12.2 and for 1.7.10, and a seeded random draw from further down the rankings. Built by scripts/select-benchmark.py and downloaded into benchmark/cache by scripts/fetch-corpus.py benchmark/manifest.json. Every finding on these jars is labeled in benchmark/labels.json.",
+	"entries": [
+		{
+			"name": "Fabric API 0.161.0+26.3",
+			"group": "latest",
+			"downloads": 268974946,
+			"file": "modrinth-bNnaTiuM-fabric-api-0.161.0+26.3.jar",
+			"sha1": "53f9ee02c3702734d90520aa8c9719bf0e1c8d4f",
+			"source": {
+				"modrinth": {
+					"versionId": "bNnaTiuM",
+					"filename": "fabric-api-0.161.0+26.3.jar"
+				}
+			}
+		},
+		{
+			"name": "Sodium mc26.3-0.9.2-neoforge",
+			"group": "latest",
+			"downloads": 237462072,
+			"file": "modrinth-VHtnT9Q4-sodium-neoforge-0.9.2+mc26.3.jar",
+			"sha1": "9015607e5ae2c5b9692ebf05113f9caca6ec41bf",
+			"source": {
+				"modrinth": {
+					"versionId": "VHtnT9Q4",
+					"filename": "sodium-neoforge-0.9.2+mc26.3.jar"
+				}
+			}
+		},
+		{
+			"name": "Iris Shaders 1.11.7+26.3-neoforge",
+			"group": "latest",
+			"downloads": 184716337,
+			"file": "modrinth-Ag5S66CF-iris-neoforge-1.11.7+mc26.3.jar",
+			"sha1": "57cbbd1f58b6226c633520541c1a3ae57c019373",
+			"source": {
+				"modrinth": {
+					"versionId": "Ag5S66CF",
+					"filename": "iris-neoforge-1.11.7+mc26.3.jar"
+				}
+			}
+		},
+		{
+			"name": "Entity Culling 1.11.2",
+			"group": "latest",
+			"downloads": 175405764,
+			"file": "modrinth-V9D2X186-entityculling-neoforge-1.11.2-mc26.3.jar",
+			"sha1": "91da9d411e8d6b72175f62f7153772085170faa7",
+			"source": {
+				"modrinth": {
+					"versionId": "V9D2X186",
+					"filename": "entityculling-neoforge-1.11.2-mc26.3.jar"
+				}
+			}
+		},
+		{
+			"name": "Cloth Config API 26.3.159+neoforge",
+			"group": "latest",
+			"downloads": 174579463,
+			"file": "modrinth-GchRXPnb-cloth-config-neoforge-26.3.159.jar",
+			"sha1": "d57fa1419228ee371b0c29abf943288d384e2d08",
+			"source": {
+				"modrinth": {
+					"versionId": "GchRXPnb",
+					"filename": "cloth-config-neoforge-26.3.159.jar"
+				}
+			}
+		},
+		{
+			"name": "FerriteCore 9.0.0-fabric",
+			"group": "latest",
+			"downloads": 156213444,
+			"file": "modrinth-d5ddUdiB-ferritecore-9.0.0-fabric.jar",
+			"sha1": "eac76ff0f3753422c61b2c44487d0d195d88d4bc",
+			"source": {
+				"modrinth": {
+					"versionId": "d5ddUdiB",
+					"filename": "ferritecore-9.0.0-fabric.jar"
+				}
+			}
+		},
+		{
+			"name": "Mod Menu 20.0.3",
+			"group": "latest",
+			"downloads": 150381788,
+			"file": "modrinth-iRo7AZXf-modmenu-20.0.3.jar",
+			"sha1": "9fc381627b471c18d67156e846228f51ff2ea5b4",
+			"source": {
+				"modrinth": {
+					"versionId": "iRo7AZXf",
+					"filename": "modmenu-20.0.3.jar"
+				}
+			}
+		},
+		{
+			"name": "Lithium mc26.3-0.26.2-neoforge",
+			"group": "latest",
+			"downloads": 132654281,
+			"file": "modrinth-1rb9wI5K-lithium-neoforge-0.26.2+mc26.3.jar",
+			"sha1": "1d11e085f74dda6fb797dfc4296cf4086fddfdcb",
+			"source": {
+				"modrinth": {
+					"versionId": "1rb9wI5K",
+					"filename": "lithium-neoforge-0.26.2+mc26.3.jar"
+				}
+			}
+		},
+		{
+			"name": "ImmediatelyFast 1.17.1+26.3-neoforge",
+			"group": "latest",
+			"downloads": 128319359,
+			"file": "modrinth-4SovUFpn-ImmediatelyFast-NeoForge-1.17.1+26.3.jar",
+			"sha1": "a072863c3b4e7cfed81899d8d3115839a161a708",
+			"source": {
+				"modrinth": {
+					"versionId": "4SovUFpn",
+					"filename": "ImmediatelyFast-NeoForge-1.17.1+26.3.jar"
+				}
+			}
+		},
+		{
+			"name": "YetAnotherConfigLib (YACL) 3.9.8+26.4-fabric",
+			"group": "latest",
+			"downloads": 127361138,
+			"file": "modrinth-XcxdJEup-yet_another_config_lib_v3-3.9.8+26.4-fabric.jar",
+			"sha1": "2da0c9a92e1dda6b4c33174cdc2c0d7b7364a5dd",
+			"source": {
+				"modrinth": {
+					"versionId": "XcxdJEup",
+					"filename": "yet_another_config_lib_v3-3.9.8+26.4-fabric.jar"
+				}
+			}
+		},
+		{
+			"name": "Fabric Language Kotlin 1.14.1+kotlin.2.4.20",
+			"group": "latest",
+			"downloads": 123866155,
+			"file": "modrinth-eRRZzGMc-fabric-language-kotlin-1.14.1+kotlin.2.4.20.jar",
+			"sha1": "62ae40a31b689b52fde399f2143d547a631e942c",
+			"source": {
+				"modrinth": {
+					"versionId": "eRRZzGMc",
+					"filename": "fabric-language-kotlin-1.14.1+kotlin.2.4.20.jar"
+				}
+			}
+		},
+		{
+			"name": "Xaero's Minimap forge-26.3-26.6.0",
+			"group": "latest",
+			"downloads": 114426010,
+			"file": "modrinth-Ph1WKpgW-xaerominimap-forge-26.3-26.6.0.jar",
+			"sha1": "e04751e1b3db390f3be7d43c3aefc214ea94c9c0",
+			"source": {
+				"modrinth": {
+					"versionId": "Ph1WKpgW",
+					"filename": "xaerominimap-forge-26.3-26.6.0.jar"
+				}
+			}
+		},
+		{
+			"name": "[ETF] Entity Texture Features 7.2.5-neoforge-26.3",
+			"group": "latest",
+			"downloads": 104497232,
+			"file": "modrinth-As3vXDMK-entity_texture_features-7.2.5-26.3-neoforge.jar",
+			"sha1": "1c44f7d646508422311df548d4ad1a29f27d8272",
+			"source": {
+				"modrinth": {
+					"versionId": "As3vXDMK",
+					"filename": "entity_texture_features-7.2.5-26.3-neoforge.jar"
+				}
+			}
+		},
+		{
+			"name": "Architectury API 22.0.4+neoforge",
+			"group": "latest",
+			"downloads": 102729668,
+			"file": "modrinth-oMUmsk4c-architectury-neoforge-22.0.4.jar",
+			"sha1": "7aa6b4dc0c5a633f626c8e635c7507c152755dec",
+			"source": {
+				"modrinth": {
+					"versionId": "oMUmsk4c",
+					"filename": "architectury-neoforge-22.0.4.jar"
+				}
+			}
+		},
+		{
+			"name": "Xaero's World Map forge-26.3-1.47.0",
+			"group": "latest",
+			"downloads": 100039656,
+			"file": "modrinth-tWNbndF1-xaeroworldmap-forge-26.3-1.47.0.jar",
+			"sha1": "36975df2ad717817b927c3872c63c64de7e12e73",
+			"source": {
+				"modrinth": {
+					"versionId": "tWNbndF1",
+					"filename": "xaeroworldmap-forge-26.3-1.47.0.jar"
+				}
+			}
+		},
+		{
+			"name": "Sodium Extra mc26.3-0.9.4+fabric",
+			"group": "latest",
+			"downloads": 99885853,
+			"file": "modrinth-te2y9qZn-sodium-extra-fabric-0.9.4+mc26.3.jar",
+			"sha1": "ff2056f222b751fe161123e71e55afd5b2f41da4",
+			"source": {
+				"modrinth": {
+					"versionId": "te2y9qZn",
+					"filename": "sodium-extra-fabric-0.9.4+mc26.3.jar"
+				}
+			}
+		},
+		{
+			"name": "[EMF] Entity Model Features 3.3.11-neoforge-26.3",
+			"group": "latest",
+			"downloads": 99190509,
+			"file": "modrinth-zMO6nY8z-entity_model_features-3.3.11-26.3-neoforge.jar",
+			"sha1": "fa2d015e24b9fc26678394a77e5db5afba4d2abc",
+			"source": {
+				"modrinth": {
+					"versionId": "zMO6nY8z",
+					"filename": "entity_model_features-3.3.11-26.3-neoforge.jar"
+				}
+			}
+		},
+		{
+			"name": "AppleSkin 3.0.10+mc26.3",
+			"group": "latest",
+			"downloads": 92749147,
+			"file": "modrinth-PHjDtQay-appleskin-fabric-mc26.3-3.0.10.jar",
+			"sha1": "3d19e40c5f97186857db98e622c01c2cd0030497",
+			"source": {
+				"modrinth": {
+					"versionId": "PHjDtQay",
+					"filename": "appleskin-fabric-mc26.3-3.0.10.jar"
+				}
+			}
+		},
+		{
+			"name": "VeinMiner 2.12.3",
+			"group": "latest",
+			"downloads": 90073598,
+			"file": "modrinth-fYKoPw5F-veinminer-neoforge-2.12.3.jar",
+			"sha1": "f5919eed38a1c8d95866677a760d3f611413c109",
+			"source": {
+				"modrinth": {
+					"versionId": "fYKoPw5F",
+					"filename": "veinminer-neoforge-2.12.3.jar"
+				}
+			}
+		},
+		{
+			"name": "Not Enough Animations 1.12.6",
+			"group": "latest",
+			"downloads": 89593445,
+			"file": "modrinth-YEeJ72Hz-notenoughanimations-neoforge-1.12.6-mc26.3.jar",
+			"sha1": "9cfcbc764013d5ac0f27d11adb291dce239c144f",
+			"source": {
+				"modrinth": {
+					"versionId": "YEeJ72Hz",
+					"filename": "notenoughanimations-neoforge-1.12.6-mc26.3.jar"
+				}
+			}
+		},
+		{
+			"name": "Reese's Sodium Options mc26.3-2.2.5+fabric",
+			"group": "latest",
+			"downloads": 83412737,
+			"file": "modrinth-EfchygKx-reeses-sodium-options-fabric-2.2.5+mc26.3.jar",
+			"sha1": "305aa813172358eb5e95d0a7af02a44326261226",
+			"source": {
+				"modrinth": {
+					"versionId": "EfchygKx",
+					"filename": "reeses-sodium-options-fabric-2.2.5+mc26.3.jar"
+				}
+			}
+		},
+		{
+			"name": "Just Enough Items (JEI) 19.51.0.418",
+			"group": "latest",
+			"downloads": 80590811,
+			"file": "modrinth-ufHUqt9b-jei-1.21.1-neoforge-19.51.0.418.jar",
+			"sha1": "d19552586f686eae4ef5e7199f31604d1d3cfca7",
+			"source": {
+				"modrinth": {
+					"versionId": "ufHUqt9b",
+					"filename": "jei-1.21.1-neoforge-19.51.0.418.jar"
+				}
+			}
+		},
+		{
+			"name": "3D Skin Layers 1.11.3",
+			"group": "latest",
+			"downloads": 79753045,
+			"file": "modrinth-JjjmtNNa-skinlayers3d-neoforge-1.11.3-mc26.3.jar",
+			"sha1": "e3abd2b4cc399d8098e59d523e261a8733d3e0cb",
+			"source": {
+				"modrinth": {
+					"versionId": "JjjmtNNa",
+					"filename": "skinlayers3d-neoforge-1.11.3-mc26.3.jar"
+				}
+			}
+		},
+		{
+			"name": "ModernFix 5.27.85+mc1.20.1",
+			"group": "latest",
+			"downloads": 79750068,
+			"file": "modrinth-hHwYTQwa-modernfix-forge-5.27.85+mc1.20.1.jar",
+			"sha1": "ba76615cdaff6de931c2e33c71f0b05deb1dad41",
+			"source": {
+				"modrinth": {
+					"versionId": "hHwYTQwa",
+					"filename": "modernfix-forge-5.27.85+mc1.20.1.jar"
+				}
+			}
+		},
+		{
+			"name": "Continuity 3.0.1+26.3",
+			"group": "latest",
+			"downloads": 75507736,
+			"file": "modrinth-Jt2sCWTQ-continuity-3.0.1+26.3.jar",
+			"sha1": "63d51781b2c87e3b4b4ca98a133db8c98d3f2afb",
+			"source": {
+				"modrinth": {
+					"versionId": "Jt2sCWTQ",
+					"filename": "continuity-3.0.1+26.3.jar"
+				}
+			}
+		},
+		{
+			"name": "Geckolib 5.5.7",
+			"group": "latest",
+			"downloads": 72324914,
+			"file": "modrinth-2s1O42FX-geckolib-neoforge-26.3-5.5.7.jar",
+			"sha1": "24d1aa6c02afa779558165d0529b1f21a03e1cf7",
+			"source": {
+				"modrinth": {
+					"versionId": "2s1O42FX",
+					"filename": "geckolib-neoforge-26.3-5.5.7.jar"
+				}
+			}
+		},
+		{
+			"name": "Simple Voice Chat bukkit-2.6.24",
+			"group": "latest",
+			"downloads": 71931037,
+			"file": "modrinth-EJth3OAr-voicechat-bukkit-2.6.24.jar",
+			"sha1": "bdc44827f53e392800935452dc2c6e6e20f378d4",
+			"source": {
+				"modrinth": {
+					"versionId": "EJth3OAr",
+					"filename": "voicechat-bukkit-2.6.24.jar"
+				}
+			}
+		},
+		{
+			"name": "Jade 🔍 26.3.5+neoforge",
+			"group": "latest",
+			"downloads": 69916724,
+			"file": "modrinth-dVB8U7Td-Jade-mc26.3-NeoForge-26.3.5.jar",
+			"sha1": "add5199928930724adbe6f9dfaaf646bd1027294",
+			"source": {
+				"modrinth": {
+					"versionId": "dVB8U7Td",
+					"filename": "Jade-mc26.3-NeoForge-26.3.5.jar"
+				}
+			}
+		},
+		{
+			"name": "Text Placeholder API 3.2.0+26.3",
+			"group": "latest",
+			"downloads": 68339542,
+			"file": "modrinth-lXytLqWj-placeholder-api-3.2.0+26.3.jar",
+			"sha1": "4c455faa6333dbaef72cedbb91fe4a2a03176741",
+			"source": {
+				"modrinth": {
+					"versionId": "lXytLqWj",
+					"filename": "placeholder-api-3.2.0+26.3.jar"
+				}
+			}
+		},
+		{
+			"name": "More Culling 1.9.0",
+			"group": "latest",
+			"downloads": 68185474,
+			"file": "modrinth-t7vAlfgO-moreculling-fabric-26.3-1.9.0.jar",
+			"sha1": "7308b0b0b6fffb0e076cabf97db7fc889d9ada68",
+			"source": {
+				"modrinth": {
+					"versionId": "t7vAlfgO",
+					"filename": "moreculling-fabric-26.3-1.9.0.jar"
+				}
+			}
+		},
+		{
+			"name": "Zoomify (Zoom) 2.16.3+26.4",
+			"group": "latest",
+			"downloads": 68095164,
+			"file": "modrinth-ge4rmTmU-zoomify-2.16.3+26.4.jar",
+			"sha1": "0f966075d94b21b83a54891074aaa49eb08f9d73",
+			"source": {
+				"modrinth": {
+					"versionId": "ge4rmTmU",
+					"filename": "zoomify-2.16.3+26.4.jar"
+				}
+			}
+		},
+		{
+			"name": "FancyMenu 3.9.14-26.3-neoforge",
+			"group": "latest",
+			"downloads": 67860312,
+			"file": "modrinth-WZJI2jni-fancymenu_neoforge_3.9.14_MC_26.3.jar",
+			"sha1": "cab341980bd4f479d9c13a0aaeb456536455f91a",
+			"source": {
+				"modrinth": {
+					"versionId": "WZJI2jni",
+					"filename": "fancymenu_neoforge_3.9.14_MC_26.3.jar"
+				}
+			}
+		},
+		{
+			"name": "Dynamic FPS 3.11.10",
+			"group": "latest",
+			"downloads": 67751100,
+			"file": "modrinth-KGWebRrW-dynamic-fps-3.11.10+minecraft-26.3.0-neoforge.jar",
+			"sha1": "3b6d398a201195ae96201154743bee4c4361f634",
+			"source": {
+				"modrinth": {
+					"versionId": "KGWebRrW",
+					"filename": "dynamic-fps-3.11.10+minecraft-26.3.0-neoforge.jar"
+				}
+			}
+		},
+		{
+			"name": "Forge Config API Port 26.3.1",
+			"group": "latest",
+			"downloads": 67316086,
+			"file": "modrinth-JpKvrr9J-ForgeConfigAPIPort-v26.3.1-mc26.3.x-Fabric.jar",
+			"sha1": "a0d802d2cb010a5054c72f1ccf248433b6e0bafb",
+			"source": {
+				"modrinth": {
+					"versionId": "JpKvrr9J",
+					"filename": "ForgeConfigAPIPort-v26.3.1-mc26.3.x-Fabric.jar"
+				}
+			}
+		},
+		{
+			"name": "Collective 26.3.0-8.42-fabric+forge+neo",
+			"group": "latest",
+			"downloads": 66503698,
+			"file": "modrinth-S1V3Trc7-collective-26.3.0-8.42.jar",
+			"sha1": "8bdd75360aea25b00038ff8d6e7844d9c8aa31bf",
+			"source": {
+				"modrinth": {
+					"versionId": "S1V3Trc7",
+					"filename": "collective-26.3.0-8.42.jar"
+				}
+			}
+		},
+		{
+			"name": "VeinMiner Hotkey 2.12.3",
+			"group": "latest",
+			"downloads": 63661332,
+			"file": "modrinth-rxa0vmOU-veinminer-client-neoforge-2.12.3.jar",
+			"sha1": "e2837854d3f0cec11a3a2fbaadcaaf60c3c010e1",
+			"source": {
+				"modrinth": {
+					"versionId": "rxa0vmOU",
+					"filename": "veinminer-client-neoforge-2.12.3.jar"
+				}
+			}
+		},
+		{
+			"name": "Puzzles Lib 26.3.10",
+			"group": "latest",
+			"downloads": 63371357,
+			"file": "modrinth-Lp7RfhmI-puzzleslib-v26.3.10-mc26.3.x+neoforge.jar",
+			"sha1": "b34ffa0c601bda056208de381657433d122fcba1",
+			"source": {
+				"modrinth": {
+					"versionId": "Lp7RfhmI",
+					"filename": "puzzleslib-v26.3.10-mc26.3.x+neoforge.jar"
+				}
+			}
+		},
+		{
+			"name": "Konkrete 1.11.1-26.3-neoforge",
+			"group": "latest",
+			"downloads": 62721942,
+			"file": "modrinth-LHlMMPu1-konkrete_neoforge_1.11.1_MC_26.3.jar",
+			"sha1": "a5ebf03fa038d739c6adcabe4552d50c87ae06b6",
+			"source": {
+				"modrinth": {
+					"versionId": "LHlMMPu1",
+					"filename": "konkrete_neoforge_1.11.1_MC_26.3.jar"
+				}
+			}
+		},
+		{
+			"name": "Balm 26.3.0.3+neoforge-26.3",
+			"group": "latest",
+			"downloads": 60872118,
+			"file": "modrinth-QcBcRJZb-balm-neoforge-26.3-26.3.0.3.jar",
+			"sha1": "a42f20df25844e8cbf198d43f9b21fc0ed91344d",
+			"source": {
+				"modrinth": {
+					"versionId": "QcBcRJZb",
+					"filename": "balm-neoforge-26.3-26.3.0.3.jar"
+				}
+			}
+		},
+		{
+			"name": "Mouse Tweaks 26.3-2.31-forge",
+			"group": "latest",
+			"downloads": 60376398,
+			"file": "modrinth-nDrx0Wkc-MouseTweaks-forge-mc26.3-2.31.jar",
+			"sha1": "4e9003aaabcc0edbfa7539087cc77e88f90f4e96",
+			"source": {
+				"modrinth": {
+					"versionId": "nDrx0Wkc",
+					"filename": "MouseTweaks-forge-mc26.3-2.31.jar"
+				}
+			}
+		},
+		{
+			"name": "LambDynamicLights - Dynamic Lights 4.13.0+26.3",
+			"group": "latest",
+			"downloads": 60093833,
+			"file": "modrinth-rylKnJ4M-lambdynamiclights-4.13.0+26.3.jar",
+			"sha1": "18c8ab40f03219bfcf809a83db6e3958ed8bb866",
+			"source": {
+				"modrinth": {
+					"versionId": "rylKnJ4M",
+					"filename": "lambdynamiclights-4.13.0+26.3.jar"
+				}
+			}
+		},
+		{
+			"name": "No Chat Reports NeoForge-26.3-v2.21.0",
+			"group": "latest",
+			"downloads": 59020870,
+			"file": "modrinth-RzXG2uJB-NoChatReports-NEOFORGE-26.3-v2.21.0.jar",
+			"sha1": "69e021bad74c6f4747011bcecf4b981e50d92ed3",
+			"source": {
+				"modrinth": {
+					"versionId": "RzXG2uJB",
+					"filename": "NoChatReports-NEOFORGE-26.3-v2.21.0.jar"
+				}
+			}
+		},
+		{
+			"name": "Sound Physics Remastered forge-1.5.1+26.3",
+			"group": "latest",
+			"downloads": 54057335,
+			"file": "modrinth-9fsEYAXC-sound-physics-remastered-forge-1.5.1+26.3.jar",
+			"sha1": "4cacb33817789c42b676f284a95c8fbef2cbbb7e",
+			"source": {
+				"modrinth": {
+					"versionId": "9fsEYAXC",
+					"filename": "sound-physics-remastered-forge-1.5.1+26.3.jar"
+				}
+			}
+		},
+		{
+			"name": "CreativeCore 2.14.20",
+			"group": "latest",
+			"downloads": 52861586,
+			"file": "modrinth-C1lNe7Iw-CreativeCore_NEOFORGE_v2.14.20_mc26.3.jar",
+			"sha1": "c33cd29716bf2ddd42d05c8f4c3d519994b6cd0a",
+			"source": {
+				"modrinth": {
+					"versionId": "C1lNe7Iw",
+					"filename": "CreativeCore_NEOFORGE_v2.14.20_mc26.3.jar"
+				}
+			}
+		},
+		{
+			"name": "Kotlin for Forge 5.12.0",
+			"group": "latest",
+			"downloads": 52543740,
+			"file": "modrinth-uhJhCT7X-kotlinforforge-5.12.0-all.jar",
+			"sha1": "d10d062caf1aad9aec82d7852f2fee1781735c1f",
+			"source": {
+				"modrinth": {
+					"versionId": "uhJhCT7X",
+					"filename": "kotlinforforge-5.12.0-all.jar"
+				}
+			}
+		},
+		{
+			"name": "Melody 1.0.17-26.3-neoforge",
+			"group": "latest",
+			"downloads": 50675501,
+			"file": "modrinth-2saEF7mZ-melody_neoforge_1.0.17_MC_26.3.jar",
+			"sha1": "7272d8c3439b085eaf7edd7e9d869414975ed0e3",
+			"source": {
+				"modrinth": {
+					"versionId": "2saEF7mZ",
+					"filename": "melody_neoforge_1.0.17_MC_26.3.jar"
+				}
+			}
+		},
+		{
+			"name": "Chat Heads 1.3.2",
+			"group": "latest",
+			"downloads": 50152490,
+			"file": "modrinth-i3gcElvQ-chat_heads-1.3.2-fabric-26.3.jar",
+			"sha1": "cf4eec23f6bc4b3ce7c3c20308694beb5f4c5edf",
+			"source": {
+				"modrinth": {
+					"versionId": "i3gcElvQ",
+					"filename": "chat_heads-1.3.2-fabric-26.3.jar"
+				}
+			}
+		},
+		{
+			"name": "oωo (owo-lib) 0.13.1+26.2",
+			"group": "latest",
+			"downloads": 49025596,
+			"file": "modrinth-1h9g10ru-owo-lib-0.13.1+26.2.jar",
+			"sha1": "3111139453af67f14cb32e572bde7ae93126477b",
+			"source": {
+				"modrinth": {
+					"versionId": "1h9g10ru",
+					"filename": "owo-lib-0.13.1+26.2.jar"
+				}
+			}
+		},
+		{
+			"name": "Bookshelf 26.3.0.4",
+			"group": "latest",
+			"downloads": 46804262,
+			"file": "modrinth-JHg3Kz4E-Bookshelf-neoforge-MC26.3-26.3.0.4.jar",
+			"sha1": "1d8d4306fd8c08d6e41f4fbc069b20c3515d162f",
+			"source": {
+				"modrinth": {
+					"versionId": "JHg3Kz4E",
+					"filename": "Bookshelf-neoforge-MC26.3-26.3.0.4.jar"
+				}
+			}
+		},
+		{
+			"name": "Essential Mod 1.5.0.1",
+			"group": "latest",
+			"downloads": 45839818,
+			"file": "modrinth-k8WrGuis-Essential_1-5-0-1_neoforge_1-21-1.jar",
+			"sha1": "bcdade1307e9f927d6e7544b798dbddb613704c5",
+			"source": {
+				"modrinth": {
+					"versionId": "k8WrGuis",
+					"filename": "Essential_1-5-0-1_neoforge_1-21-1.jar"
+				}
+			}
+		},
+		{
+			"name": "Indium 1.0.36+mc1.20.1",
+			"group": "latest",
+			"downloads": 44767207,
+			"file": "modrinth-nQHYSjxO-indium-1.0.36+mc1.20.1.jar",
+			"sha1": "d824614e7a173d273167969f427702f51846aca7",
+			"source": {
+				"modrinth": {
+					"versionId": "nQHYSjxO",
+					"filename": "indium-1.0.36+mc1.20.1.jar"
+				}
+			}
+		},
+		{
+			"name": "BadOptimizations 2.4.1",
+			"group": "latest",
+			"downloads": 44428465,
+			"file": "modrinth-i4wDPCKM-BadOptimizations-2.4.1-26.3-forge.jar",
+			"sha1": "800e5054e76a9df9643492c78b88a8d0354da6a0",
+			"source": {
+				"modrinth": {
+					"versionId": "i4wDPCKM",
+					"filename": "BadOptimizations-2.4.1-26.3-forge.jar"
+				}
+			}
+		},
+		{
+			"name": "Krypton 0.3.2",
+			"group": "latest",
+			"downloads": 42763343,
+			"file": "modrinth-UugdIYJw-krypton-0.3.2.jar",
+			"sha1": "21b21cb88e412f0bce73b6609de6dd6aca958d7d",
+			"source": {
+				"modrinth": {
+					"versionId": "UugdIYJw",
+					"filename": "krypton-0.3.2.jar"
+				}
+			}
+		},
+		{
+			"name": "Moonlight Lib 1.20-2.16.36-forge",
+			"group": "latest",
+			"downloads": 41555295,
+			"file": "modrinth-vRwjKsFk-moonlight-1.20-2.16.36-forge-sources.jar",
+			"sha1": "5310baf8ad1d9947e5d1f98e1b534165d0767524",
+			"source": {
+				"modrinth": {
+					"versionId": "vRwjKsFk",
+					"filename": "moonlight-1.20-2.16.36-forge-sources.jar"
+				}
+			}
+		},
+		{
+			"name": "Language Reload 1.7.8+26.3",
+			"group": "latest",
+			"downloads": 41540259,
+			"file": "modrinth-QVn4cccd-language-reload-1.7.8+26.3.jar",
+			"sha1": "e6fd2df83d1d3d0f352a7e45eaf76f4551c136f2",
+			"source": {
+				"modrinth": {
+					"versionId": "QVn4cccd",
+					"filename": "language-reload-1.7.8+26.3.jar"
+				}
+			}
+		},
+		{
+			"name": "Fzzy Config 0.7.7+fix3+26.3+neoforge",
+			"group": "latest",
+			"downloads": 41328506,
+			"file": "modrinth-FS7j9uST-fzzy_config-0.7.7+fix3+26.3+neoforge.jar",
+			"sha1": "a064921ed0505f2c8707664e6f8e0b07eeefa641",
+			"source": {
+				"modrinth": {
+					"versionId": "FS7j9uST",
+					"filename": "fzzy_config-0.7.7+fix3+26.3+neoforge.jar"
+				}
+			}
+		},
+		{
+			"name": "Inventory Profiles Next neoforge-26.3-2.3.8",
+			"group": "latest",
+			"downloads": 40752431,
+			"file": "modrinth-5gXp3J2W-InventoryProfilesNext-neoforge-26.3-2.3.8.jar",
+			"sha1": "0f7ef2fe5395148a8695fdaba6215a4058e20a9a",
+			"source": {
+				"modrinth": {
+					"versionId": "5gXp3J2W",
+					"filename": "InventoryProfilesNext-neoforge-26.3-2.3.8.jar"
+				}
+			}
+		},
+		{
+			"name": "TerraBlender 3.3.0.12",
+			"group": "latest",
+			"downloads": 40573240,
+			"file": "modrinth-IPdVGfJl-TerraBlender-neoforge-1.20.4-3.3.0.12.jar",
+			"sha1": "55b5b64aeb3e962017297c19224f9be87f867a20",
+			"source": {
+				"modrinth": {
+					"versionId": "IPdVGfJl",
+					"filename": "TerraBlender-neoforge-1.20.4-3.3.0.12.jar"
+				}
+			}
+		},
+		{
+			"name": "Presence Footsteps 1.14.0+26.3",
+			"group": "latest",
+			"downloads": 40127819,
+			"file": "modrinth-UUNiN7Tm-PresenceFootsteps-1.14.0+26.3.jar",
+			"sha1": "2747a6c39d42ef4024a26bb43fc17be5f1eb86b5",
+			"source": {
+				"modrinth": {
+					"versionId": "UUNiN7Tm",
+					"filename": "PresenceFootsteps-1.14.0+26.3.jar"
+				}
+			}
+		},
+		{
+			"name": "Searchables 1.0.2",
+			"group": "latest",
+			"downloads": 40069395,
+			"file": "modrinth-lh417ZHC-Searchables-neoforge-26.3-1.0.2.jar",
+			"sha1": "827a18aca958f54b37426fd838918d82d782512f",
+			"source": {
+				"modrinth": {
+					"versionId": "lh417ZHC",
+					"filename": "Searchables-neoforge-26.3-1.0.2.jar"
+				}
+			}
+		},
+		{
+			"name": "Controlling 26.1.0.3",
+			"group": "latest",
+			"downloads": 39931384,
+			"file": "modrinth-pxpVTB3f-Controlling-fabric-26.1-26.1.0.3.jar",
+			"sha1": "7e48a65edf1053dec35a2fed0421d2b5a56f0a65",
+			"source": {
+				"modrinth": {
+					"versionId": "pxpVTB3f",
+					"filename": "Controlling-fabric-26.1-26.1.0.3.jar"
+				}
+			}
+		},
+		{
+			"name": "Clumps 26.3.2",
+			"group": "latest",
+			"downloads": 39895114,
+			"file": "modrinth-kV095inH-Clumps-neoforge-26.3-26.3.2.jar",
+			"sha1": "aeb6689f2f3840021a8af0b02248ece388d262ab",
+			"source": {
+				"modrinth": {
+					"versionId": "kV095inH",
+					"filename": "Clumps-neoforge-26.3-26.3.2.jar"
+				}
+			}
+		},
+		{
+			"name": "AmbientSounds 6.3.6",
+			"group": "latest",
+			"downloads": 39810930,
+			"file": "modrinth-ViiM66Of-AmbientSounds_FABRIC_v6.3.6_mc26.3.jar",
+			"sha1": "2b2e14a4aad85da51bf11a3bd84bdff06a14260e",
+			"source": {
+				"modrinth": {
+					"versionId": "ViiM66Of",
+					"filename": "AmbientSounds_FABRIC_v6.3.6_mc26.3.jar"
+				}
+			}
+		},
+		{
+			"name": "Concurrent Chunk Management Engine (Fabric) 0.3.6.0.0",
+			"group": "latest",
+			"downloads": 38851255,
+			"file": "modrinth-olrVZpJd-c2me-fabric-mc1.21.11-0.3.6.0.0.jar",
+			"sha1": "587f9a3d9e4591e8e1a1c3eda61ed2f7bfa5dc46",
+			"source": {
+				"modrinth": {
+					"versionId": "olrVZpJd",
+					"filename": "c2me-fabric-mc1.21.11-0.3.6.0.0.jar"
+				}
+			}
+		},
+		{
+			"name": "Shulker Box Tooltip 5.4.2+26.3-neoforge",
+			"group": "latest",
+			"downloads": 38604852,
+			"file": "modrinth-2baXmnLh-shulkerboxtooltip-neoforge-5.4.2+26.3.jar",
+			"sha1": "4023f8b718795ab66623ad891fbd361d119f22b7",
+			"source": {
+				"modrinth": {
+					"versionId": "2baXmnLh",
+					"filename": "shulkerboxtooltip-neoforge-5.4.2+26.3.jar"
+				}
+			}
+		},
+		{
+			"name": "Enchantment Descriptions 26.3.0.2",
+			"group": "latest",
+			"downloads": 38121802,
+			"file": "modrinth-LgjUQBfn-EnchantmentDescriptions-neoforge-MC26.3-26.3.0.2.jar",
+			"sha1": "32f9861f769250ec42b95ec072aad0693fedce2c",
+			"source": {
+				"modrinth": {
+					"versionId": "LgjUQBfn",
+					"filename": "EnchantmentDescriptions-neoforge-MC26.3-26.3.0.2.jar"
+				}
+			}
+		},
+		{
+			"name": "Memory Leak Fix v1.1.5",
+			"group": "latest",
+			"downloads": 37908568,
+			"file": "modrinth-3w0IxNtk-memoryleakfix-forge-1.17+-1.1.5.jar",
+			"sha1": "9f60142dd94631800386a16a4ad70ad9e84cd78a",
+			"source": {
+				"modrinth": {
+					"versionId": "3w0IxNtk",
+					"filename": "memoryleakfix-forge-1.17+-1.1.5.jar"
+				}
+			}
+		},
+		{
+			"name": "Biomes O' Plenty 26.3.0.0.7",
+			"group": "latest",
+			"downloads": 37464360,
+			"file": "modrinth-Hhn5UJ4L-BiomesOPlenty-fabric-26.3-26.3.0.0.7.jar",
+			"sha1": "18b91b345793616dbaa43e250ca68b7b4ef46c93",
+			"source": {
+				"modrinth": {
+					"versionId": "Hhn5UJ4L",
+					"filename": "BiomesOPlenty-fabric-26.3-26.3.0.0.7.jar"
+				}
+			}
+		},
+		{
+			"name": "Oculus 1.19.2-1.6.9a",
+			"group": "latest",
+			"downloads": 37269965,
+			"file": "modrinth-Mw8aFpWF-oculus-mc1.19.2-1.6.9a.jar",
+			"sha1": "be4e14cb03ba5c931f8b73323ee8893ff5a2dd4b",
+			"source": {
+				"modrinth": {
+					"versionId": "Mw8aFpWF",
+					"filename": "oculus-mc1.19.2-1.6.9a.jar"
+				}
+			}
+		},
+		{
+			"name": "Debugify 1.21.1+1.1",
+			"group": "latest",
+			"downloads": 36932843,
+			"file": "modrinth-pyIdu3f1-Debugify-1.21.1+1.1.jar",
+			"sha1": "3388ba4c0f973f0a73a68a42048fe902bb2b14ea",
+			"source": {
+				"modrinth": {
+					"versionId": "pyIdu3f1",
+					"filename": "Debugify-1.21.1+1.1.jar"
+				}
+			}
+		},
+		{
+			"name": "MaLiLib 0.30.2",
+			"group": "latest",
+			"downloads": 36828774,
+			"file": "modrinth-JX9bESec-malilib-fabric-26.3-0.30.2.jar",
+			"sha1": "832a00c0d6417d7f195fbe1b1c643bbd4893e64a",
+			"source": {
+				"modrinth": {
+					"versionId": "JX9bESec",
+					"filename": "malilib-fabric-26.3-0.30.2.jar"
+				}
+			}
+		},
+		{
+			"name": "Iceberg 1.4.3.1",
+			"group": "latest",
+			"downloads": 36349929,
+			"file": "modrinth-jkpfzaMS-Iceberg-26.3-forge-1.4.3.1.jar",
+			"sha1": "a4ee8a3df9109899a3e50d3674e2c034c69c2184",
+			"source": {
+				"modrinth": {
+					"versionId": "jkpfzaMS",
+					"filename": "Iceberg-26.3-forge-1.4.3.1.jar"
+				}
+			}
+		},
+		{
+			"name": "Embeddium 1.0.15+mc1.21.1",
+			"group": "latest",
+			"downloads": 36235456,
+			"file": "modrinth-J7b96IEd-embeddium-1.0.15+mc1.21.1.jar",
+			"sha1": "56063839172a000d079272794bad366f2ad4cbbd",
+			"source": {
+				"modrinth": {
+					"versionId": "J7b96IEd",
+					"filename": "embeddium-1.0.15+mc1.21.1.jar"
+				}
+			}
+		},
+		{
+			"name": "Distant Horizons 3.3.4-26.3",
+			"group": "latest",
+			"downloads": 36195547,
+			"file": "modrinth-TGgEbP9A-DistantHorizons-3.3.4-26.3-fabric-neoforge.jar",
+			"sha1": "310c0363068dfae18e91f799ed671a591b6ad49a",
+			"source": {
+				"modrinth": {
+					"versionId": "TGgEbP9A",
+					"filename": "DistantHorizons-3.3.4-26.3-fabric-neoforge.jar"
+				}
+			}
+		},
+		{
+			"name": "Cobblemon 1.8.1",
+			"group": "latest",
+			"downloads": 35867562,
+			"file": "modrinth-gBW3vLC7-Cobblemon-fabric-1.8.1+1.21.1.jar",
+			"sha1": "ebbf2dad130391cd39c51ffcf83a1b157951e919",
+			"source": {
+				"modrinth": {
+					"versionId": "gBW3vLC7",
+					"filename": "Cobblemon-fabric-1.8.1+1.21.1.jar"
+				}
+			}
+		},
+		{
+			"name": "Resourceful Lib 6.0.1",
+			"group": "latest",
+			"downloads": 35725280,
+			"file": "modrinth-P6Jq77km-ResourcefulLib-6.0.1.jar",
+			"sha1": "825dce0c0be393b766ec6cc788e57952f7d266ad",
+			"source": {
+				"modrinth": {
+					"versionId": "P6Jq77km",
+					"filename": "ResourcefulLib-6.0.1.jar"
+				}
+			}
+		},
+		{
+			"name": "Patchouli 1.20.1-85-forge",
+			"group": "latest",
+			"downloads": 35468049,
+			"file": "modrinth-94dtOLgZ-Patchouli-1.20.1-85-FORGE.jar",
+			"sha1": "d4614507d6e4c7cb464bba5eca891978272062ef",
+			"source": {
+				"modrinth": {
+					"versionId": "94dtOLgZ",
+					"filename": "Patchouli-1.20.1-85-FORGE.jar"
+				}
+			}
+		},
+		{
+			"name": "YUNG's API 1.21.1-NeoForge-5.1.9",
+			"group": "latest",
+			"downloads": 35211710,
+			"file": "modrinth-2prKITKh-YungsApi-1.21.1-NeoForge-5.1.9.jar",
+			"sha1": "2c4b740c8ad27bbcb2a21b85b64f011b809aed91",
+			"source": {
+				"modrinth": {
+					"versionId": "2prKITKh",
+					"filename": "YungsApi-1.21.1-NeoForge-5.1.9.jar"
+				}
+			}
+		},
+		{
+			"name": "libIPN neoforge-26.1.2-6.9.0",
+			"group": "latest",
+			"downloads": 34882844,
+			"file": "modrinth-bm1OYABy-libIPN-neoforge-26.1.2-6.9.0.jar",
+			"sha1": "38824f77f0d3dd1dbdd64ed6b9c8c9d11a7444e7",
+			"source": {
+				"modrinth": {
+					"versionId": "bm1OYABy",
+					"filename": "libIPN-neoforge-26.1.2-6.9.0.jar"
+				}
+			}
+		},
+		{
+			"name": "BetterF3 20.0.0",
+			"group": "latest",
+			"downloads": 34768970,
+			"file": "modrinth-1rOnEBD0-BetterF3-20.0.0-NeoForge-26.3.jar",
+			"sha1": "c26d7b0fa40b884bac2de4d29aad10a7bbbfc86b",
+			"source": {
+				"modrinth": {
+					"versionId": "1rOnEBD0",
+					"filename": "BetterF3-20.0.0-NeoForge-26.3.jar"
+				}
+			}
+		},
+		{
+			"name": "Model Gap Fix 1.21.10-1.12",
+			"group": "latest",
+			"downloads": 32777625,
+			"file": "modrinth-WzvHpi86-modelfix-1.21.10-1.12-fabric.jar",
+			"sha1": "6902ab0bc41ee2db516b61667a8998dc4045dc2f",
+			"source": {
+				"modrinth": {
+					"versionId": "WzvHpi86",
+					"filename": "modelfix-1.21.10-1.12-fabric.jar"
+				}
+			}
+		},
+		{
+			"name": "SuperMartijn642's Config Lib 1.1.8a-fabric-mc26.3",
+			"group": "latest",
+			"downloads": 32511440,
+			"file": "modrinth-eYcALOr1-supermartijn642configlib-1.1.8a-fabric-mc26.3.jar",
+			"sha1": "4460d7fde6244e7e540d0794691e987371963526",
+			"source": {
+				"modrinth": {
+					"versionId": "eYcALOr1",
+					"filename": "supermartijn642configlib-1.1.8a-fabric-mc26.3.jar"
+				}
+			}
+		},
+		{
+			"name": "Cherished Worlds 18.0.0+26.3",
+			"group": "latest",
+			"downloads": 32463617,
+			"file": "modrinth-7JRzs33f-cherishedworlds-neoforge-18.0.0+26.3.jar",
+			"sha1": "3168b6805f8c4baf0e470b55ed0d6c41ad40a0cc",
+			"source": {
+				"modrinth": {
+					"versionId": "7JRzs33f",
+					"filename": "cherishedworlds-neoforge-18.0.0+26.3.jar"
+				}
+			}
+		},
+		{
+			"name": "Curios API 16.0.0+26.2",
+			"group": "latest",
+			"downloads": 31896376,
+			"file": "modrinth-BI7D0sbK-curios-neoforge-16.0.0+26.2.jar",
+			"sha1": "fc8b4596dbeca2a9f516eeb632d8a5ad039e540a",
+			"source": {
+				"modrinth": {
+					"versionId": "BI7D0sbK",
+					"filename": "curios-neoforge-16.0.0+26.2.jar"
+				}
+			}
+		},
+		{
+			"name": "[TaCZ] Timeless and Classics Zero 1.1.8-hotfix2",
+			"group": "latest",
+			"downloads": 31790201,
+			"file": "modrinth-AzCBJlex-tacz-1.20.1-1.1.8-hotfix2.jar",
+			"sha1": "5c2f72dfe8125ffa863e3b5feafa27d86d7e56ea",
+			"source": {
+				"modrinth": {
+					"versionId": "AzCBJlex",
+					"filename": "tacz-1.20.1-1.1.8-hotfix2.jar"
+				}
+			}
+		},
+		{
+			"name": "CoroUtil 1.21.4-1.3.8",
+			"group": "latest",
+			"downloads": 30978479,
+			"file": "modrinth-kGU8LxQf-coroutil-fabric-1.21.4-1.3.8.jar",
+			"sha1": "88e640091d0c8c5842f1158656f2e025e5fac868",
+			"source": {
+				"modrinth": {
+					"versionId": "kGU8LxQf",
+					"filename": "coroutil-fabric-1.21.4-1.3.8.jar"
+				}
+			}
+		},
+		{
+			"name": "Visuality 0.7.13+1.21.11",
+			"group": "latest",
+			"downloads": 29652496,
+			"file": "modrinth-6vzUj4RD-visuality-0.7.13+1.21.11.jar",
+			"sha1": "1b40880769e72a419562bc072ac1bccf152275e6",
+			"source": {
+				"modrinth": {
+					"versionId": "6vzUj4RD",
+					"filename": "visuality-0.7.13+1.21.11.jar"
+				}
+			}
+		},
+		{
+			"name": "Packet Fixer 3.3.7",
+			"group": "latest",
+			"downloads": 29565507,
+			"file": "modrinth-Fq2YuqLr-PacketFixer-neoforge-3.3.7.jar",
+			"sha1": "eb595fc4e642bed3bbc1e2ea919b8dfc76e25524",
+			"source": {
+				"modrinth": {
+					"versionId": "Fq2YuqLr",
+					"filename": "PacketFixer-neoforge-3.3.7.jar"
+				}
+			}
+		},
+		{
+			"name": "EMI 1.1.24+1.21.1+neoforge",
+			"group": "latest",
+			"downloads": 29450718,
+			"file": "modrinth-5sIPA1To-emi-1.1.24+1.21.1+neoforge.jar",
+			"sha1": "3fd494b37027dfbc7f78414d7cbf251c9eb6738a",
+			"source": {
+				"modrinth": {
+					"versionId": "5sIPA1To",
+					"filename": "emi-1.1.24+1.21.1+neoforge.jar"
+				}
+			}
+		},
+		{
+			"name": "Forgified Fabric API 0.155.3+26.1.2+3.5.7",
+			"group": "latest",
+			"downloads": 29426589,
+			"file": "modrinth-n96WMa6s-forgified-fabric-api-0.155.3+26.1.2+3.5.7.jar",
+			"sha1": "2a5525cd1b59ab07fd4ab57da40eff94457732b6",
+			"source": {
+				"modrinth": {
+					"versionId": "n96WMa6s",
+					"filename": "forgified-fabric-api-0.155.3+26.1.2+3.5.7.jar"
+				}
+			}
+		},
+		{
+			"name": "MidnightLib 1.9.3.1+26.3-neoforge",
+			"group": "latest",
+			"downloads": 28845977,
+			"file": "modrinth-lNImYCDG-midnightlib-neoforge-1.9.3.1+26.3.jar",
+			"sha1": "38ea795523ce4baaa51035a9a138f95301abd9de",
+			"source": {
+				"modrinth": {
+					"versionId": "lNImYCDG",
+					"filename": "midnightlib-neoforge-1.9.3.1+26.3.jar"
+				}
+			}
+		},
+		{
+			"name": "More Chat History 2.0.0",
+			"group": "latest",
+			"downloads": 28402541,
+			"file": "modrinth-qpDhYv1Y-morechathistory-2.0.0.jar",
+			"sha1": "6ce97845f93090dd7556b6e64bb7d63e126b83b4",
+			"source": {
+				"modrinth": {
+					"versionId": "qpDhYv1Y",
+					"filename": "morechathistory-2.0.0.jar"
+				}
+			}
+		},
+		{
+			"name": "Euphoria Patches 1.10.5-r5.9.3-fabric",
+			"group": "latest",
+			"downloads": 28360859,
+			"file": "modrinth-YYczPGkW-EuphoriaPatcher-1.10.5-r5.9.3-fabric.jar",
+			"sha1": "3e2d5b02476337413fb1afba9bf74f9383338daf",
+			"source": {
+				"modrinth": {
+					"versionId": "YYczPGkW",
+					"filename": "EuphoriaPatcher-1.10.5-r5.9.3-fabric.jar"
+				}
+			}
+		},
+		{
+			"name": "Cubes Without Borders 4.1.0+26.2",
+			"group": "latest",
+			"downloads": 28219641,
+			"file": "modrinth-Zn8JbMkF-cwb-4.1.0+26.2.jar",
+			"sha1": "9420614dd8f95a9ca1e1b2371f342e92855bb354",
+			"source": {
+				"modrinth": {
+					"versionId": "Zn8JbMkF",
+					"filename": "cwb-4.1.0+26.2.jar"
+				}
+			}
+		},
+		{
+			"name": "Supplementaries 1.21.1-3.9.9",
+			"group": "latest",
+			"downloads": 28177401,
+			"file": "modrinth-h8FyJ2as-supplementaries-1.21.1-3.9.9-fabric.jar",
+			"sha1": "0f3a3e04c59752f96460880f2b5d8e4c810e973a",
+			"source": {
+				"modrinth": {
+					"versionId": "h8FyJ2as",
+					"filename": "supplementaries-1.21.1-3.9.9-fabric.jar"
+				}
+			}
+		},
+		{
+			"name": "playerAnimator 2.0.5+1.21.4-fabric",
+			"group": "latest",
+			"downloads": 27271883,
+			"file": "modrinth-ZTeZ33xQ-player-animation-lib-fabric-2.0.5+1.21.4.jar",
+			"sha1": "042c3d9e38538d5076eafed31d761ff1d4d39f14",
+			"source": {
+				"modrinth": {
+					"versionId": "ZTeZ33xQ",
+					"filename": "player-animation-lib-fabric-2.0.5+1.21.4.jar"
+				}
+			}
+		},
+		{
+			"name": "Falling Leaves 2.0.8+26.3",
+			"group": "latest",
+			"downloads": 27129360,
+			"file": "modrinth-5i0SxXxj-fallingleaves-2.0.8+26.3.jar",
+			"sha1": "029c64703879734d7d325449852e0bf9309f3b8c",
+			"source": {
+				"modrinth": {
+					"versionId": "5i0SxXxj",
+					"filename": "fallingleaves-2.0.8+26.3.jar"
+				}
+			}
+		},
+		{
+			"name": "Create 6.0.10+mc1.21.1",
+			"group": "latest",
+			"downloads": 27091254,
+			"file": "modrinth-UjX6dr61-create-1.21.1-6.0.10.jar",
+			"sha1": "0e97e49837bed766e6f28a4c95b04885d6acc353",
+			"source": {
+				"modrinth": {
+					"versionId": "UjX6dr61",
+					"filename": "create-1.21.1-6.0.10.jar"
+				}
+			}
+		},
+		{
+			"name": "Remove Reloading Screen 4.1.0+mc1.20.6-fabric",
+			"group": "latest",
+			"downloads": 26797993,
+			"file": "modrinth-RTegAHGi-rrls-4.1.0+mc1.20.6-fabric.jar",
+			"sha1": "4e4e01e0293959ced3f198749f978f59e7359e2a",
+			"source": {
+				"modrinth": {
+					"versionId": "RTegAHGi",
+					"filename": "rrls-4.1.0+mc1.20.6-fabric.jar"
+				}
+			}
+		},
+		{
+			"name": "Handcrafted 4.0.3",
+			"group": "latest",
+			"downloads": 26749771,
+			"file": "modrinth-f0pKpUWd-handcrafted-fabric-1.21.1-4.0.3.jar",
+			"sha1": "a9579fecd7ed429c282be21d5c921d220197acc6",
+			"source": {
+				"modrinth": {
+					"versionId": "f0pKpUWd",
+					"filename": "handcrafted-fabric-1.21.1-4.0.3.jar"
+				}
+			}
+		},
+		{
+			"name": "Roughly Enough Items (REI) 26.3.823+fabric",
+			"group": "latest",
+			"downloads": 26574064,
+			"file": "modrinth-ePn2dRJ1-RoughlyEnoughItems-26.3.823.jar",
+			"sha1": "1e8a34a2a4e9e8e680cbd173b793ff1a7db97ea9",
+			"source": {
+				"modrinth": {
+					"versionId": "ePn2dRJ1",
+					"filename": "RoughlyEnoughItems-26.3.823.jar"
+				}
+			}
+		},
+		{
+			"name": "Carry On 2.11.2",
+			"group": "latest",
+			"downloads": 26348352,
+			"file": "modrinth-EMd9Jyxc-carryon-neoforge-26.2-2.11.2.jar",
+			"sha1": "f7f97f456b20ae6d64ef20e1cfd1ccf91326ffa3",
+			"source": {
+				"modrinth": {
+					"versionId": "EMd9Jyxc",
+					"filename": "carryon-neoforge-26.2-2.11.2.jar"
+				}
+			}
+		},
+		{
+			"name": "Better Advancements 0.6.0.76",
+			"group": "latest",
+			"downloads": 26290761,
+			"file": "modrinth-QOJvSu6p-BetterAdvancements-Forge-26.1.2-0.6.0.76.jar",
+			"sha1": "f6b1adf21a1ee7f2dbdd5eb31b555876aca41510",
+			"source": {
+				"modrinth": {
+					"versionId": "QOJvSu6p",
+					"filename": "BetterAdvancements-Forge-26.1.2-0.6.0.76.jar"
+				}
+			}
+		},
+		{
+			"name": "Litematica 0.29.1",
+			"group": "latest",
+			"downloads": 26240241,
+			"file": "modrinth-ZqV316KY-litematica-fabric-26.3-0.29.1.jar",
+			"sha1": "2c0e37ef450b7fcea61e0fce482f134d1fe5a9c6",
+			"source": {
+				"modrinth": {
+					"versionId": "ZqV316KY",
+					"filename": "litematica-fabric-26.3-0.29.1.jar"
+				}
+			}
+		},
+		{
+			"name": "Nature's Compass 26.3-3.3.1-neoforge",
+			"group": "latest",
+			"downloads": 26226099,
+			"file": "modrinth-PijZPpB6-NaturesCompass-26.3-3.3.1-neoforge.jar",
+			"sha1": "4f08244647fe9a49e55e17c7b152b51663b0f534",
+			"source": {
+				"modrinth": {
+					"versionId": "PijZPpB6",
+					"filename": "NaturesCompass-26.3-3.3.1-neoforge.jar"
+				}
+			}
+		},
+		{
+			"name": "OptiGUI 2.1.7",
+			"group": "latest",
+			"downloads": 26154681,
+			"file": "modrinth-xpfegZsE-optigui-2.1.7.jar",
+			"sha1": "47040b4c65b6381ca61bc3af61fee4df279b5eec",
+			"source": {
+				"modrinth": {
+					"versionId": "xpfegZsE",
+					"filename": "optigui-2.1.7.jar"
+				}
+			}
+		},
+		{
+			"name": "Waystones 21.1.46+neoforge-1.21.1",
+			"group": "latest",
+			"downloads": 26140015,
+			"file": "modrinth-6Z6MQ6os-waystones-neoforge-1.21.1-21.1.46.jar",
+			"sha1": "75718161662d9ec957ba22e10e497788ec1687ba",
+			"source": {
+				"modrinth": {
+					"versionId": "6Z6MQ6os",
+					"filename": "waystones-neoforge-1.21.1-21.1.46.jar"
+				}
+			}
+		},
+		{
+			"name": "Sinytra Connector 3.0.0-beta.6+26.1.2",
+			"group": "latest",
+			"downloads": 26083229,
+			"file": "modrinth-oY5C4GFW-connector-3.0.0-beta.6+26.1.2-full.jar",
+			"sha1": "be19358e16a22ad6174075e6f5b0f78fd1b36e12",
+			"source": {
+				"modrinth": {
+					"versionId": "oY5C4GFW",
+					"filename": "connector-3.0.0-beta.6+26.1.2-full.jar"
+				}
+			}
+		},
+		{
+			"name": "Visual Workbench 26.3.0",
+			"group": "latest",
+			"downloads": 26048447,
+			"file": "modrinth-rcsB2H1O-visualworkbench-v26.3.0-mc26.3.x+fabric.jar",
+			"sha1": "06f606064a00bd6246bc39a330742c83c4d2bfdd",
+			"source": {
+				"modrinth": {
+					"versionId": "rcsB2H1O",
+					"filename": "visualworkbench-v26.3.0-mc26.3.x+fabric.jar"
+				}
+			}
+		},
+		{
+			"name": "Puzzle 2.3.1+26.3-neoforge",
+			"group": "latest",
+			"downloads": 25863970,
+			"file": "modrinth-kiF75M5t-puzzle-neoforge-2.3.1+26.3.jar",
+			"sha1": "78a0830ed454d1fa97e25aa3f6b0dd9c7b34d263",
+			"source": {
+				"modrinth": {
+					"versionId": "kiF75M5t",
+					"filename": "puzzle-neoforge-2.3.1+26.3.jar"
+				}
+			}
+		},
+		{
+			"name": "Quark 4.1-487",
+			"group": "latest",
+			"downloads": 25606361,
+			"file": "modrinth-18h0L19k-Quark-4.1-487.jar",
+			"sha1": "d421f58ef6d31dc456c25890a5770b2609917d09",
+			"source": {
+				"modrinth": {
+					"versionId": "18h0L19k",
+					"filename": "Quark-4.1-487.jar"
+				}
+			}
+		},
+		{
+			"name": "Polymorph 1.1.0+1.21.1",
+			"group": "latest",
+			"downloads": 25330232,
+			"file": "modrinth-VEburL70-polymorph-neoforge-1.1.0+1.21.1.jar",
+			"sha1": "84f8c539fa326dc723ae62b7a6916d6b01982d07",
+			"source": {
+				"modrinth": {
+					"versionId": "VEburL70",
+					"filename": "polymorph-neoforge-1.1.0+1.21.1.jar"
+				}
+			}
+		},
+		{
+			"name": "Resourceful Config 6.0.1",
+			"group": "latest",
+			"downloads": 25246101,
+			"file": "modrinth-IFB0XCI9-ResourcefulConfig-6.0.1.jar",
+			"sha1": "55c3c414ee21bf2aeb381df612bc61e864c3dfd5",
+			"source": {
+				"modrinth": {
+					"versionId": "IFB0XCI9",
+					"filename": "ResourcefulConfig-6.0.1.jar"
+				}
+			}
+		},
+		{
+			"name": "Enhanced Block Entities 0.11.3+1.21.4",
+			"group": "latest",
+			"downloads": 25128431,
+			"file": "modrinth-YokFoILZ-enhancedblockentities-0.11.3+1.21.4.jar",
+			"sha1": "261b0e79ffbb79f9b708827333bd745620ebbec0",
+			"source": {
+				"modrinth": {
+					"versionId": "YokFoILZ",
+					"filename": "enhancedblockentities-0.11.3+1.21.4.jar"
+				}
+			}
+		},
+		{
+			"name": "CIT Resewn 1.1.5+1.20.4",
+			"group": "latest",
+			"downloads": 25119692,
+			"file": "modrinth-MU5nRGAS-citresewn-1.1.5+1.20.4.jar",
+			"sha1": "fd9917d408f2377af9ec5c9b84fa05b0db2e8666",
+			"source": {
+				"modrinth": {
+					"versionId": "MU5nRGAS",
+					"filename": "citresewn-1.1.5+1.20.4.jar"
+				}
+			}
+		},
+		{
+			"name": "e4mc 6.2.3-neoforge",
+			"group": "latest",
+			"downloads": 24699332,
+			"file": "modrinth-HXD8kS5O-e4mc-neoforge-6.2.3.jar",
+			"sha1": "7127478b19531091257b3f58cd734a638200e481",
+			"source": {
+				"modrinth": {
+					"versionId": "HXD8kS5O",
+					"filename": "e4mc-neoforge-6.2.3.jar"
+				}
+			}
+		},
+		{
+			"name": "Farmer's Delight 1.21.1-1.3.4",
+			"group": "latest",
+			"downloads": 24635653,
+			"file": "modrinth-XTVZDOol-FarmersDelight-1.21.1-1.3.4.jar",
+			"sha1": "27675ddfcb8cc37e6ea1ab6c15051c7949d94657",
+			"source": {
+				"modrinth": {
+					"versionId": "XTVZDOol",
+					"filename": "FarmersDelight-1.21.1-1.3.4.jar"
+				}
+			}
+		},
+		{
+			"name": "NetherPortalFix 26.3.0.1+fabric-26.3",
+			"group": "latest",
+			"downloads": 24495486,
+			"file": "modrinth-RC1fmH8z-netherportalfix-fabric-26.3-26.3.0.1.jar",
+			"sha1": "931aa21198cdff436adecc90cbf73de8f16b0d67",
+			"source": {
+				"modrinth": {
+					"versionId": "RC1fmH8z",
+					"filename": "netherportalfix-fabric-26.3-26.3.0.1.jar"
+				}
+			}
+		},
+		{
+			"name": "Trinkets 3.10.0",
+			"group": "latest",
+			"downloads": 24459624,
+			"file": "modrinth-JagCscwi-trinkets-3.10.0.jar",
+			"sha1": "f54756f938c7c273713b9f97d4a987eec551e892",
+			"source": {
+				"modrinth": {
+					"versionId": "JagCscwi",
+					"filename": "trinkets-3.10.0.jar"
+				}
+			}
+		},
+		{
+			"name": "Capes 1.5.10+26.3",
+			"group": "latest",
+			"downloads": 24172755,
+			"file": "modrinth-I89rLLKh-capes-1.5.10+26.3.jar",
+			"sha1": "87e14543620887cab4f055ad8d033c165b9fc5b8",
+			"source": {
+				"modrinth": {
+					"versionId": "I89rLLKh",
+					"filename": "capes-1.5.10+26.3.jar"
+				}
+			}
+		},
+		{
+			"name": "Physics Mod 3.2.5",
+			"group": "latest",
+			"downloads": 24122357,
+			"file": "modrinth-Lcn6Sxer-physics-mod-3.2.5-mc-26.3-forge.jar",
+			"sha1": "90cf291d11c8a08e0f8185144f5d584e56d793c9",
+			"source": {
+				"modrinth": {
+					"versionId": "Lcn6Sxer",
+					"filename": "physics-mod-3.2.5-mc-26.3-forge.jar"
+				}
+			}
+		},
+		{
+			"name": "Controlify (Controller support) 3.5.3+mc26.2",
+			"group": "latest",
+			"downloads": 24104290,
+			"file": "modrinth-VDw4mGkG-controlify-3.5.3+mc26.2-universal.jar",
+			"sha1": "52a9beb9f9782690f1170f2e72e1764fe3f82199",
+			"source": {
+				"modrinth": {
+					"versionId": "VDw4mGkG",
+					"filename": "controlify-3.5.3+mc26.2-universal.jar"
+				}
+			}
+		},
+		{
+			"name": "Let Me Despawn 1.26.9.2",
+			"group": "latest",
+			"downloads": 24055329,
+			"file": "modrinth-uN2ynf2u-letmedespawn-neoforge-26.3-1.26.9.2.jar",
+			"sha1": "eb437203f150c303ee8d655b82e7fd2858520bcc",
+			"source": {
+				"modrinth": {
+					"versionId": "uN2ynf2u",
+					"filename": "letmedespawn-neoforge-26.3-1.26.9.2.jar"
+				}
+			}
+		},
+		{
+			"name": "Your Options Shall Be Respected (YOSBR) 0.1.2",
+			"group": "latest",
+			"downloads": 23935693,
+			"file": "modrinth-KMOzdYko-yosbr-0.1.2.jar",
+			"sha1": "f0340e9c0bc95d67f3f3e9c1cd79b61054af11f9",
+			"source": {
+				"modrinth": {
+					"versionId": "KMOzdYko",
+					"filename": "yosbr-0.1.2.jar"
+				}
+			}
+		},
+		{
+			"name": "Better Mount HUD 1.3.1",
+			"group": "latest",
+			"downloads": 23920487,
+			"file": "modrinth-M3Fe5t0L-bettermounthud-1.3.1.jar",
+			"sha1": "f86040d5010c7aad1c677c7a7fefe52d3b386abd",
+			"source": {
+				"modrinth": {
+					"versionId": "M3Fe5t0L",
+					"filename": "bettermounthud-1.3.1.jar"
+				}
+			}
+		},
+		{
+			"name": "Fast IP Ping v1.0.12-mc1.21.11-neoforge",
+			"group": "latest",
+			"downloads": 23864913,
+			"file": "modrinth-uUAzjBH9-fast-ip-ping-v1.0.12-mc1.21.11-neoforge.jar",
+			"sha1": "b0fb14578ea96a7b5a32ca1574b046b04348dbc8",
+			"source": {
+				"modrinth": {
+					"versionId": "uUAzjBH9",
+					"filename": "fast-ip-ping-v1.0.12-mc1.21.11-neoforge.jar"
+				}
+			}
+		},
+		{
+			"name": "CustomSkinLoader 15.0.1-Universal",
+			"group": "latest",
+			"downloads": 23816826,
+			"file": "modrinth-OLaesh5y-CustomSkinLoader_Universal-15.0.1.jar",
+			"sha1": "ab8dd841cafc3b4ecbf0250d3f5aee8a1fdb506a",
+			"source": {
+				"modrinth": {
+					"versionId": "OLaesh5y",
+					"filename": "CustomSkinLoader_Universal-15.0.1.jar"
+				}
+			}
+		},
+		{
+			"name": "Lithostitched 2.0.4-neoforge-26.3",
+			"group": "latest",
+			"downloads": 23701320,
+			"file": "modrinth-y9AtQNh2-lithostitched-2.0.4-neoforge-26.3.jar",
+			"sha1": "171f40b119b43cade1da728ba15ebfcdf5b0de8f",
+			"source": {
+				"modrinth": {
+					"versionId": "y9AtQNh2",
+					"filename": "lithostitched-2.0.4-neoforge-26.3.jar"
+				}
+			}
+		},
+		{
+			"name": "Athena 4.0.6",
+			"group": "latest",
+			"downloads": 23676985,
+			"file": "modrinth-JfyYsWKP-athena-fabric-1.21.1-4.0.6.jar",
+			"sha1": "92534d85cad33ab1fee598068443c685f4bb06e0",
+			"source": {
+				"modrinth": {
+					"versionId": "JfyYsWKP",
+					"filename": "athena-fabric-1.21.1-4.0.6.jar"
+				}
+			}
+		},
+		{
+			"name": "Sodium Shadowy Path Blocks (SSPB) 8.0.0-neoforge",
+			"group": "latest",
+			"downloads": 23629598,
+			"file": "modrinth-MQdulj3H-sodium-shadowy-path-blocks-neoforge-8.0.0.jar",
+			"sha1": "0ea15ef20a01159a3120911eaeaac83ca6da2a89",
+			"source": {
+				"modrinth": {
+					"versionId": "MQdulj3H",
+					"filename": "sodium-shadowy-path-blocks-neoforge-8.0.0.jar"
+				}
+			}
+		},
+		{
+			"name": "FastQuit 3.1.5+mc26.2",
+			"group": "latest",
+			"downloads": 23269299,
+			"file": "modrinth-ZZ5dfboC-fastquit-3.1.5+mc26.2.jar",
+			"sha1": "0977eb0a35e1a1602bc9306ddbbb9177734131f0",
+			"source": {
+				"modrinth": {
+					"versionId": "ZZ5dfboC",
+					"filename": "fastquit-3.1.5+mc26.2.jar"
+				}
+			}
+		},
+		{
+			"name": "GlitchCore 21.11.0.4",
+			"group": "latest",
+			"downloads": 23231988,
+			"file": "modrinth-6dbbrOrO-GlitchCore-neoforge-1.21.11-21.11.0.4.jar",
+			"sha1": "80c62e231a041dd5f2d266617979a0bee4779a2e",
+			"source": {
+				"modrinth": {
+					"versionId": "6dbbrOrO",
+					"filename": "GlitchCore-neoforge-1.21.11-21.11.0.4.jar"
+				}
+			}
+		},
+		{
+			"name": "Chipped 3.0.7",
+			"group": "latest",
+			"downloads": 23209869,
+			"file": "modrinth-pwyEaKDs-chipped-fabric-1.20.1-3.0.7.jar",
+			"sha1": "add35e79f6a930825e4dbe77d5d0468fb96c533f",
+			"source": {
+				"modrinth": {
+					"versionId": "pwyEaKDs",
+					"filename": "chipped-fabric-1.20.1-3.0.7.jar"
+				}
+			}
+		},
+		{
+			"name": "Comforts 16.0.0+26.2",
+			"group": "latest",
+			"downloads": 23165299,
+			"file": "modrinth-fbz515w1-comforts-neoforge-16.0.0+26.2.jar",
+			"sha1": "4d8bb58c264cecc9b2210ee5d2fd6fcb8f8d025b",
+			"source": {
+				"modrinth": {
+					"versionId": "fbz515w1",
+					"filename": "comforts-neoforge-16.0.0+26.2.jar"
+				}
+			}
+		},
+		{
+			"name": "spark 1.10.187-neoforge",
+			"group": "latest",
+			"downloads": 23020328,
+			"file": "modrinth-HwHxykP9-spark-1.10.187-neoforge.jar",
+			"sha1": "be5c8cf137b1bcaa5627a85c7cfe83da846e9e36",
+			"source": {
+				"modrinth": {
+					"versionId": "HwHxykP9",
+					"filename": "spark-1.10.187-neoforge.jar"
+				}
+			}
+		},
+		{
+			"name": "Chat Animation [Smooth Chat] 1.3.4+neoforge-26.3",
+			"group": "latest",
+			"downloads": 23008613,
+			"file": "modrinth-Cq4oMaWR-chatanimation-neoforge-1.3.4+mc26.3.jar",
+			"sha1": "c797c97eeac947d1b25cea3fbf8151c41ab444e2",
+			"source": {
+				"modrinth": {
+					"versionId": "Cq4oMaWR",
+					"filename": "chatanimation-neoforge-1.3.4+mc26.3.jar"
+				}
+			}
+		},
+		{
+			"name": "YUNG's Better Nether Fortresses 26.1.2-NeoForge-4.1.1",
+			"group": "latest",
+			"downloads": 23000160,
+			"file": "modrinth-CXSmjEju-YungsBetterNetherFortresses-26.1.2-NeoForge-4.1.1.jar",
+			"sha1": "0ae0d1263f817c1834eba7128b1c25d5901d0a8b",
+			"source": {
+				"modrinth": {
+					"versionId": "CXSmjEju",
+					"filename": "YungsBetterNetherFortresses-26.1.2-NeoForge-4.1.1.jar"
+				}
+			}
+		},
+		{
+			"name": "Open Parties and Claims forge-26.3-0.32.8",
+			"group": "latest",
+			"downloads": 22958466,
+			"file": "modrinth-wsgre9LG-open-parties-and-claims-forge-26.3-0.32.8.jar",
+			"sha1": "c84ef9172043c7fc82d0fce47438594e875530b0",
+			"source": {
+				"modrinth": {
+					"versionId": "wsgre9LG",
+					"filename": "open-parties-and-claims-forge-26.3-0.32.8.jar"
+				}
+			}
+		},
+		{
+			"name": "Lootr 1.24.41.124",
+			"group": "latest",
+			"downloads": 22901408,
+			"file": "modrinth-HegkPUoM-lootr-fabric-26.2-1.24.41.124.jar",
+			"sha1": "f1879274e67392f74e4a34b2bce5cce957deb6c3",
+			"source": {
+				"modrinth": {
+					"versionId": "HegkPUoM",
+					"filename": "lootr-fabric-26.2-1.24.41.124.jar"
+				}
+			}
+		},
+		{
+			"name": "Modern UI 3.13.0.5",
+			"group": "latest",
+			"downloads": 22778308,
+			"file": "modrinth-uf6cAgLr-ModernUI-Fabric-26.1.2-3.13.0.5-universal.jar",
+			"sha1": "c717515109217497dd3c467b95fd3156e3151768",
+			"source": {
+				"modrinth": {
+					"versionId": "uf6cAgLr",
+					"filename": "ModernUI-Fabric-26.1.2-3.13.0.5-universal.jar"
+				}
+			}
+		},
+		{
+			"name": "Rhino 2101.2.7-build.85+Rhino-1.21",
+			"group": "latest",
+			"downloads": 22671271,
+			"file": "modrinth-cQ4POTah-rhino-2101.2.7-build.85.jar",
+			"sha1": "3c8d34c7efe9e42fc90506acbf9fc842d36f9a42",
+			"source": {
+				"modrinth": {
+					"versionId": "cQ4POTah",
+					"filename": "rhino-2101.2.7-build.85.jar"
+				}
+			}
+		},
+		{
+			"name": "Drippy Loading Screen 3.1.6-26.3-neoforge",
+			"group": "latest",
+			"downloads": 22421894,
+			"file": "modrinth-ATpgEWcw-drippyloadingscreen_neoforge_3.1.6_MC_26.3.jar",
+			"sha1": "885efa2d1872dd65742bed5692857a31dd75b269",
+			"source": {
+				"modrinth": {
+					"versionId": "ATpgEWcw",
+					"filename": "drippyloadingscreen_neoforge_3.1.6_MC_26.3.jar"
+				}
+			}
+		},
+		{
+			"name": "Kiwi 🥝 26.0.20+fabric",
+			"group": "latest",
+			"downloads": 22212179,
+			"file": "modrinth-4bVjsuKT-Kiwi-mc26.1-Fabric-26.0.20.jar",
+			"sha1": "7d3866d341b3d3fa6527320f714fc636c1d86085",
+			"source": {
+				"modrinth": {
+					"versionId": "4bVjsuKT",
+					"filename": "Kiwi-mc26.1-Fabric-26.0.20.jar"
+				}
+			}
+		},
+		{
+			"name": "YUNG's Better Dungeons 26.1.2-NeoForge-6.1.1",
+			"group": "latest",
+			"downloads": 22129668,
+			"file": "modrinth-e1qEvr8D-YungsBetterDungeons-26.1.2-NeoForge-6.1.1.jar",
+			"sha1": "afe40d572f542ce8250704c47734a44e38a378c4",
+			"source": {
+				"modrinth": {
+					"versionId": "e1qEvr8D",
+					"filename": "YungsBetterDungeons-26.1.2-NeoForge-6.1.1.jar"
+				}
+			}
+		},
+		{
+			"name": "YUNG's Better Ocean Monuments 26.1.2-NeoForge-5.1.1",
+			"group": "latest",
+			"downloads": 22120830,
+			"file": "modrinth-HwZo1wRg-YungsBetterOceanMonuments-26.1.2-NeoForge-5.1.1.jar",
+			"sha1": "e7a864ff93f3692168871dbc4a84ca2024566b18",
+			"source": {
+				"modrinth": {
+					"versionId": "HwZo1wRg",
+					"filename": "YungsBetterOceanMonuments-26.1.2-NeoForge-5.1.1.jar"
+				}
+			}
+		},
+		{
+			"name": "AttributeFix 26.3.0.1",
+			"group": "latest",
+			"downloads": 22111997,
+			"file": "modrinth-FY3iBTbW-AttributeFix-neoforge-MC26.3-26.3.0.1.jar",
+			"sha1": "286aed2ba27a006710ffbb7d46ecc83595cb8970",
+			"source": {
+				"modrinth": {
+					"versionId": "FY3iBTbW",
+					"filename": "AttributeFix-neoforge-MC26.3-26.3.0.1.jar"
+				}
+			}
+		},
+		{
+			"name": "KubeJS 2101.7.2-build.377",
+			"group": "latest",
+			"downloads": 21871520,
+			"file": "modrinth-THIGFPwf-kubejs-neoforge-2101.7.2-build.377.jar",
+			"sha1": "7313fcd99318834c642ee9f3a05ed7fd7bcb6ef4",
+			"source": {
+				"modrinth": {
+					"versionId": "THIGFPwf",
+					"filename": "kubejs-neoforge-2101.7.2-build.377.jar"
+				}
+			}
+		},
+		{
+			"name": "Better Third Person 1.9.0",
+			"group": "latest",
+			"downloads": 21637658,
+			"file": "modrinth-vYowyk3l-BetterThirdPerson-neoforge-1.21.5-1.9.0.jar",
+			"sha1": "b29dda188680c88b9e604baca5dddde2140025ea",
+			"source": {
+				"modrinth": {
+					"versionId": "vYowyk3l",
+					"filename": "BetterThirdPerson-neoforge-1.21.5-1.9.0.jar"
+				}
+			}
+		},
+		{
+			"name": "Dungeons and Taverns 6.0.2+mod",
+			"group": "latest",
+			"downloads": 21586274,
+			"file": "modrinth-2AjppPPt-dungeons-and-taverns-6.0.2.jar",
+			"sha1": "3623ed750493578060875dbcd0c64e26a080d382",
+			"source": {
+				"modrinth": {
+					"versionId": "2AjppPPt",
+					"filename": "dungeons-and-taverns-6.0.2.jar"
+				}
+			}
+		},
+		{
+			"name": "Entity Culling 1.6.3-1.12.2",
+			"group": "1.12.2",
+			"downloads": 175405764,
+			"file": "modrinth-knltv3Vh-entityculling-1.12.2-1.6.3.jar",
+			"sha1": "fb22f03b297ca7b1bb7c6d5948e46c12e0a24446",
+			"source": {
+				"modrinth": {
+					"versionId": "knltv3Vh",
+					"filename": "entityculling-1.12.2-1.6.3.jar"
+				}
+			}
+		},
+		{
+			"name": "Xaero's Minimap forge-1.12.2-26.6.0",
+			"group": "1.12.2",
+			"downloads": 114426010,
+			"file": "modrinth-5RQMTvSN-xaerominimap-forge-1.12.2-26.6.0.jar",
+			"sha1": "b8697cc145185645b750c54280f01c48e103773d",
+			"source": {
+				"modrinth": {
+					"versionId": "5RQMTvSN",
+					"filename": "xaerominimap-forge-1.12.2-26.6.0.jar"
+				}
+			}
+		},
+		{
+			"name": "Xaero's World Map forge-1.12.2-1.47.0",
+			"group": "1.12.2",
+			"downloads": 100039656,
+			"file": "modrinth-qRwIl1WB-xaeroworldmap-forge-1.12.2-1.47.0.jar",
+			"sha1": "a00726c1f38b6d0794499b7337423bb25203b122",
+			"source": {
+				"modrinth": {
+					"versionId": "qRwIl1WB",
+					"filename": "xaeroworldmap-forge-1.12.2-1.47.0.jar"
+				}
+			}
+		},
+		{
+			"name": "AppleSkin 1.0.14+mc1.12",
+			"group": "1.12.2",
+			"downloads": 92749147,
+			"file": "modrinth-Tsz4BT2X-AppleSkin-mc1.12-1.0.14.jar",
+			"sha1": "d798af79de48be0f00c772943e5ec5a2fb5659fa",
+			"source": {
+				"modrinth": {
+					"versionId": "Tsz4BT2X",
+					"filename": "AppleSkin-mc1.12-1.0.14.jar"
+				}
+			}
+		},
+		{
+			"name": "Just Enough Items (JEI) 4.16.5.1030",
+			"group": "1.12.2",
+			"downloads": 80590811,
+			"file": "modrinth-ys10FvNX-jei_1.12.2-4.16.5.1030.jar",
+			"sha1": "c95a36f066f5be0d59bc09e08cb9faed43417f8c",
+			"source": {
+				"modrinth": {
+					"versionId": "ys10FvNX",
+					"filename": "jei_1.12.2-4.16.5.1030.jar"
+				}
+			}
+		},
+		{
+			"name": "3D Skin Layers 1.2.0-forge-1.12.2",
+			"group": "1.12.2",
+			"downloads": 79753045,
+			"file": "modrinth-9MFKDRpJ-3dSkinLayers-forge-mc1.12.2-1.2.0.jar",
+			"sha1": "332db9675de67c5f84b1b0e4f398b5fbe9b6ed56",
+			"source": {
+				"modrinth": {
+					"versionId": "9MFKDRpJ",
+					"filename": "3dSkinLayers-forge-mc1.12.2-1.2.0.jar"
+				}
+			}
+		},
+		{
+			"name": "Geckolib 3.0.31",
+			"group": "1.12.2",
+			"downloads": 72324914,
+			"file": "modrinth-PePYVhnE-geckolib-forge-1.12.2-3.0.31.jar",
+			"sha1": "abab17e7e19cba9ab575425a32419eb9db9cb876",
+			"source": {
+				"modrinth": {
+					"versionId": "PePYVhnE",
+					"filename": "geckolib-forge-1.12.2-3.0.31.jar"
+				}
+			}
+		},
+		{
+			"name": "FancyMenu 2.14.9-1.12-1.12.2-forge",
+			"group": "1.12.2",
+			"downloads": 67860312,
+			"file": "modrinth-VCIrxpB6-fancymenu_forge_2.14.9_MC_1.12-1.12.2.jar",
+			"sha1": "b85302e855530f799697b2850e70293111f0cdbe",
+			"source": {
+				"modrinth": {
+					"versionId": "VCIrxpB6",
+					"filename": "fancymenu_forge_2.14.9_MC_1.12-1.12.2.jar"
+				}
+			}
+		},
+		{
+			"name": "Konkrete 1.6.1-1.12-1.12.2-forge",
+			"group": "1.12.2",
+			"downloads": 62721942,
+			"file": "modrinth-Nmo9ggyx-konkrete_forge_1.6.1_MC_1.12-1.12.2.jar",
+			"sha1": "d8853dbd60fd050709d2d687d875cb0d93806e92",
+			"source": {
+				"modrinth": {
+					"versionId": "Nmo9ggyx",
+					"filename": "konkrete_forge_1.6.1_MC_1.12-1.12.2.jar"
+				}
+			}
+		},
+		{
+			"name": "CreativeCore 1.10.62",
+			"group": "1.12.2",
+			"downloads": 52861586,
+			"file": "modrinth-KQPGT13V-CreativeCore_v1.10.62_mc1.12.2.jar",
+			"sha1": "ffc8e5ac94598c65917cdba235ce6dff1a2e3ada",
+			"source": {
+				"modrinth": {
+					"versionId": "KQPGT13V",
+					"filename": "CreativeCore_v1.10.62_mc1.12.2.jar"
+				}
+			}
+		},
+		{
+			"name": "Bookshelf 2.3.590",
+			"group": "1.12.2",
+			"downloads": 46804262,
+			"file": "modrinth-VdfPMCPQ-Bookshelf-1.12.2-2.3.590.jar",
+			"sha1": "83a1864dd78f48102609849dd36866d6cf32b907",
+			"source": {
+				"modrinth": {
+					"versionId": "VdfPMCPQ",
+					"filename": "Bookshelf-1.12.2-2.3.590.jar"
+				}
+			}
+		},
+		{
+			"name": "Essential Mod 1.5.0.1",
+			"group": "1.12.2",
+			"downloads": 45839818,
+			"file": "modrinth-L3j1XOYm-Essential_1-5-0-1_forge_1-12-2.jar",
+			"sha1": "733d94e60534948961e6a8d3577ebc805d60b0c0",
+			"source": {
+				"modrinth": {
+					"versionId": "L3j1XOYm",
+					"filename": "Essential_1-5-0-1_forge_1-12-2.jar"
+				}
+			}
+		},
+		{
+			"name": "Controlling 3.0.12.2",
+			"group": "1.12.2",
+			"downloads": 39931384,
+			"file": "modrinth-buGCYKY1-Controlling-3.0.12.2.jar",
+			"sha1": "64e791db7eaf3577223a708df0325f07762bd059",
+			"source": {
+				"modrinth": {
+					"versionId": "buGCYKY1",
+					"filename": "Controlling-3.0.12.2.jar"
+				}
+			}
+		},
+		{
+			"name": "Clumps 3.1.2",
+			"group": "1.12.2",
+			"downloads": 39895114,
+			"file": "modrinth-nZvGITpT-Clumps-3.1.2.jar",
+			"sha1": "6ea78bea8006e3924bc37c2aef0115134c8af07b",
+			"source": {
+				"modrinth": {
+					"versionId": "nZvGITpT",
+					"filename": "Clumps-3.1.2.jar"
+				}
+			}
+		},
+		{
+			"name": "AmbientSounds 3.1.5",
+			"group": "1.12.2",
+			"downloads": 39810930,
+			"file": "modrinth-BkXARkwZ-AmbientSounds_v3.1.5_mc1.12.2.jar",
+			"sha1": "9357964cdbfbe97fb16cbfc33eab8c847a03ccb4",
+			"source": {
+				"modrinth": {
+					"versionId": "BkXARkwZ",
+					"filename": "AmbientSounds_v3.1.5_mc1.12.2.jar"
+				}
+			}
+		},
+		{
+			"name": "Enchantment Descriptions 1.1.15",
+			"group": "1.12.2",
+			"downloads": 38121802,
+			"file": "modrinth-qUEJlzny-EnchantmentDescriptions-1.12.2-1.1.15.jar",
+			"sha1": "51ba50251c2821c8fe22a6918bab8f87cb7a75c0",
+			"source": {
+				"modrinth": {
+					"versionId": "qUEJlzny",
+					"filename": "EnchantmentDescriptions-1.12.2-1.1.15.jar"
+				}
+			}
+		},
+		{
+			"name": "Biomes O' Plenty 7.0.1.2445",
+			"group": "1.12.2",
+			"downloads": 37464360,
+			"file": "modrinth-e5wgKLKS-BiomesOPlenty-1.12.2-7.0.1.2445-universal.jar",
+			"sha1": "13c1e58ffec2a550b9698e25cda93b8d155007b0",
+			"source": {
+				"modrinth": {
+					"versionId": "e5wgKLKS",
+					"filename": "BiomesOPlenty-1.12.2-7.0.1.2445-universal.jar"
+				}
+			}
+		},
+		{
+			"name": "MaLiLib 0.60.2",
+			"group": "1.12.2",
+			"downloads": 36828774,
+			"file": "modrinth-c5hvGuGn-malilib-ornithe-1.12.2-0.60.2.jar",
+			"sha1": "2afd08f15e65ccdd4a02496b67220a780de35882",
+			"source": {
+				"modrinth": {
+					"versionId": "c5hvGuGn",
+					"filename": "malilib-ornithe-1.12.2-0.60.2.jar"
+				}
+			}
+		},
+		{
+			"name": "Distant Horizons 3.3.3-1.12.2",
+			"group": "1.12.2",
+			"downloads": 36195547,
+			"file": "modrinth-1PczaQGZ-DistantHorizons-3.3.3-1.12.2-forge.jar",
+			"sha1": "ffe0a2b83c9b1870fa48b8c5295bb3688fe2a9be",
+			"source": {
+				"modrinth": {
+					"versionId": "1PczaQGZ",
+					"filename": "DistantHorizons-3.3.3-1.12.2-forge.jar"
+				}
+			}
+		},
+		{
+			"name": "Patchouli 1.0-23.6-forge",
+			"group": "1.12.2",
+			"downloads": 35468049,
+			"file": "modrinth-rgxH3b9S-Patchouli-1.0-23.6.jar",
+			"sha1": "0febe14bdd007b13f6089a16a57d90e44646f041",
+			"source": {
+				"modrinth": {
+					"versionId": "rgxH3b9S",
+					"filename": "Patchouli-1.0-23.6.jar"
+				}
+			}
+		},
+		{
+			"name": "SuperMartijn642's Config Lib 1.1.8-forge-mc1.12",
+			"group": "1.12.2",
+			"downloads": 32511440,
+			"file": "modrinth-IJL4TGRd-supermartijn642configlib-1.1.8-forge-mc1.12.jar",
+			"sha1": "49f6b461ff22ad8e23bb99679c1f64eee85ee958",
+			"source": {
+				"modrinth": {
+					"versionId": "IJL4TGRd",
+					"filename": "supermartijn642configlib-1.1.8-forge-mc1.12.jar"
+				}
+			}
+		},
+		{
+			"name": "Cherished Worlds 1.12.2-1.0.1",
+			"group": "1.12.2",
+			"downloads": 32463617,
+			"file": "modrinth-NKPlBLC1-cherishedworlds-1.12.2-1.0.1.jar",
+			"sha1": "ea5fd7e61fb7c8ab6a546e2a17a6f4929e904ec0",
+			"source": {
+				"modrinth": {
+					"versionId": "NKPlBLC1",
+					"filename": "cherishedworlds-1.12.2-1.0.1.jar"
+				}
+			}
+		},
+		{
+			"name": "Packet Fixer 2.1.0",
+			"group": "1.12.2",
+			"downloads": 29565507,
+			"file": "modrinth-z8AimD45-PacketFixer-forge-2.1.0-1.12.2.jar",
+			"sha1": "87300e503c045fbf93ec1de6574e9b1c34f87293",
+			"source": {
+				"modrinth": {
+					"versionId": "z8AimD45",
+					"filename": "PacketFixer-forge-2.1.0-1.12.2.jar"
+				}
+			}
+		},
+		{
+			"name": "Euphoria Patches 1.10.5-r5.9.3-forgeLegacy",
+			"group": "1.12.2",
+			"downloads": 28360859,
+			"file": "modrinth-swYsBD0X-EuphoriaPatcher-1.10.5-r5.9.3-forgeLegacy.jar",
+			"sha1": "33ddeaa112839ea33f5b0f588483f437037d587e",
+			"source": {
+				"modrinth": {
+					"versionId": "swYsBD0X",
+					"filename": "EuphoriaPatcher-1.10.5-r5.9.3-forgeLegacy.jar"
+				}
+			}
+		},
+		{
+			"name": "Carry On 1.12.7.23",
+			"group": "1.12.2",
+			"downloads": 26348352,
+			"file": "modrinth-uGbxgawj-carryon-1.12.2-1.12.7.23.jar",
+			"sha1": "6b48020b113f227d92a2d5ea3d763c9bf6196554",
+			"source": {
+				"modrinth": {
+					"versionId": "uGbxgawj",
+					"filename": "carryon-1.12.2-1.12.7.23.jar"
+				}
+			}
+		},
+		{
+			"name": "Better Advancements 0.1.0.77",
+			"group": "1.12.2",
+			"downloads": 26290761,
+			"file": "modrinth-TanCG0k3-BetterAdvancements-1.12.2-0.1.0.77.jar",
+			"sha1": "13948f45e69059c3714266a1549bf643fee6ebc3",
+			"source": {
+				"modrinth": {
+					"versionId": "TanCG0k3",
+					"filename": "BetterAdvancements-1.12.2-0.1.0.77.jar"
+				}
+			}
+		},
+		{
+			"name": "Litematica 0.40.1",
+			"group": "1.12.2",
+			"downloads": 26240241,
+			"file": "modrinth-iqj6EsbG-litematica-ornithe-1.12.2-0.40.1.jar",
+			"sha1": "54efa517ac97ab1451347bc0359a75df1a819953",
+			"source": {
+				"modrinth": {
+					"versionId": "iqj6EsbG",
+					"filename": "litematica-ornithe-1.12.2-0.40.1.jar"
+				}
+			}
+		},
+		{
+			"name": "Nature's Compass 1.12.2-1.8.5-forge",
+			"group": "1.12.2",
+			"downloads": 26226099,
+			"file": "modrinth-kMPLisZs-NaturesCompass-1.12.2-1.8.5-forge.jar",
+			"sha1": "60bcf179cab708f67bbce98d201e82f3e7be9266",
+			"source": {
+				"modrinth": {
+					"versionId": "kMPLisZs",
+					"filename": "NaturesCompass-1.12.2-1.8.5-forge.jar"
+				}
+			}
+		},
+		{
+			"name": "Quark r1.6-179",
+			"group": "1.12.2",
+			"downloads": 25606361,
+			"file": "modrinth-MPJKDJmI-Quark-r1.6-179.jar",
+			"sha1": "35521fd8911b6ef893afbfe7d0d5d04962b3360d",
+			"source": {
+				"modrinth": {
+					"versionId": "MPJKDJmI",
+					"filename": "Quark-r1.6-179.jar"
+				}
+			}
+		},
+		{
+			"name": "NetherPortalFix 5.3.17+forge-1.12.2",
+			"group": "1.12.2",
+			"downloads": 24495486,
+			"file": "modrinth-BrV6KDNp-NetherPortalFix_1.12.1-5.3.17.jar",
+			"sha1": "c89d0046a1473293338cb5bb1d3f765ae497bcd6",
+			"source": {
+				"modrinth": {
+					"versionId": "BrV6KDNp",
+					"filename": "NetherPortalFix_1.12.1-5.3.17.jar"
+				}
+			}
+		},
+		{
+			"name": "Let Me Despawn 1.12.2-forge-1.0.2",
+			"group": "1.12.2",
+			"downloads": 24055329,
+			"file": "modrinth-aPFboA2d-letmedespawn-1.12.2-forge-1.0.2.jar",
+			"sha1": "89cd0cecbf15bccb5e0d7091b92c71e619f3dd21",
+			"source": {
+				"modrinth": {
+					"versionId": "aPFboA2d",
+					"filename": "letmedespawn-1.12.2-forge-1.0.2.jar"
+				}
+			}
+		},
+		{
+			"name": "Comforts 1.12.2-1.4.1.3",
+			"group": "1.12.2",
+			"downloads": 23165299,
+			"file": "modrinth-dHrSKL4J-comforts-1.12.2-1.4.1.3.jar",
+			"sha1": "30528a47630935ba8517dcd5a28263a8be117b5f",
+			"source": {
+				"modrinth": {
+					"versionId": "dHrSKL4J",
+					"filename": "comforts-1.12.2-1.4.1.3.jar"
+				}
+			}
+		},
+		{
+			"name": "Lootr 0.6.2",
+			"group": "1.12.2",
+			"downloads": 22901408,
+			"file": "modrinth-fTrJqmfv-lootr-1.12.2-0.6.2.jar",
+			"sha1": "3d21562963b4cdffeb7b5361c54b5ac560e1708f",
+			"source": {
+				"modrinth": {
+					"versionId": "fTrJqmfv",
+					"filename": "lootr-1.12.2-0.6.2.jar"
+				}
+			}
+		},
+		{
+			"name": "AttributeFix 1.0.12",
+			"group": "1.12.2",
+			"downloads": 22111997,
+			"file": "modrinth-ip7KQeBK-AttributeFix-Forge-1.12.2-1.0.12.jar",
+			"sha1": "d293e08f5b11aa0afa1ad6be5864b85e4266dfde",
+			"source": {
+				"modrinth": {
+					"versionId": "ip7KQeBK",
+					"filename": "AttributeFix-Forge-1.12.2-1.0.12.jar"
+				}
+			}
+		},
+		{
+			"name": "Traveler's Backpack 1.12.2-1.0.35",
+			"group": "1.12.2",
+			"downloads": 20902734,
+			"file": "modrinth-3JLbcslr-TravelersBackpack-1.12.2-1.0.35.jar",
+			"sha1": "5c9157582cc081f0d3b4090f3a2dbc5cfbe70cc6",
+			"source": {
+				"modrinth": {
+					"versionId": "3JLbcslr",
+					"filename": "TravelersBackpack-1.12.2-1.0.35.jar"
+				}
+			}
+		},
+		{
+			"name": "Crash Assistant 1.11.12",
+			"group": "1.12.2",
+			"downloads": 19784319,
+			"file": "modrinth-1EzA3xZ5-CrashAssistant-forge-1.12.2-1.11.12.jar",
+			"sha1": "8a71f76d8c71dbfb4b8f17f659114e4daec47e8d",
+			"source": {
+				"modrinth": {
+					"versionId": "1EzA3xZ5",
+					"filename": "!!!CrashAssistant-forge-1.12.2-1.11.12.jar"
+				}
+			}
+		},
+		{
+			"name": "ReplayMod 1.12.2-2.6.24",
+			"group": "1.12.2",
+			"downloads": 18986468,
+			"file": "modrinth-V8x1l1js-replaymod-1.12.2-2.6.24.jar",
+			"sha1": "090dec4dfbd927bb1698177c1c3bccffc17afe8b",
+			"source": {
+				"modrinth": {
+					"versionId": "V8x1l1js",
+					"filename": "replaymod-1.12.2-2.6.24.jar"
+				}
+			}
+		},
+		{
+			"name": "SuperMartijn642's Core Lib 1.1.24a-forge-mc1.12",
+			"group": "1.12.2",
+			"downloads": 18099599,
+			"file": "modrinth-Jh3HccSI-_supermartijn642corelib-1.1.24a-forge-mc1.12.jar",
+			"sha1": "09bacb7d3cc9b72e0c7fea53dad2f1f8b624da01",
+			"source": {
+				"modrinth": {
+					"versionId": "Jh3HccSI",
+					"filename": "_supermartijn642corelib-1.1.24a-forge-mc1.12.jar"
+				}
+			}
+		},
+		{
+			"name": "Wavey Capes 1.2.0-forge-1.12",
+			"group": "1.12.2",
+			"downloads": 17927662,
+			"file": "modrinth-EeJqeSyd-waveycapes-forge-mc1.12.2-1.2.0.jar",
+			"sha1": "40ed4ad073ea7e3eea077ce9b08209d2e34f4065",
+			"source": {
+				"modrinth": {
+					"versionId": "EeJqeSyd",
+					"filename": "waveycapes-forge-mc1.12.2-1.2.0.jar"
+				}
+			}
+		},
+		{
+			"name": "Advancement Plaques 1.4.10",
+			"group": "1.12.2",
+			"downloads": 17490525,
+			"file": "modrinth-3uNMYsgw-AdvancementPlaques-1.12.2-1.4.10.jar",
+			"sha1": "37e1f4d871669df0b9bd0a9d80cc9fa8f9ac0665",
+			"source": {
+				"modrinth": {
+					"versionId": "3uNMYsgw",
+					"filename": "AdvancementPlaques-1.12.2-1.4.10.jar"
+				}
+			}
+		},
+		{
+			"name": "I18nUpdateMod 3.7.0",
+			"group": "1.12.2",
+			"downloads": 17352168,
+			"file": "modrinth-4ihDUjWs-I18nUpdateMod-3.7.0-all.jar",
+			"sha1": "d9c217b569345ae30a5271baa5e9482080c2e41d",
+			"source": {
+				"modrinth": {
+					"versionId": "4ihDUjWs",
+					"filename": "I18nUpdateMod-3.7.0-all.jar"
+				}
+			}
+		},
+		{
+			"name": "Item Highlighter 1.1.7",
+			"group": "1.12.2",
+			"downloads": 17149331,
+			"file": "modrinth-9rqjmdxp-Highlighter-1.12.2-forge-1.1.7.jar",
+			"sha1": "5260bc0f2d4a27adf6409e707fb385899065982e",
+			"source": {
+				"modrinth": {
+					"versionId": "9rqjmdxp",
+					"filename": "Highlighter-1.12.2-forge-1.1.7.jar"
+				}
+			}
+		},
+		{
+			"name": "Fusion (Connected Textures) 1.3.16-forge-mc1.12",
+			"group": "1.12.2",
+			"downloads": 15233542,
+			"file": "modrinth-CphnYxP4-fusion-1.3.16-forge-mc1.12.jar",
+			"sha1": "68716c4306352b7456a920b739e7b39d088cba01",
+			"source": {
+				"modrinth": {
+					"versionId": "CphnYxP4",
+					"filename": "fusion-1.3.16-forge-mc1.12.jar"
+				}
+			}
+		},
+		{
+			"name": "JustEnoughCharacters 3.7.3",
+			"group": "1.12.2",
+			"downloads": 15027649,
+			"file": "modrinth-xeGzcHsN-jecharacters-1.12.0-3.7.3.jar",
+			"sha1": "cada3601a67075accc8f8c9f254866cd8d952dd8",
+			"source": {
+				"modrinth": {
+					"versionId": "xeGzcHsN",
+					"filename": "jecharacters-1.12.0-3.7.3.jar"
+				}
+			}
+		},
+		{
+			"name": "BisectHosting Server Integration Menu 2.4.6",
+			"group": "1.12.2",
+			"downloads": 14916270,
+			"file": "modrinth-n64nrOMS-BHMenu-Forge-1.12.2-2.4.6.jar",
+			"sha1": "70efb19bcb3f11777b71eb3a8ca86c1dbe864071",
+			"source": {
+				"modrinth": {
+					"versionId": "n64nrOMS",
+					"filename": "BHMenu-Forge-1.12.2-2.4.6.jar"
+				}
+			}
+		},
+		{
+			"name": "JourneyMap 1.12.2-6.0.10+forge",
+			"group": "1.12.2",
+			"downloads": 14911374,
+			"file": "modrinth-ArujzPqc-journeymap-forge-1.12.2-6.0.10.jar",
+			"sha1": "6455be4d12b507878067738ccb23cfa02992c719",
+			"source": {
+				"modrinth": {
+					"versionId": "ArujzPqc",
+					"filename": "journeymap-forge-1.12.2-6.0.10.jar"
+				}
+			}
+		},
+		{
+			"name": "Durability Tooltip 1.2.0-forge-mc1.12",
+			"group": "1.12.2",
+			"downloads": 14444185,
+			"file": "modrinth-l7ru4STg-durabilitytooltip-1.2.0-forge-mc1.12.jar",
+			"sha1": "4b930d54c27150fc30e72a71a75a4eb3a97ef3c0",
+			"source": {
+				"modrinth": {
+					"versionId": "l7ru4STg",
+					"filename": "durabilitytooltip-1.2.0-forge-mc1.12.jar"
+				}
+			}
+		},
+		{
+			"name": "Bad Wither No Cookie - Reloaded 3.4.18",
+			"group": "1.12.2",
+			"downloads": 13850585,
+			"file": "modrinth-2CWlpXcj-badwithernocookiereloaded-1.12.2-3.4.18.jar",
+			"sha1": "11ab53b71d86a7da97e5fa1a1705b62aa8da2b9c",
+			"source": {
+				"modrinth": {
+					"versionId": "2CWlpXcj",
+					"filename": "badwithernocookiereloaded-1.12.2-3.4.18.jar"
+				}
+			}
+		},
+		{
+			"name": "AI Improvements: Performance Tuning 0.0.1b3",
+			"group": "1.12.2",
+			"downloads": 13781343,
+			"file": "modrinth-kOyZhvg3-AIImprovements-1.12-0.0.1b3.jar",
+			"sha1": "ef4b64cd4fc10522ead1f659b81e471af455c3fe",
+			"source": {
+				"modrinth": {
+					"versionId": "kOyZhvg3",
+					"filename": "AIImprovements-1.12-0.0.1b3.jar"
+				}
+			}
+		},
+		{
+			"name": "CraftPresence 2.7.1+1.12.2-forge",
+			"group": "1.12.2",
+			"downloads": 13507367,
+			"file": "modrinth-IjzBfkpi-CraftPresence-2.7.1+1.12.2-forge.jar",
+			"sha1": "1c0955ade87d7f340a0b00eb5570ed42dd93019c",
+			"source": {
+				"modrinth": {
+					"versionId": "IjzBfkpi",
+					"filename": "CraftPresence-2.7.1+1.12.2-forge.jar"
+				}
+			}
+		},
+		{
+			"name": "Resourcify 1.6.2",
+			"group": "1.12.2",
+			"downloads": 13030463,
+			"file": "modrinth-sl8MXedu-Resourcify-1.12.2-forge--1.6.2.jar",
+			"sha1": "57b9cf6bd3d5e336050e0d8b5b486d983ba8b025",
+			"source": {
+				"modrinth": {
+					"versionId": "sl8MXedu",
+					"filename": "Resourcify (1.12.2-forge)-1.6.2.jar"
+				}
+			}
+		},
+		{
+			"name": "Spartan Weaponry 1.12.2-1.6.1",
+			"group": "1.12.2",
+			"downloads": 13015767,
+			"file": "modrinth-x2dB3EKv-SpartanWeaponry-1.12.2-1.6.1.jar",
+			"sha1": "0f4c533dbd1a9f6e9383bac0f6fef4cb80354fc3",
+			"source": {
+				"modrinth": {
+					"versionId": "x2dB3EKv",
+					"filename": "SpartanWeaponry-1.12.2-1.6.1.jar"
+				}
+			}
+		},
+		{
+			"name": "Shoulder Surfing Reloaded 1.12.2-2.9.6",
+			"group": "1.12.2",
+			"downloads": 12031312,
+			"file": "modrinth-9BBcQeo4-ShoulderSurfing-1.12.2-2.9.6.jar",
+			"sha1": "eaea5760358ef7448f978c3a953a4286511768fe",
+			"source": {
+				"modrinth": {
+					"versionId": "9BBcQeo4",
+					"filename": "ShoulderSurfing-1.12.2-2.9.6.jar"
+				}
+			}
+		},
+		{
+			"name": "Tips 1.0.9",
+			"group": "1.12.2",
+			"downloads": 12020100,
+			"file": "modrinth-pPMwq1zD-Tips-1.12.2-1.0.9.jar",
+			"sha1": "9790e6083bbeab78e045c027c964495133507efa",
+			"source": {
+				"modrinth": {
+					"versionId": "pPMwq1zD",
+					"filename": "Tips-1.12.2-1.0.9.jar"
+				}
+			}
+		},
+		{
+			"name": "XaeroPlus 200",
+			"group": "1.12.2",
+			"downloads": 12003577,
+			"file": "modrinth-v2fUhgIf-XaeroPlus-200+forge-1.12.2-WM1.47.0-MM26.6.0.jar",
+			"sha1": "1b5cbe7ec00b1e7371bf052c0c133f4cfefca1a1",
+			"source": {
+				"modrinth": {
+					"versionId": "v2fUhgIf",
+					"filename": "XaeroPlus-200+forge-1.12.2-WM1.47.0-MM26.6.0.jar"
+				}
+			}
+		},
+		{
+			"name": "Alternate Current ornithe-mc1.12-1.9.0",
+			"group": "1.12.2",
+			"downloads": 11531913,
+			"file": "modrinth-6sfeQATP-alternate-current-mc1.12-1.9.0.jar",
+			"sha1": "09950f1c32c2ae50d7a70e511a9597ff8cf8c41d",
+			"source": {
+				"modrinth": {
+					"versionId": "6sfeQATP",
+					"filename": "alternate-current-mc1.12-1.9.0.jar"
+				}
+			}
+		},
+		{
+			"name": "WorldEdit 6.1.10",
+			"group": "1.12.2",
+			"downloads": 11164168,
+			"file": "modrinth-GaGvu76z-worldedit-forge-mc1.12.2-6.1.10-dist.jar",
+			"sha1": "17314bdab33678478af060d2156338ee34db8a09",
+			"source": {
+				"modrinth": {
+					"versionId": "GaGvu76z",
+					"filename": "worldedit-forge-mc1.12.2-6.1.10-dist.jar"
+				}
+			}
+		},
+		{
+			"name": "The Lost Cities 1.12-2.0.22",
+			"group": "1.12.2",
+			"downloads": 11159753,
+			"file": "modrinth-dKHWZOQm-lostcities-1.12-2.0.22.jar",
+			"sha1": "dcea94d4a3d05f8282e014fcfe69048feafe4ce0",
+			"source": {
+				"modrinth": {
+					"versionId": "dKHWZOQm",
+					"filename": "lostcities-1.12-2.0.22.jar"
+				}
+			}
+		},
+		{
+			"name": "Entity Culling 1.6.4-1.7.10",
+			"group": "1.7.10",
+			"downloads": 175405764,
+			"file": "modrinth-SLiFyIon-entityculling-1.6.4-mc1.7.10.jar",
+			"sha1": "9a14606b7d305b4bb1db7094b308c2c2db30fdff",
+			"source": {
+				"modrinth": {
+					"versionId": "SLiFyIon",
+					"filename": "entityculling-1.6.4-mc1.7.10.jar"
+				}
+			}
+		},
+		{
+			"name": "Xaero's Minimap 21.10.44_Forge_1.7.10",
+			"group": "1.7.10",
+			"downloads": 114426010,
+			"file": "modrinth-EeB36MIM-Xaeros_Minimap_21.10.44_Forge_1.7.10.jar",
+			"sha1": "8be058c70fc161077fd84a6e72ba2bf951aa89c4",
+			"source": {
+				"modrinth": {
+					"versionId": "EeB36MIM",
+					"filename": "Xaeros_Minimap_21.10.44_Forge_1.7.10.jar"
+				}
+			}
+		},
+		{
+			"name": "Xaero's World Map 1.14.1.33_Forge_1.7.10",
+			"group": "1.7.10",
+			"downloads": 100039656,
+			"file": "modrinth-p1yJWyyU-XaerosWorldMap_1.14.1.33_Forge_1.7.10.jar",
+			"sha1": "19d1262bf9d20f449d0e9c16e9d3f4d9c373b182",
+			"source": {
+				"modrinth": {
+					"versionId": "p1yJWyyU",
+					"filename": "XaerosWorldMap_1.14.1.33_Forge_1.7.10.jar"
+				}
+			}
+		},
+		{
+			"name": "Bookshelf 1.0.4.187",
+			"group": "1.7.10",
+			"downloads": 46804262,
+			"file": "modrinth-oRWvMKUU-Bookshelf-1.7.10-1.0.4.187.jar",
+			"sha1": "7350f513ff0a4e2fb855dcfbac1df6c17f0af401",
+			"source": {
+				"modrinth": {
+					"versionId": "oRWvMKUU",
+					"filename": "Bookshelf-1.7.10-1.0.4.187.jar"
+				}
+			}
+		},
+		{
+			"name": "Controlling 1.7.10-1.0.0.4",
+			"group": "1.7.10",
+			"downloads": 39931384,
+			"file": "modrinth-xnHAqJdJ-Controlling-1.7.10-1.0.0.4.jar",
+			"sha1": "3a816187749c6bbbff25259efbc538c8ddc6ecba",
+			"source": {
+				"modrinth": {
+					"versionId": "xnHAqJdJ",
+					"filename": "Controlling-1.7.10-1.0.0.4.jar"
+				}
+			}
+		},
+		{
+			"name": "Biomes O' Plenty 2.1.0.1889",
+			"group": "1.7.10",
+			"downloads": 37464360,
+			"file": "modrinth-npMp1xmu-BiomesOPlenty-1.7.10-2.1.0.1889-universal.jar",
+			"sha1": "83bf658e3d2e31c62bf72b7e8330a61b55b336c7",
+			"source": {
+				"modrinth": {
+					"versionId": "npMp1xmu",
+					"filename": "BiomesOPlenty-1.7.10-2.1.0.1889-universal.jar"
+				}
+			}
+		},
+		{
+			"name": "Euphoria Patches 1.10.5-r5.9.3-forge1.7.10",
+			"group": "1.7.10",
+			"downloads": 28360859,
+			"file": "modrinth-3HotjtC0-EuphoriaPatcher-1.10.5-r5.9.3-forge1.7.10.jar",
+			"sha1": "6564658d370af06c57fb1e2f9546726e43677b3d",
+			"source": {
+				"modrinth": {
+					"versionId": "3HotjtC0",
+					"filename": "EuphoriaPatcher-1.10.5-r5.9.3-forge1.7.10.jar"
+				}
+			}
+		},
+		{
+			"name": "Nature's Compass 1.17.10-1.3.1-forge",
+			"group": "1.7.10",
+			"downloads": 26226099,
+			"file": "modrinth-Oq29B6p7-NaturesCompass-1.7.10-1.3.1-forge.jar",
+			"sha1": "470b45aa127e3ff619d4ae2d764613f8d7493c8a",
+			"source": {
+				"modrinth": {
+					"versionId": "Oq29B6p7",
+					"filename": "NaturesCompass-1.7.10-1.3.1-forge.jar"
+				}
+			}
+		},
+		{
+			"name": "Crash Assistant 1.11.12",
+			"group": "1.7.10",
+			"downloads": 19784319,
+			"file": "modrinth-d71LIV4C-CrashAssistant-forge-1.7.10-1.11.12.jar",
+			"sha1": "7e05e80687bb9909f0eafbc64699fd78404ddff2",
+			"source": {
+				"modrinth": {
+					"versionId": "d71LIV4C",
+					"filename": "!!!CrashAssistant-forge-1.7.10-1.11.12.jar"
+				}
+			}
+		},
+		{
+			"name": "JourneyMap 1.7.10-6.0.8+forge",
+			"group": "1.7.10",
+			"downloads": 14911374,
+			"file": "modrinth-QACZ3xh8-journeymap-forge-1.7.10-6.0.8.jar",
+			"sha1": "aa05ce2c4793c99df74f6f4c50e851216070a2d6",
+			"source": {
+				"modrinth": {
+					"versionId": "QACZ3xh8",
+					"filename": "journeymap-forge-1.7.10-6.0.8.jar"
+				}
+			}
+		},
+		{
+			"name": "AI Improvements: Performance Tuning 0.0.1b8",
+			"group": "1.7.10",
+			"downloads": 13781343,
+			"file": "modrinth-Nv6G28rf-AIImprovements-1.7.10-0.0.1b8.jar",
+			"sha1": "08175b6a601003ca9968d06ff50db59c13a010c3",
+			"source": {
+				"modrinth": {
+					"versionId": "Nv6G28rf",
+					"filename": "AIImprovements-1.7.10-0.0.1b8.jar"
+				}
+			}
+		},
+		{
+			"name": "CraftPresence 2.7.1+1.7.10-forge",
+			"group": "1.7.10",
+			"downloads": 13507367,
+			"file": "modrinth-uYIsYc7B-CraftPresence-2.7.1+1.7.10-forge.jar",
+			"sha1": "3cbbf7c39f090cc38d42587bb79c37e44221f761",
+			"source": {
+				"modrinth": {
+					"versionId": "uYIsYc7B",
+					"filename": "CraftPresence-2.7.1+1.7.10-forge.jar"
+				}
+			}
+		},
+		{
+			"name": "Shoulder Surfing Reloaded 1.7.10-2.4.1",
+			"group": "1.7.10",
+			"downloads": 12031312,
+			"file": "modrinth-dfgKdx9y-ShoulderSurfing-1.7.10-2.4.1.jar",
+			"sha1": "1f338e5299c63ec9a8f210528ddf0fd9e8a9dc2e",
+			"source": {
+				"modrinth": {
+					"versionId": "dfgKdx9y",
+					"filename": "ShoulderSurfing-1.7.10-2.4.1.jar"
+				}
+			}
+		},
+		{
+			"name": "Alternate Current ornithe-mc1.7-1.9.0",
+			"group": "1.7.10",
+			"downloads": 11531913,
+			"file": "modrinth-DzewbbCz-alternate-current-mc1.7-1.9.0.jar",
+			"sha1": "bf52979476b0fdd67af836ed34cfec62135f86b5",
+			"source": {
+				"modrinth": {
+					"versionId": "DzewbbCz",
+					"filename": "alternate-current-mc1.7-1.9.0.jar"
+				}
+			}
+		},
+		{
+			"name": "WorldEdit 6.1.9",
+			"group": "1.7.10",
+			"downloads": 11164168,
+			"file": "modrinth-JezAXbj7-worldedit-bukkit-6.1.9.jar",
+			"sha1": "8e56dc4ffb69b17cfbd9d3ad34f4dbee982d63e8",
+			"source": {
+				"modrinth": {
+					"versionId": "JezAXbj7",
+					"filename": "worldedit-bukkit-6.1.9.jar"
+				}
+			}
+		},
+		{
+			"name": "Zume 1.2.2",
+			"group": "1.7.10",
+			"downloads": 10721112,
+			"file": "modrinth-Rh2ImJ86-zume-1.2.2.jar",
+			"sha1": "cbd353ee0e2a35d122a758b9cbb26b2f54145f3f",
+			"source": {
+				"modrinth": {
+					"versionId": "Rh2ImJ86",
+					"filename": "zume-1.2.2.jar"
+				}
+			}
+		},
+		{
+			"name": "UniLib 1.2.1+1.7.10-forge",
+			"group": "1.7.10",
+			"downloads": 10439287,
+			"file": "modrinth-XJoN1mmq-UniLib-1.2.1+1.7.10-forge.jar",
+			"sha1": "5adeda46c13f7b6b4494ae58b1c463df3c3d3e84",
+			"source": {
+				"modrinth": {
+					"versionId": "XJoN1mmq",
+					"filename": "UniLib-1.2.1+1.7.10-forge.jar"
+				}
+			}
+		},
+		{
+			"name": "Neat 1.0-1",
+			"group": "1.7.10",
+			"downloads": 10347388,
+			"file": "modrinth-NOwFHZBU-Neat+1.0-1.jar",
+			"sha1": "efb6219d83e6ec1fdb5a9625acc79b1fad723248",
+			"source": {
+				"modrinth": {
+					"versionId": "NOwFHZBU",
+					"filename": "Neat+1.0-1.jar"
+				}
+			}
+		},
+		{
+			"name": "The Aether 1.7.10-v1.1.2.5",
+			"group": "1.7.10",
+			"downloads": 9908782,
+			"file": "modrinth-sDnmimXy-aether-1.7.10-v1.1.2.5.jar",
+			"sha1": "1a8423455e0dc93b548b051e18df9011c23c2fe5",
+			"source": {
+				"modrinth": {
+					"versionId": "sDnmimXy",
+					"filename": "aether-1.7.10-v1.1.2.5.jar"
+				}
+			}
+		},
+		{
+			"name": "FPS Reducer 1.7.10-1.10.3",
+			"group": "1.7.10",
+			"downloads": 7593482,
+			"file": "modrinth-KkQ36LBj-FpsReducer-mc1.7.10-1.10.3.jar",
+			"sha1": "05782dc663eec3a38c920400f96c43e8c8be6dcb",
+			"source": {
+				"modrinth": {
+					"versionId": "KkQ36LBj",
+					"filename": "FpsReducer-mc1.7.10-1.10.3.jar"
+				}
+			}
+		},
+		{
+			"name": "Serene Seasons 1.2.18",
+			"group": "1.7.10",
+			"downloads": 7200553,
+			"file": "modrinth-NoGF2P4Y-SereneSeasons-1.7.10-1.2.18.jar",
+			"sha1": "290c63a61afc6fd5e19ee56f0710d69c21084f96",
+			"source": {
+				"modrinth": {
+					"versionId": "NoGF2P4Y",
+					"filename": "SereneSeasons-1.7.10-1.2.18.jar"
+				}
+			}
+		},
+		{
+			"name": "YDM's Weapon Master 1.7.10+forge+4.2.4",
+			"group": "1.7.10",
+			"downloads": 6726875,
+			"file": "modrinth-6rFP2ziB-weaponmaster_ydm-forge-1.7.10-4.2.4.jar",
+			"sha1": "cfd7ea9fa305d376d0023d491ce3bf60abfac4d8",
+			"source": {
+				"modrinth": {
+					"versionId": "6rFP2ziB",
+					"filename": "weaponmaster_ydm-forge-1.7.10-4.2.4.jar"
+				}
+			}
+		},
+		{
+			"name": "Sit v1.1",
+			"group": "1.7.10",
+			"downloads": 6691318,
+			"file": "modrinth-ZGamMOvX-sit-1.7.10-v1.1.jar",
+			"sha1": "d1e9092c55740b710b696c53551ce3c38f760210",
+			"source": {
+				"modrinth": {
+					"versionId": "ZGamMOvX",
+					"filename": "sit-1.7.10-v1.1.jar"
+				}
+			}
+		},
+		{
+			"name": "SecurityCraft v1.8.13",
+			"group": "1.7.10",
+			"downloads": 5698126,
+			"file": "modrinth-m5J5jt6a-1.7.10-SecurityCraft-v1.8.13.jar",
+			"sha1": "5f1083b06139dbd4d6b5cc153b0ff24e5071aaf8",
+			"source": {
+				"modrinth": {
+					"versionId": "m5J5jt6a",
+					"filename": "[1.7.10] SecurityCraft v1.8.13.jar"
+				}
+			}
+		},
+		{
+			"name": "In-Game Account Switcher 8.0.1-forge1.7",
+			"group": "1.7.10",
+			"downloads": 5443892,
+			"file": "modrinth-IEcVEZWR-InGameAccountSwitcher-Forge-1.7-8.0.1.jar",
+			"sha1": "893c2002616c1f9fe1ed18f5b8ad3123de45bb1d",
+			"source": {
+				"modrinth": {
+					"versionId": "IEcVEZWR",
+					"filename": "InGameAccountSwitcher-Forge-1.7-8.0.1.jar"
+				}
+			}
+		},
+		{
+			"name": "Search on MCMOD 0.1.0",
+			"group": "1.7.10",
+			"downloads": 4470426,
+			"file": "modrinth-jnKJkBMj-searchonmcmod-forge-1.7.10-0.1.0.jar",
+			"sha1": "f6226a9f2268dc12526c45ec273b8c60576d2538",
+			"source": {
+				"modrinth": {
+					"versionId": "jnKJkBMj",
+					"filename": "searchonmcmod-forge-1.7.10-0.1.0.jar"
+				}
+			}
+		},
+		{
+			"name": "CraftTweaker 3.1.0",
+			"group": "1.7.10",
+			"downloads": 4160598,
+			"file": "modrinth-Hz9R6dqB-CraftTweaker-1.7.10-3.1.0-legacy.jar",
+			"sha1": "ecd735d334578d127b75fc4a680a2a8043e0f5d5",
+			"source": {
+				"modrinth": {
+					"versionId": "Hz9R6dqB",
+					"filename": "CraftTweaker-1.7.10-3.1.0-legacy.jar"
+				}
+			}
+		},
+		{
+			"name": "Botania 1.8-249-forge",
+			"group": "1.7.10",
+			"downloads": 4153403,
+			"file": "modrinth-Vez9CKSz-Botania+r1.8-249.jar",
+			"sha1": "eee543e33c0f57c93d3d83815576cc96236f56f4",
+			"source": {
+				"modrinth": {
+					"versionId": "Vez9CKSz",
+					"filename": "Botania+r1.8-249.jar"
+				}
+			}
+		},
+		{
+			"name": "GPUBooster 1.3.0-26.2-fabric",
+			"group": "mid-tail",
+			"downloads": 6649286,
+			"file": "modrinth-G4XqHY5P-GPUBooster-1.3.0-26.2-fabric.jar",
+			"sha1": "f678dba1b0c9c020620b9b8f6d4341d09757b18f",
+			"source": {
+				"modrinth": {
+					"versionId": "G4XqHY5P",
+					"filename": "GPUBooster-1.3.0-26.2-fabric.jar"
+				}
+			}
+		},
+		{
+			"name": "From The Fog 1.11.3",
+			"group": "mid-tail",
+			"downloads": 5724562,
+			"file": "modrinth-wdgA7oeY-From-The-Fog-Forge-Fabric-26.2-v1.11.3.jar",
+			"sha1": "64695fbacfea0dcf98ba302ae5c3c1bac4673692",
+			"source": {
+				"modrinth": {
+					"versionId": "wdgA7oeY",
+					"filename": "From-The-Fog-Forge-Fabric-26.2-v1.11.3.jar"
+				}
+			}
+		},
+		{
+			"name": "Cobblemon Battle Extras 1.13.45",
+			"group": "mid-tail",
+			"downloads": 4727968,
+			"file": "modrinth-liJnZJxw-cobblemon-battle-extras-neoforge-1.13.45.jar",
+			"sha1": "eb446be193bdd4981d16c86bb40410be3f0cb693",
+			"source": {
+				"modrinth": {
+					"versionId": "liJnZJxw",
+					"filename": "cobblemon-battle-extras-neoforge-1.13.45.jar"
+				}
+			}
+		},
+		{
+			"name": "BetterEnd Crashed Ships Tweaks 1.0.0",
+			"group": "mid-tail",
+			"downloads": 4691942,
+			"file": "modrinth-E4nLamkA-betterend-crashed-ships-1.0.0.jar",
+			"sha1": "63ea28f999b58d331f653d2611a414097d4ee6f4",
+			"source": {
+				"modrinth": {
+					"versionId": "E4nLamkA",
+					"filename": "betterend-crashed-ships-1.0.0.jar"
+				}
+			}
+		},
+		{
+			"name": "Dusty Decorations 2.2.0",
+			"group": "mid-tail",
+			"downloads": 3404656,
+			"file": "modrinth-RNe51mjH-dustydecorations-neoforge+1.21.1-2.2.0.jar",
+			"sha1": "59b931b22ceac96e2e38c81619a57a28a792a413",
+			"source": {
+				"modrinth": {
+					"versionId": "RNe51mjH",
+					"filename": "dustydecorations-neoforge+1.21.1-2.2.0.jar"
+				}
+			}
+		},
+		{
+			"name": "Particle Interactions 0.10.4+26.3-fabric",
+			"group": "mid-tail",
+			"downloads": 2483038,
+			"file": "modrinth-i7jOadv4-eg_particle_interactions-0.10.4+26.3-fabric.jar",
+			"sha1": "0577f3fbefed84116aa96eddeb9d9900da9ef8eb",
+			"source": {
+				"modrinth": {
+					"versionId": "i7jOadv4",
+					"filename": "eg_particle_interactions-0.10.4+26.3-fabric.jar"
+				}
+			}
+		},
+		{
+			"name": "Better Compressed Blocks 1.13",
+			"group": "mid-tail",
+			"downloads": 2328711,
+			"file": "modrinth-QEzbyUk2-compressed-blocks-1.13.jar",
+			"sha1": "17f1623e7085849f17848826024f080c37808687",
+			"source": {
+				"modrinth": {
+					"versionId": "QEzbyUk2",
+					"filename": "compressed-blocks-1.13.jar"
+				}
+			}
+		},
+		{
+			"name": "Botany Pots 21.1.44",
+			"group": "mid-tail",
+			"downloads": 2107251,
+			"file": "modrinth-vb3XbVhI-botanypots-fabric-1.21.1-21.1.44.jar",
+			"sha1": "8121a4a9f2e02d7ab08493f8e46e9a3905c78191",
+			"source": {
+				"modrinth": {
+					"versionId": "vb3XbVhI",
+					"filename": "botanypots-fabric-1.21.1-21.1.44.jar"
+				}
+			}
+		},
+		{
+			"name": "Crosshair Addons Public 2.1.4-26.2",
+			"group": "mid-tail",
+			"downloads": 2094229,
+			"file": "modrinth-jTmDvZTS-CrosshairAddons-2.1.4-26.2.jar",
+			"sha1": "a02c52b0ea18afe06975ab6a46716c676508b7fe",
+			"source": {
+				"modrinth": {
+					"versionId": "jTmDvZTS",
+					"filename": "CrosshairAddons-2.1.4-26.2.jar"
+				}
+			}
+		},
+		{
+			"name": "End's Phantasm 1.4-forge",
+			"group": "mid-tail",
+			"downloads": 1942025,
+			"file": "modrinth-dVzsoZoB-phantasm-1.4.jar",
+			"sha1": "f4f7e99df55d3e361064123c3262b94fa4b2d737",
+			"source": {
+				"modrinth": {
+					"versionId": "dVzsoZoB",
+					"filename": "phantasm-1.4.jar"
+				}
+			}
+		},
+		{
+			"name": "VanillaHUD v3.5.7",
+			"group": "mid-tail",
+			"downloads": 1750276,
+			"file": "modrinth-gvVE7znL-vanillahud-3.5.7+26.3.jar",
+			"sha1": "afeacb228fa0a3b0e8f650bfd8fd9085ce6a9ef9",
+			"source": {
+				"modrinth": {
+					"versionId": "gvVE7znL",
+					"filename": "vanillahud-3.5.7+26.3.jar"
+				}
+			}
+		},
+		{
+			"name": "Archers Expansion (RPG Series Plus) 3.0.0+1.20.1-forge",
+			"group": "mid-tail",
+			"downloads": 1655389,
+			"file": "modrinth-tHRIDXen-archers_expansion-forge-3.0.0+1.20.1.jar",
+			"sha1": "209f9493669ce687a98ab6b13a671909f327037e",
+			"source": {
+				"modrinth": {
+					"versionId": "tHRIDXen",
+					"filename": "archers_expansion-forge-3.0.0+1.20.1.jar"
+				}
+			}
+		},
+		{
+			"name": "More Music Discs 26.3-neoforge-35.1.1",
+			"group": "mid-tail",
+			"downloads": 1621848,
+			"file": "modrinth-s0no5qEy-morediscs-26.3-neoforge-35.1.1.jar",
+			"sha1": "ff0ff653de2d43ce29e4b97d2c80080f10f2080b",
+			"source": {
+				"modrinth": {
+					"versionId": "s0no5qEy",
+					"filename": "morediscs-26.3-neoforge-35.1.1.jar"
+				}
+			}
+		},
+		{
+			"name": "Underlay 1.0.5",
+			"group": "mid-tail",
+			"downloads": 1513315,
+			"file": "modrinth-A0pHFywN-underlay-1.0.5-neoforge-mc26.3.jar",
+			"sha1": "3b66f180a42c1226414304223bb581a9b71ea13e",
+			"source": {
+				"modrinth": {
+					"versionId": "A0pHFywN",
+					"filename": "underlay-1.0.5-neoforge-mc26.3.jar"
+				}
+			}
+		},
+		{
+			"name": "Thaumon 2.3.0+1.21",
+			"group": "mid-tail",
+			"downloads": 1387014,
+			"file": "modrinth-rx9dpWVN-thaumon-neoforge-2.3.0+1.21.jar",
+			"sha1": "8a1a3508b88e78cc427333db9973f9837d5f7437",
+			"source": {
+				"modrinth": {
+					"versionId": "rx9dpWVN",
+					"filename": "thaumon-neoforge-2.3.0+1.21.jar"
+				}
+			}
+		},
+		{
+			"name": "Inventory Blur 1.3.1+26.2-neoforge",
+			"group": "mid-tail",
+			"downloads": 821728,
+			"file": "modrinth-LNTorcF6-eg_inventory_blur-1.3.1+26.2-neoforge.jar",
+			"sha1": "c9c4fa6fae9d8709f7a7d4e92fb56369084e9662",
+			"source": {
+				"modrinth": {
+					"versionId": "LNTorcF6",
+					"filename": "eg_inventory_blur-1.3.1+26.2-neoforge.jar"
+				}
+			}
+		},
+		{
+			"name": "Create Smart Bounds 1.0.0",
+			"group": "mid-tail",
+			"downloads": 749453,
+			"file": "modrinth-HXviiJ3I-smart_bounds-1.0.0.jar",
+			"sha1": "9d271d70b1d2870d5c232e71e2923abaac3a6767",
+			"source": {
+				"modrinth": {
+					"versionId": "HXviiJ3I",
+					"filename": "smart_bounds-1.0.0.jar"
+				}
+			}
+		},
+		{
+			"name": "SmoothMenu Refabricated 1.1.0",
+			"group": "mid-tail",
+			"downloads": 743318,
+			"file": "modrinth-637Rl8Ch-smoothmenu-1.1.0.jar",
+			"sha1": "3c12ad87a36955fdbfa8e851da4e7f40ce6652fe",
+			"source": {
+				"modrinth": {
+					"versionId": "637Rl8Ch",
+					"filename": "smoothmenu-1.1.0.jar"
+				}
+			}
+		},
+		{
+			"name": "Combat Sense 1.0.1",
+			"group": "mid-tail",
+			"downloads": 667982,
+			"file": "modrinth-4RPRuxYF-combatsense-1.0.1.jar",
+			"sha1": "a19906e4f4a7b0029f34974ba3ced7231343235a",
+			"source": {
+				"modrinth": {
+					"versionId": "4RPRuxYF",
+					"filename": "combatsense-1.0.1.jar"
+				}
+			}
+		},
+		{
+			"name": "DivineRPG 1.10.10",
+			"group": "mid-tail",
+			"downloads": 615339,
+			"file": "modrinth-M9cHTouB-divinerpg-1.10.10.jar",
+			"sha1": "04601e9ae4deaf3caa021ceeae1822a38dfb1948",
+			"source": {
+				"modrinth": {
+					"versionId": "M9cHTouB",
+					"filename": "divinerpg-1.10.10.jar"
+				}
+			}
+		},
+		{
+			"name": "Hunger Remover 1.1.13",
+			"group": "mid-tail",
+			"downloads": 596100,
+			"file": "modrinth-8pgmijJP-hunger-remover-1.1.13.jar",
+			"sha1": "4ca170a0f934e0fbd516ad4b136b11e064ee2bae",
+			"source": {
+				"modrinth": {
+					"versionId": "8pgmijJP",
+					"filename": "hunger-remover-1.1.13.jar"
+				}
+			}
+		},
+		{
+			"name": "Random Enchant Fix fabric-1.21.1-1.0.1",
+			"group": "mid-tail",
+			"downloads": 505902,
+			"file": "modrinth-Ci6hsEhe-randomenchantfix-fabric-1.0.1-1.21.1.jar",
+			"sha1": "066f4e328d0ed22f5602b40c0db8119f73c46bef",
+			"source": {
+				"modrinth": {
+					"versionId": "Ci6hsEhe",
+					"filename": "randomenchantfix-fabric-1.0.1-1.21.1.jar"
+				}
+			}
+		},
+		{
+			"name": "Ornamental Plants 1.3.3-Zhongqiu",
+			"group": "mid-tail",
+			"downloads": 502963,
+			"file": "modrinth-J0vo4Q3r-more_orn_plants-neoforge-1.21.1-1.3.3-Zhongqiu.jar",
+			"sha1": "ec74d9d65ea5ed2662ca54bd2512fb320068d1f3",
+			"source": {
+				"modrinth": {
+					"versionId": "J0vo4Q3r",
+					"filename": "more_orn_plants-neoforge-1.21.1-1.3.3-Zhongqiu.jar"
+				}
+			}
+		},
+		{
+			"name": "TPS HUD 2.0.0+26.2",
+			"group": "mid-tail",
+			"downloads": 489055,
+			"file": "modrinth-LzmGBWcf-tps-hud-2.0.0+26.2.jar",
+			"sha1": "f75b1b1db8dbb3a36c82ba42b7ff42121495e331",
+			"source": {
+				"modrinth": {
+					"versionId": "LzmGBWcf",
+					"filename": "tps-hud-2.0.0+26.2.jar"
+				}
+			}
+		},
+		{
+			"name": "One Enough Lib 0.2.4.1",
+			"group": "mid-tail",
+			"downloads": 441720,
+			"file": "modrinth-3ZN7sdQJ-OELib-forge-1.20.1-0.2.4.1.jar",
+			"sha1": "f903e07b03b2ea391c106f2d2f02274c9633b316",
+			"source": {
+				"modrinth": {
+					"versionId": "3ZN7sdQJ",
+					"filename": "OELib-forge-1.20.1-0.2.4.1.jar"
+				}
+			}
+		},
+		{
+			"name": "Akashic Tome 1.21.1-1.8-30",
+			"group": "mid-tail",
+			"downloads": 430205,
+			"file": "modrinth-MRro5nPG-AkashicTome-1.8-30.jar",
+			"sha1": "6493e575f295e18fac1f7c5399c05c53caa1f7ce",
+			"source": {
+				"modrinth": {
+					"versionId": "MRro5nPG",
+					"filename": "AkashicTome-1.8-30.jar"
+				}
+			}
+		},
+		{
+			"name": "No.IXAPI 1.4.4",
+			"group": "mid-tail",
+			"downloads": 418166,
+			"file": "modrinth-Y1QB9rft-noixmodapi-1.4.4.jar",
+			"sha1": "8e9f51d5f93bf1cf7bb43c3d6f5350558c887302",
+			"source": {
+				"modrinth": {
+					"versionId": "Y1QB9rft",
+					"filename": "noixmodapi-1.4.4.jar"
+				}
+			}
+		},
+		{
+			"name": "Extra Compat 1.5.25",
+			"group": "mid-tail",
+			"downloads": 373159,
+			"file": "modrinth-OrWDjxxP-extra_compat-1.5.25-1-.jar",
+			"sha1": "73daad79b768afd4c233811d39696053e9bbb2da",
+			"source": {
+				"modrinth": {
+					"versionId": "OrWDjxxP",
+					"filename": "extra_compat-1.5.25 (1).jar"
+				}
+			}
+		},
+		{
+			"name": "YANDO's Villager Names 4.5.4",
+			"group": "mid-tail",
+			"downloads": 361687,
+			"file": "modrinth-hT45brNd-villagernames-1.21-4.5.4.jar",
+			"sha1": "9c03df4a71cba0a7f2a99aefd405971f85144c66",
+			"source": {
+				"modrinth": {
+					"versionId": "hT45brNd",
+					"filename": "villagernames-1.21-4.5.4.jar"
+				}
+			}
+		},
+		{
+			"name": "Culinary Construct 6.0.0+1.20.2",
+			"group": "mid-tail",
+			"downloads": 345217,
+			"file": "modrinth-mf4srzpq-culinaryconstruct-forge-6.0.0+1.20.2.jar",
+			"sha1": "6937566d432adad42a3b3286c00ad5793756be08",
+			"source": {
+				"modrinth": {
+					"versionId": "mf4srzpq",
+					"filename": "culinaryconstruct-forge-6.0.0+1.20.2.jar"
+				}
+			}
+		},
+		{
+			"name": "Connectored C2ME (C2ME fork for connector) (C3ME) 0.2.0-c3me-alpha.11.52-dirty",
+			"group": "mid-tail",
+			"downloads": 334132,
+			"file": "modrinth-CuHuik2S-c3me-fabric-mc1.20.1-0.2.0-c3me-alpha.11.61.jar",
+			"sha1": "fa56d635562eeb25b4b9c310c3f9572075530f4d",
+			"source": {
+				"modrinth": {
+					"versionId": "CuHuik2S",
+					"filename": "c3me-fabric-mc1.20.1-0.2.0-c3me-alpha.11.61.jar"
+				}
+			}
+		},
+		{
+			"name": "Barista - Window Title Editor 1.1.2",
+			"group": "mid-tail",
+			"downloads": 326433,
+			"file": "modrinth-mglZYfss-Barsita-1.20-1.1.2-Forge.jar",
+			"sha1": "0f399f11920e1c3994f507b6968b3956a5487e07",
+			"source": {
+				"modrinth": {
+					"versionId": "mglZYfss",
+					"filename": "Barsita-1.20-1.1.2-Forge.jar"
+				}
+			}
+		},
+		{
+			"name": "Scannable MC1.21.11-neoforge-1.8.0",
+			"group": "mid-tail",
+			"downloads": 315835,
+			"file": "modrinth-pHz3H1C2-scannable-MC1.21.11-neoforge-1.8.0+042da65.jar",
+			"sha1": "8e3f280f6c0b881a25d9768b207dc12697cd1992",
+			"source": {
+				"modrinth": {
+					"versionId": "pHz3H1C2",
+					"filename": "scannable-MC1.21.11-neoforge-1.8.0+042da65.jar"
+				}
+			}
+		},
+		{
+			"name": "GraphUtil 1.0.0-1.20.1",
+			"group": "mid-tail",
+			"downloads": 284325,
+			"file": "modrinth-zmHteWGB-graphutil-fabric-1.0.0-mc1.20.1.jar",
+			"sha1": "3375973b93f5424997ef2af7d947dc6b3163054d",
+			"source": {
+				"modrinth": {
+					"versionId": "zmHteWGB",
+					"filename": "graphutil-fabric-1.0.0-mc1.20.1.jar"
+				}
+			}
+		},
+		{
+			"name": "Aether's Delight 0.1.3.1",
+			"group": "mid-tail",
+			"downloads": 283528,
+			"file": "modrinth-IMQRjMr0-aethersdelight-0.1.3.1-1.20.1.jar",
+			"sha1": "19641db497b8505aa97604c38bc5177becf14a0b",
+			"source": {
+				"modrinth": {
+					"versionId": "IMQRjMr0",
+					"filename": "aethersdelight-0.1.3.1-1.20.1.jar"
+				}
+			}
+		},
+		{
+			"name": "Modular Routers 13.2.7",
+			"group": "mid-tail",
+			"downloads": 282695,
+			"file": "modrinth-wcfqOJTo-modular-routers-13.2.7+mc1.21.1.jar",
+			"sha1": "386fcae227b6d7963ba11e9808be4bc0910079da",
+			"source": {
+				"modrinth": {
+					"versionId": "wcfqOJTo",
+					"filename": "modular-routers-13.2.7+mc1.21.1.jar"
+				}
+			}
+		},
+		{
+			"name": "Immersive Winds 1.0+26.1.2",
+			"group": "mid-tail",
+			"downloads": 259195,
+			"file": "modrinth-jy6sc3rr-immersive-winds-26.1.2-1.0.jar",
+			"sha1": "05796ad97268d0ffd8bb517e41c9d68667459ef6",
+			"source": {
+				"modrinth": {
+					"versionId": "jy6sc3rr",
+					"filename": "immersive-winds-26.1.2-1.0.jar"
+				}
+			}
+		},
+		{
+			"name": "D-hand mod 1.5.0",
+			"group": "mid-tail",
+			"downloads": 258849,
+			"file": "modrinth-iEil0ZU7-dhandmod-1.5.0.jar",
+			"sha1": "d550cd0d757831db5449b12ecba0764773dfe0d1",
+			"source": {
+				"modrinth": {
+					"versionId": "iEil0ZU7",
+					"filename": "dhandmod-1.5.0.jar"
+				}
+			}
+		},
+		{
+			"name": "Creeper no Break Blocks 1.0.0+neoforge",
+			"group": "mid-tail",
+			"downloads": 257659,
+			"file": "modrinth-VYHbW2Y1-nocreeperexplosion-26.1-26.2-1.0.0+neoforge.jar",
+			"sha1": "00ac0c24626a94c4ec24d0fde2d12b56215de268",
+			"source": {
+				"modrinth": {
+					"versionId": "VYHbW2Y1",
+					"filename": "nocreeperexplosion-26.1-26.2-1.0.0+neoforge.jar"
+				}
+			}
+		},
+		{
+			"name": "GrowableOres 3.8.0-26.3-NeoForge",
+			"group": "mid-tail",
+			"downloads": 252373,
+			"file": "modrinth-TmzFCXCO-GrowableOres-3.8.0-26.3-NeoForge.jar",
+			"sha1": "42a595a6f7c1e980f8a53acd625edd994bb1de4c",
+			"source": {
+				"modrinth": {
+					"versionId": "TmzFCXCO",
+					"filename": "GrowableOres-3.8.0-26.3-NeoForge.jar"
+				}
+			}
+		},
+		{
+			"name": "Lucky Blocks v1.3.3+mod",
+			"group": "mid-tail",
+			"downloads": 235051,
+			"file": "modrinth-W0d259j1-ly-lucky-blocks-v1.3.3.jar",
+			"sha1": "68ca3cfbb49f3a1ebf175d61e2829743e7f0e86d",
+			"source": {
+				"modrinth": {
+					"versionId": "W0d259j1",
+					"filename": "ly-lucky-blocks-v1.3.3.jar"
+				}
+			}
+		},
+		{
+			"name": "Hidden Recipe Book 26.3.0-5.3-fabric+forge+neo",
+			"group": "mid-tail",
+			"downloads": 226540,
+			"file": "modrinth-m5x2Sec5-hiddenrecipebook-26.3.0-5.3.jar",
+			"sha1": "1de909edd372b1705bf537f15813711b54624bf0",
+			"source": {
+				"modrinth": {
+					"versionId": "m5x2Sec5",
+					"filename": "hiddenrecipebook-26.3.0-5.3.jar"
+				}
+			}
+		},
+		{
+			"name": "Titlebar Changer 1.21.x-0.4",
+			"group": "mid-tail",
+			"downloads": 219538,
+			"file": "modrinth-aLkSJxy8-titlebarchanger-fabric-1.21.x-0.4.jar",
+			"sha1": "e949b6a9cb5921f8c1e0feebeba8ed9aefaabf36",
+			"source": {
+				"modrinth": {
+					"versionId": "aLkSJxy8",
+					"filename": "titlebarchanger-fabric-1.21.x-0.4.jar"
+				}
+			}
+		},
+		{
+			"name": "Panda's Extra Details 0.3.1-beta",
+			"group": "mid-tail",
+			"downloads": 216580,
+			"file": "modrinth-5ROV45O8-extra_details-0.3.1-beta-1.20.1.jar",
+			"sha1": "69e2e1bb8ba64ba977514d7e6729baae6514ece6",
+			"source": {
+				"modrinth": {
+					"versionId": "5ROV45O8",
+					"filename": "extra_details-0.3.1-beta-1.20.1.jar"
+				}
+			}
+		},
+		{
+			"name": "Loot Beams: Relooted! 1.20.1",
+			"group": "mid-tail",
+			"downloads": 200274,
+			"file": "modrinth-Tj2fhhuD-lootbeams-1.20.1-1.2.2.jar",
+			"sha1": "2e32454be3a099299a3256f5a2e9a5deac04b4cb",
+			"source": {
+				"modrinth": {
+					"versionId": "Tj2fhhuD",
+					"filename": "lootbeams-1.20.1-1.2.2.jar"
+				}
+			}
+		},
+		{
+			"name": "Dye Depot 2.1.1",
+			"group": "mid-tail",
+			"downloads": 191796,
+			"file": "modrinth-HrjD3oYu-dye_depot-2.1.1.jar",
+			"sha1": "8caffd9273cc47f37d9210d4a0c430f0325c5422",
+			"source": {
+				"modrinth": {
+					"versionId": "HrjD3oYu",
+					"filename": "dye_depot-2.1.1.jar"
+				}
+			}
+		},
+		{
+			"name": "MoreBeeInfo 2.0.0",
+			"group": "mid-tail",
+			"downloads": 191164,
+			"file": "modrinth-NWPApriQ-MoreBeeInfo-neoforge-1.21-2.0.0.jar",
+			"sha1": "f3e3d44330789a1be250e91ad0f7b1e5af0c2be7",
+			"source": {
+				"modrinth": {
+					"versionId": "NWPApriQ",
+					"filename": "MoreBeeInfo-neoforge-1.21-2.0.0.jar"
+				}
+			}
+		},
+		{
+			"name": "Create: Renewable Diamonds 1.0.1+mod",
+			"group": "mid-tail",
+			"downloads": 191158,
+			"file": "modrinth-YbXuduVa-create-renewable-diamonds-1.0.1.jar",
+			"sha1": "86d0c0364049638e94140d2549fc07b89319ee29",
+			"source": {
+				"modrinth": {
+					"versionId": "YbXuduVa",
+					"filename": "create-renewable-diamonds-1.0.1.jar"
+				}
+			}
+		},
+		{
+			"name": "FTB X EMI Compat 1.0.3",
+			"group": "mid-tail",
+			"downloads": 185801,
+			"file": "modrinth-G7Rl78Ue-ftbxemicompat-1.0.3.jar",
+			"sha1": "e6b49910fee827ffe3e44c178013cfb86293b107",
+			"source": {
+				"modrinth": {
+					"versionId": "G7Rl78Ue",
+					"filename": "ftbxemicompat-1.0.3.jar"
+				}
+			}
+		},
+		{
+			"name": "Timestamp Chat v2.4.0+1.19.1",
+			"group": "mid-tail",
+			"downloads": 182722,
+			"file": "modrinth-8bZrCjs5-timestamp-chat-forge-2.4.0+1.19.1.jar",
+			"sha1": "3e9f0de931a63fadd5c72f2045c44eccd1df0dab",
+			"source": {
+				"modrinth": {
+					"versionId": "8bZrCjs5",
+					"filename": "timestamp-chat-forge-2.4.0+1.19.1.jar"
+				}
+			}
+		},
+		{
+			"name": "Blood N Particles Mod 1.4.0",
+			"group": "mid-tail",
+			"downloads": 179366,
+			"file": "modrinth-3JbuuyN7-Blood-N-Particles-v1.4.0---Fabric-1.21.6.jar",
+			"sha1": "a9602867c5019cd3dff8443307f84cf7b7083f3b",
+			"source": {
+				"modrinth": {
+					"versionId": "3JbuuyN7",
+					"filename": "Blood N' Particles v1.4.0 - Fabric 1.21.6.jar"
+				}
+			}
+		},
+		{
+			"name": "MAtmos 1.12.2-36.0.1",
+			"group": "mid-tail",
+			"downloads": 174496,
+			"file": "modrinth-IEb5FUk2-matmos-1.12.2-36.0.1.jar",
+			"sha1": "de9e19d07741eec800274329f983093ce2d27cce",
+			"source": {
+				"modrinth": {
+					"versionId": "IEb5FUk2",
+					"filename": "matmos-1.12.2-36.0.1.jar"
+				}
+			}
+		},
+		{
+			"name": "Dimension Viewer 2.2.1",
+			"group": "mid-tail",
+			"downloads": 174233,
+			"file": "modrinth-gZEtZOY7-dimensionviewer-neoforge-1.21-2.2.1.jar",
+			"sha1": "f0c711b8262fdc43df2617541919ba1429b8311f",
+			"source": {
+				"modrinth": {
+					"versionId": "gZEtZOY7",
+					"filename": "dimensionviewer-neoforge-1.21-2.2.1.jar"
+				}
+			}
+		},
+		{
+			"name": "Good Ending 1.20.1-1.1.0",
+			"group": "mid-tail",
+			"downloads": 172216,
+			"file": "modrinth-Ajpkjvir-GoodEnding-1.20.1-1.1.0-Forge.jar",
+			"sha1": "c176b6d56f7a74b8f5409eb7c0bad76cd2d9fd36",
+			"source": {
+				"modrinth": {
+					"versionId": "Ajpkjvir",
+					"filename": "GoodEnding-1.20.1-1.1.0-Forge.jar"
+				}
+			}
+		},
+		{
+			"name": "Better Boat Movement 3.1.0-26.3+neoforge",
+			"group": "mid-tail",
+			"downloads": 168748,
+			"file": "modrinth-wYAx89lb-better-boat-movement-3.1.0-26.3+neoforge.jar",
+			"sha1": "cea8da4808af2dec9a973b450c287d28e8d6a913",
+			"source": {
+				"modrinth": {
+					"versionId": "wYAx89lb",
+					"filename": "better-boat-movement-3.1.0-26.3+neoforge.jar"
+				}
+			}
+		},
+		{
+			"name": "CosmeticArmours 1.5.3.1",
+			"group": "mid-tail",
+			"downloads": 168091,
+			"file": "modrinth-u30xtl3a-CosmeticArmours---1.5.3.1---1.21.1---NeoForge.jar",
+			"sha1": "433e6df6026eaa1fef791e8c4efc982c444ec046",
+			"source": {
+				"modrinth": {
+					"versionId": "u30xtl3a",
+					"filename": "CosmeticArmours - 1.5.3.1 - 1.21.1 - NeoForge.jar"
+				}
+			}
+		},
+		{
+			"name": "Architect's Palette 1.3.5",
+			"group": "mid-tail",
+			"downloads": 160765,
+			"file": "modrinth-3NNRjDeC-Architects-Palette-1.19.2-1.3.5.jar",
+			"sha1": "8b506e0cbabdb04e500863ae44502dd4aeddf37f",
+			"source": {
+				"modrinth": {
+					"versionId": "3NNRjDeC",
+					"filename": "Architects-Palette-1.19.2-1.3.5.jar"
+				}
+			}
+		},
+		{
+			"name": "Cave Spider Spawn 26.3.0-1.3-fabric+forge+neo",
+			"group": "mid-tail",
+			"downloads": 154932,
+			"file": "modrinth-50wLrjBU-cavespiderspawn-26.3.0-1.3.jar",
+			"sha1": "13694ef4f717bb5ee2bb47174e183d9b45f0f99f",
+			"source": {
+				"modrinth": {
+					"versionId": "50wLrjBU",
+					"filename": "cavespiderspawn-26.3.0-1.3.jar"
+				}
+			}
+		},
+		{
+			"name": "Cloth Config API (Fabric/Forge/NeoForge) [Fabric 26.3] v26.3.158",
+			"group": "latest",
+			"downloads": 380305997,
+			"file": "curseforge-8884063-cloth-config-26.3.158.jar",
+			"sha1": "af17510e82adc4ce8bd82c8239f890b5bae8ac45",
+			"source": {
+				"curseforge": {
+					"modId": 348521,
+					"fileId": 8884063
+				}
+			}
+		},
+		{
+			"name": "JourneyMap journeymap-1.16.5-6.0.9+forge",
+			"group": "latest",
+			"downloads": 353716982,
+			"file": "curseforge-9049828-journeymap-forge-1.16.5-6.0.9.jar",
+			"sha1": "c7f23537a7e1b05d795e75b7445e4a2665324c66",
+			"source": {
+				"curseforge": {
+					"modId": 32274,
+					"fileId": 9049828
+				}
+			}
+		},
+		{
+			"name": "Architectury API [Fabric 26.3] v22.0.3",
+			"group": "latest",
+			"downloads": 348066131,
+			"file": "curseforge-8985710-architectury-fabric-22.0.3.jar",
+			"sha1": "7d72ecc77151be1edbf8ce3e72fc7e2370b57006",
+			"source": {
+				"curseforge": {
+					"modId": 419699,
+					"fileId": 8985710
+				}
+			}
+		},
+		{
+			"name": "Waystones waystones-fabric-1.21.1-21.1.46.jar",
+			"group": "latest",
+			"downloads": 321712445,
+			"file": "curseforge-8969760-waystones-fabric-1.21.1-21.1.46.jar",
+			"sha1": "2ef078e0e3409e3a97ec3fdc0cfd7db7ca34bc40",
+			"source": {
+				"curseforge": {
+					"modId": 245755,
+					"fileId": 8969760
+				}
+			}
+		},
+		{
+			"name": "Placebo Placebo 26.1.2-10.0.2",
+			"group": "latest",
+			"downloads": 334820852,
+			"file": "curseforge-8502256-Placebo-26.1.2-10.0.2.jar",
+			"sha1": "1a822d3ea3f16b8f5a44cafb40942df65380b1d2",
+			"source": {
+				"curseforge": {
+					"modId": 283644,
+					"fileId": 8502256
+				}
+			}
+		},
+		{
+			"name": "Moonlight Lib moonlight-1.20-2.16.36-forge",
+			"group": "latest",
+			"downloads": 289105065,
+			"file": "curseforge-9073068-moonlight-1.20-2.16.36-forge.jar",
+			"sha1": "4b3c2ed059c88a646e2ebb52effe139eb31bba21",
+			"source": {
+				"curseforge": {
+					"modId": 499980,
+					"fileId": 9073068
+				}
+			}
+		},
+		{
+			"name": "Sophisticated Backpacks sophisticatedbackpacks-1.21.1-3.26.8.2189.jar",
+			"group": "latest",
+			"downloads": 246630771,
+			"file": "curseforge-9074419-sophisticatedbackpacks-1.21.1-3.26.8.2189.jar",
+			"sha1": "046f95d4fe6582a600bf61f248cc04402b2a35d4",
+			"source": {
+				"curseforge": {
+					"modId": 422301,
+					"fileId": 9074419
+				}
+			}
+		},
+		{
+			"name": "FTB Library (NeoForge) [NEOFORGE][1.21.1] FTB Library 2101.1.37",
+			"group": "latest",
+			"downloads": 247096939,
+			"file": "curseforge-9008089-ftb-library-neoforge-2101.1.37.jar",
+			"sha1": "b6e503587afcd678ec257e4abdc6362ff18c2fef",
+			"source": {
+				"curseforge": {
+					"modId": 404465,
+					"fileId": 9008089
+				}
+			}
+		},
+		{
+			"name": "Just Enough Resources (JER) JustEnoughResources-Fabric-1.19.2-1.2.3.243.jar",
+			"group": "latest",
+			"downloads": 242994807,
+			"file": "curseforge-4862433-JustEnoughResources-Fabric-1.19.2-1.2.3.243.jar",
+			"sha1": "d3680330d52bc360e753452d46a0c8b88ecbab60",
+			"source": {
+				"curseforge": {
+					"modId": 240630,
+					"fileId": 4862433
+				}
+			}
+		},
+		{
+			"name": "Storage Drawers Storage Drawers-neoforge-26.3.0.1",
+			"group": "latest",
+			"downloads": 240347398,
+			"file": "curseforge-9007426-StorageDrawers-neoforge-26.3.0.1.jar",
+			"sha1": "9e71fb985ca9aa014058130b0627344c466dfdd6",
+			"source": {
+				"curseforge": {
+					"modId": 223852,
+					"fileId": 9007426
+				}
+			}
+		},
+		{
+			"name": "Biomes O' Plenty Biomes O' Plenty Forge 26.3-26.3.0.0.7",
+			"group": "latest",
+			"downloads": 231553289,
+			"file": "curseforge-8973617-BiomesOPlenty-forge-26.3-26.3.0.0.7.jar",
+			"sha1": "079516357ccbb2fae7674424f1b756d656d88d86",
+			"source": {
+				"curseforge": {
+					"modId": 220318,
+					"fileId": 8973617
+				}
+			}
+		},
+		{
+			"name": "Applied Energistics 2 AE2 19.2.18 [NEOFORGE]",
+			"group": "latest",
+			"downloads": 227699960,
+			"file": "curseforge-8992605-appliedenergistics2-19.2.18.jar",
+			"sha1": "bcd04bc7f181b2ffa314625f284c8eca6fee7fe4",
+			"source": {
+				"curseforge": {
+					"modId": 223794,
+					"fileId": 8992605
+				}
+			}
+		},
+		{
+			"name": "Mantle Mantle 1.11.104 for 1.20.1",
+			"group": "latest",
+			"downloads": 227132833,
+			"file": "curseforge-7563777-Mantle-1.20.1-1.11.104.jar",
+			"sha1": "8a3f948f8c505ee92dae915ec0a1593594eb2667",
+			"source": {
+				"curseforge": {
+					"modId": 74924,
+					"fileId": 7563777
+				}
+			}
+		},
+		{
+			"name": "CraftTweaker CraftTweaker-1.16.5-7.1.2.534.jar",
+			"group": "latest",
+			"downloads": 228213454,
+			"file": "curseforge-8396026-CraftTweaker-1.16.5-7.1.2.534.jar",
+			"sha1": "8ad4db3134d4440cc7299eb153b9e710523209f0",
+			"source": {
+				"curseforge": {
+					"modId": 239197,
+					"fileId": 8396026
+				}
+			}
+		},
+		{
+			"name": "Supplementaries supplementaries-1.21.1-3.9.9-neoforge",
+			"group": "latest",
+			"downloads": 227539345,
+			"file": "curseforge-8852720-supplementaries-1.21.1-3.9.9-neoforge.jar",
+			"sha1": "06ed05381a5653d90398dc6ebf3ad1154add6374",
+			"source": {
+				"curseforge": {
+					"modId": 412082,
+					"fileId": 8852720
+				}
+			}
+		},
+		{
+			"name": "FTB Quests (NeoForge) [NEOFORGE][1.21.1] FTB Quests 2101.1.36",
+			"group": "latest",
+			"downloads": 225373682,
+			"file": "curseforge-8885017-ftb-quests-neoforge-2101.1.36.jar",
+			"sha1": "b2ede29b98a3022c22065fbe9b1761e385a28683",
+			"source": {
+				"curseforge": {
+					"modId": 289412,
+					"fileId": 8885017
+				}
+			}
+		},
+		{
+			"name": "Iron Chests ironchest-1.21.11-neoforge-16.7.3.jar",
+			"group": "latest",
+			"downloads": 220298682,
+			"file": "curseforge-7404053-ironchest-1.21.11-neoforge-16.7.3.jar",
+			"sha1": "6313f0af06107c0e8c7577c9747fa5c52cfc7a80",
+			"source": {
+				"curseforge": {
+					"modId": 228756,
+					"fileId": 7404053
+				}
+			}
+		},
+		{
+			"name": "AutoRegLib AutoRegLib-1.8.2-55.jar",
+			"group": "latest",
+			"downloads": 239758430,
+			"file": "curseforge-4100299-AutoRegLib-1.8.2-55.jar",
+			"sha1": "342cac5511fe7009a260bc0a25fee777179ba530",
+			"source": {
+				"curseforge": {
+					"modId": 250363,
+					"fileId": 4100299
+				}
+			}
+		},
+		{
+			"name": "FerriteCore ((Neo)Forge) ferritecore-9.0.0-neoforge",
+			"group": "latest",
+			"downloads": 223011691,
+			"file": "curseforge-7806039-ferritecore-9.0.0-neoforge.jar",
+			"sha1": "b8bfb14ba6ce7068aae08c3a132ca40bda6bd143",
+			"source": {
+				"curseforge": {
+					"modId": 429235,
+					"fileId": 7806039
+				}
+			}
+		},
+		{
+			"name": "FTB Teams (NeoForge) [NEOFORGE][1.21.1] FTB Teams 2101.1.11",
+			"group": "latest",
+			"downloads": 220756497,
+			"file": "curseforge-8724782-ftb-teams-neoforge-2101.1.11.jar",
+			"sha1": "62b65f752d0326edd13244e58d5f2aec035da4e9",
+			"source": {
+				"curseforge": {
+					"modId": 404468,
+					"fileId": 8724782
+				}
+			}
+		},
+		{
+			"name": "Sophisticated Core sophisticatedcore-1.20.1-1.5.5.2373.jar",
+			"group": "latest",
+			"downloads": 210465375,
+			"file": "curseforge-9074374-sophisticatedcore-1.20.1-1.5.5.2373.jar",
+			"sha1": "d2d8558e57bc1c903d4d19db90832473ada3644e",
+			"source": {
+				"curseforge": {
+					"modId": 618298,
+					"fileId": 9074374
+				}
+			}
+		},
+		{
+			"name": "The Twilight Forest Twilight Forest - MC 1.21.1 - 4.8.3345",
+			"group": "latest",
+			"downloads": 208826324,
+			"file": "curseforge-7797302-twilightforest-1.21.1-4.8.3345-universal.jar",
+			"sha1": "9cfd4154928433e2f1f6cfc3deb48c284debb580",
+			"source": {
+				"curseforge": {
+					"modId": 227639,
+					"fileId": 7797302
+				}
+			}
+		},
+		{
+			"name": "Cupboard cupboard-26.3-4.3.jar",
+			"group": "latest",
+			"downloads": 208205481,
+			"file": "curseforge-8893470-cupboard-26.3-4.3.jar",
+			"sha1": "c69486821b28d5cca51d0b3c3799b410f1c39ed7",
+			"source": {
+				"curseforge": {
+					"modId": 326652,
+					"fileId": 8893470
+				}
+			}
+		},
+		{
+			"name": "ConnectedTexturesMod CTM - 1.20.1-1.1.10",
+			"group": "latest",
+			"downloads": 205101250,
+			"file": "curseforge-5983309-CTM-1.20.1-1.1.10.jar",
+			"sha1": "5381b3092d99c8f16f9fe36b3b680dee63db33a9",
+			"source": {
+				"curseforge": {
+					"modId": 267602,
+					"fileId": 5983309
+				}
+			}
+		},
+		{
+			"name": "Citadel citadel-2.7.1-1.21.1",
+			"group": "latest",
+			"downloads": 211453761,
+			"file": "curseforge-8458935-citadel-2.7.1-1.21.1.jar",
+			"sha1": "9d7873f74b418f4f83adf2ae41af75d2e8217cd6",
+			"source": {
+				"curseforge": {
+					"modId": 331936,
+					"fileId": 8458935
+				}
+			}
+		},
+		{
+			"name": "Cosmetic Armor Reworked cosmeticarmorreworked-1.21.5-v1.jar",
+			"group": "latest",
+			"downloads": 201491095,
+			"file": "curseforge-6468039-cosmeticarmorreworked-1.21.5-v1.jar",
+			"sha1": "ad2d785280380235eba3fd426963a50985ffeb8b",
+			"source": {
+				"curseforge": {
+					"modId": 237307,
+					"fileId": 6468039
+				}
+			}
+		},
+		{
+			"name": "Cooking for Blockheads cookingforblockheads-neoforge-26.3-26.3.0.2.jar",
+			"group": "latest",
+			"downloads": 198189158,
+			"file": "curseforge-9035247-cookingforblockheads-neoforge-26.3-26.3.0.2.jar",
+			"sha1": "7a92b2a11c3f5fcb05a272203c4ec6ce0dec5c83",
+			"source": {
+				"curseforge": {
+					"modId": 231484,
+					"fileId": 9035247
+				}
+			}
+		},
+		{
+			"name": "Tinkers Construct Tinkers' Construct 3.11.2.166 for 1.20.1",
+			"group": "latest",
+			"downloads": 194719410,
+			"file": "curseforge-7449219-TConstruct-1.20.1-3.11.2.166.jar",
+			"sha1": "94d07ec0ff45c49f5908beff7acb9fbec43fdde5",
+			"source": {
+				"curseforge": {
+					"modId": 74072,
+					"fileId": 7449219
+				}
+			}
+		},
+		{
+			"name": "CodeChicken Lib 1.8.+ CodeChicken Lib 1.21.1-4.6.1.529",
+			"group": "latest",
+			"downloads": 197051077,
+			"file": "curseforge-8491811-CodeChickenLib-1.21.1-4.6.1.529.jar",
+			"sha1": "354d850ca72568b88d67e3c903efced7e62dc90f",
+			"source": {
+				"curseforge": {
+					"modId": 242818,
+					"fileId": 8491811
+				}
+			}
+		},
+		{
+			"name": "Fast Leaf Decay FastLeafDecay-Fabric-36.jar",
+			"group": "latest",
+			"downloads": 191886671,
+			"file": "curseforge-7161652-FastLeafDecay-Fabric-36.jar",
+			"sha1": "4bbd3a8fa946118f1f945ae1e3fa0d1c325a8f85",
+			"source": {
+				"curseforge": {
+					"modId": 230976,
+					"fileId": 7161652
+				}
+			}
+		},
+		{
+			"name": "SuperMartijn642's Core Lib SuperMartijn642's Core Lib 1.1.24c for NeoForge 26.3",
+			"group": "latest",
+			"downloads": 187606667,
+			"file": "curseforge-9063777-supermartijn642corelib-1.1.24c-neoforge-mc26.3.jar",
+			"sha1": "4ce473b5dafa582a61cf1425c7c6706210563c10",
+			"source": {
+				"curseforge": {
+					"modId": 454372,
+					"fileId": 9063777
+				}
+			}
+		},
+		{
+			"name": "CoFH Core cofh_core-1.20.1-11.0.2.56.jar",
+			"group": "latest",
+			"downloads": 210727978,
+			"file": "curseforge-5374122-cofh_core-1.20.1-11.0.2.56.jar",
+			"sha1": "6f7c0056fece31bf393df450d79482810ed444af",
+			"source": {
+				"curseforge": {
+					"modId": 69162,
+					"fileId": 5374122
+				}
+			}
+		},
+		{
+			"name": "YUNG's API (Forge/NeoForge) [1.21.1] YUNG's API v5.1.9 (Forge)",
+			"group": "latest",
+			"downloads": 185129566,
+			"file": "curseforge-8894735-YungsApi-1.21.1-Forge-5.1.9-all.jar",
+			"sha1": "ef881b92dc7f50d8ecd7805f4e194d45e6e3ad54",
+			"source": {
+				"curseforge": {
+					"modId": 421850,
+					"fileId": 8894735
+				}
+			}
+		},
+		{
+			"name": "Kotlin for Forge Kotlin for Forge 5.12.0",
+			"group": "latest",
+			"downloads": 204513390,
+			"file": "curseforge-8335665-kotlinforforge-5.12.0-all.jar",
+			"sha1": "a2032c921e93a0ccb0db5d742167e3139c2de01b",
+			"source": {
+				"curseforge": {
+					"modId": 351264,
+					"fileId": 8335665
+				}
+			}
+		},
+		{
+			"name": "Toast Control Toast-Control 26.1.2-10.0.0",
+			"group": "latest",
+			"downloads": 192906909,
+			"file": "curseforge-8262279-ToastControl-26.1.2-10.0.0.jar",
+			"sha1": "3362983e6187787f7b30834b3c26a25073f90f87",
+			"source": {
+				"curseforge": {
+					"modId": 271740,
+					"fileId": 8262279
+				}
+			}
+		},
+		{
+			"name": "Item Filters item-filters-forge-1802.2.8-build.50.jar",
+			"group": "latest",
+			"downloads": 188910282,
+			"file": "curseforge-4553322-item-filters-forge-1802.2.8-build.50.jar",
+			"sha1": "508eb1f51f4941b2743d930836d35794783bf0b0",
+			"source": {
+				"curseforge": {
+					"modId": 309674,
+					"fileId": 4553322
+				}
+			}
+		},
+		{
+			"name": "McJtyLib McJtyLib - 1.20-8.0.8",
+			"group": "latest",
+			"downloads": 186375238,
+			"file": "curseforge-8256165-mcjtylib-1.20-8.0.8.jar",
+			"sha1": "b065a249103feb80341cbd005a6baf8601d15684",
+			"source": {
+				"curseforge": {
+					"modId": 233105,
+					"fileId": 8256165
+				}
+			}
+		},
+		{
+			"name": "OpenBlocks Elevator elevatorid-fabric-1.21.8-1.14.4.jar",
+			"group": "latest",
+			"downloads": 179421747,
+			"file": "curseforge-7020382-elevatorid-fabric-1.21.8-1.14.4.jar",
+			"sha1": "180fdf64b5f61c9dcba41a300846444ddc50cdae",
+			"source": {
+				"curseforge": {
+					"modId": 250832,
+					"fileId": 7020382
+				}
+			}
+		},
+		{
+			"name": "Crafting Tweaks craftingtweaks-neoforge-26.3-26.3.0.1.jar",
+			"group": "latest",
+			"downloads": 177133758,
+			"file": "curseforge-8893528-craftingtweaks-neoforge-26.3-26.3.0.1.jar",
+			"sha1": "55c2917aaaabfb2abeaa4895ac0f73993988bf30",
+			"source": {
+				"curseforge": {
+					"modId": 233071,
+					"fileId": 8893528
+				}
+			}
+		},
+		{
+			"name": "FastWorkbench FastWorkbench-26.1.2-10.0.0.jar",
+			"group": "latest",
+			"downloads": 184834327,
+			"file": "curseforge-8171004-FastWorkbench-26.1.2-10.0.0.jar",
+			"sha1": "89ae845448305df0f1ba69d507b3b6254cfbe182",
+			"source": {
+				"curseforge": {
+					"modId": 288885,
+					"fileId": 8171004
+				}
+			}
+		},
+		{
+			"name": "Cucumber Library Cucumber-26.1.2-9.0.6.jar",
+			"group": "latest",
+			"downloads": 174874642,
+			"file": "curseforge-8796937-Cucumber-26.1.2-9.0.6.jar",
+			"sha1": "20740f30973a1a96e45485afd04d8236508e7269",
+			"source": {
+				"curseforge": {
+					"modId": 272335,
+					"fileId": 8796937
+				}
+			}
+		},
+		{
+			"name": "Default Options defaultoptions-neoforge-26.3-26.3.0.1.jar",
+			"group": "latest",
+			"downloads": 175096331,
+			"file": "curseforge-8893539-defaultoptions-neoforge-26.3-26.3.0.1.jar",
+			"sha1": "b87d28703d027ca4fdbf1e67156ecf58cda4b9dc",
+			"source": {
+				"curseforge": {
+					"modId": 232131,
+					"fileId": 8893539
+				}
+			}
+		},
+		{
+			"name": "Botania Botania-1.20.1-456-FORGE.jar",
+			"group": "latest",
+			"downloads": 170699869,
+			"file": "curseforge-8901969-Botania-1.20.1-456-FORGE.jar",
+			"sha1": "17e0cab4160e86f434cd137a60faeb2594ae4e15",
+			"source": {
+				"curseforge": {
+					"modId": 225643,
+					"fileId": 8901969
+				}
+			}
+		},
+		{
+			"name": "Chisel Chisel - MC1.12.2-1.0.2.45",
+			"group": "latest",
+			"downloads": 167429127,
+			"file": "curseforge-2915375-Chisel-MC1.12.2-1.0.2.45.jar",
+			"sha1": "d378cee9195841ea78bb9800f543d718ef2c60ef",
+			"source": {
+				"curseforge": {
+					"modId": 235279,
+					"fileId": 2915375
+				}
+			}
+		},
+		{
+			"name": "YUNG's Better Mineshafts (Forge/NeoForge) [26.1.2] YUNG's Better Mineshafts v6.1.1 (NeoForge)",
+			"group": "latest",
+			"downloads": 167426473,
+			"file": "curseforge-8850743-YungsBetterMineshafts-26.1.2-NeoForge-6.1.1.jar",
+			"sha1": "515ca1570e52a9a6c2e77072e886f2b5c6f0d9c2",
+			"source": {
+				"curseforge": {
+					"modId": 389665,
+					"fileId": 8850743
+				}
+			}
+		},
+		{
+			"name": "Lootr (Forge & NeoForge) lootr-neoforge-26.2-1.24.41.124",
+			"group": "latest",
+			"downloads": 167748728,
+			"file": "curseforge-8995595-lootr-neoforge-26.2-1.24.41.124.jar",
+			"sha1": "735a090dc9ba86dd9e04906b04b9f4c2c69cd8fb",
+			"source": {
+				"curseforge": {
+					"modId": 361276,
+					"fileId": 8995595
+				}
+			}
+		},
+		{
+			"name": "Torchmaster torchmaster-neoforge-1.21.1-21.1.13",
+			"group": "latest",
+			"downloads": 166230739,
+			"file": "curseforge-8949981-torchmaster-neoforge-1.21.1-21.1.13.jar",
+			"sha1": "b139713195dc65bbe66dcdbde87a0d84aa407b5a",
+			"source": {
+				"curseforge": {
+					"modId": 254268,
+					"fileId": 8949981
+				}
+			}
+		},
+		{
+			"name": "MmmMmmMmmMmm (Target Dummy) dummmmmmy-1.21-2.1.2-neoforge",
+			"group": "latest",
+			"downloads": 166517962,
+			"file": "curseforge-8903254-dummmmmmy-1.21-2.1.2-neoforge.jar",
+			"sha1": "87fb529cbb220a33fedf45a4a6f2269b8e00fffe",
+			"source": {
+				"curseforge": {
+					"modId": 225738,
+					"fileId": 8903254
+				}
+			}
+		},
+		{
+			"name": "Connectivity connectivity-fabric-26.3-7.7.jar",
+			"group": "latest",
+			"downloads": 164274610,
+			"file": "curseforge-9011123-connectivity-fabric-26.3-7.7.jar",
+			"sha1": "b0e68e80768ed901b81bc2ec95e5129210be18c8",
+			"source": {
+				"curseforge": {
+					"modId": 470193,
+					"fileId": 9011123
+				}
+			}
+		},
+		{
+			"name": "KubeJS KubeJS NeoForge 2101.7.2-build.377",
+			"group": "latest",
+			"downloads": 166730243,
+			"file": "curseforge-8843626-kubejs-neoforge-2101.7.2-build.377.jar",
+			"sha1": "150c5d6efc09b969ac350ea205128dff832e0850",
+			"source": {
+				"curseforge": {
+					"modId": 238086,
+					"fileId": 8843626
+				}
+			}
+		},
+		{
+			"name": "Mekanism Mekanism-1.21.1-10.7.19.85.jar",
+			"group": "latest",
+			"downloads": 176564437,
+			"file": "curseforge-7904058-Mekanism-1.21.1-10.7.19.85.jar",
+			"sha1": "b78945c40cfe7640408f3fd1e44da385a8c8b805",
+			"source": {
+				"curseforge": {
+					"modId": 268560,
+					"fileId": 7904058
+				}
+			}
+		},
+		{
+			"name": "Rhino Rhino 2101.2.7-build.85",
+			"group": "latest",
+			"downloads": 174354685,
+			"file": "curseforge-8218748-rhino-2101.2.7-build.85.jar",
+			"sha1": "370598a1d2321c8a705ce539eb970375f20150c3",
+			"source": {
+				"curseforge": {
+					"modId": 416294,
+					"fileId": 8218748
+				}
+			}
+		},
+		{
+			"name": "Thermal Foundation thermal_foundation-1.20.1-11.0.6.70.jar",
+			"group": "latest",
+			"downloads": 174845618,
+			"file": "curseforge-5443583-thermal_foundation-1.20.1-11.0.6.70.jar",
+			"sha1": "7c1fbd79c9bda7478560faa886eaadf0dd8d181f",
+			"source": {
+				"curseforge": {
+					"modId": 222880,
+					"fileId": 5443583
+				}
+			}
+		},
+		{
+			"name": "Immersive Engineering ImmersiveEngineering-1.21.1-12.4.2-194",
+			"group": "latest",
+			"downloads": 196154611,
+			"file": "curseforge-6733669-ImmersiveEngineering-1.21.1-12.4.2-194.jar",
+			"sha1": "a4e90c2df8009040f6d022433c5d76635944dd59",
+			"source": {
+				"curseforge": {
+					"modId": 231951,
+					"fileId": 6733669
+				}
+			}
+		},
+		{
+			"name": "TerraBlender (Forge) TerraBlender Forge 1.20.4-3.3.0.12",
+			"group": "latest",
+			"downloads": 159445115,
+			"file": "curseforge-5068217-TerraBlender-forge-1.20.4-3.3.0.12.jar",
+			"sha1": "6a70c75766fad25f2f02b5c5120924da64a128b0",
+			"source": {
+				"curseforge": {
+					"modId": 563928,
+					"fileId": 5068217
+				}
+			}
+		},
+		{
+			"name": "Cyclops Core cyclopscore-26.1.2-fabric-1.31.2.jar",
+			"group": "latest",
+			"downloads": 158452947,
+			"file": "curseforge-9028611-cyclopscore-26.1.2-fabric-1.31.2.jar",
+			"sha1": "18b0611bc063cc20ae4a13e573ebde9f74b520a2",
+			"source": {
+				"curseforge": {
+					"modId": 232758,
+					"fileId": 9028611
+				}
+			}
+		},
+		{
+			"name": "AI Improvements: Performance Tuning AI-Improvements-26.3-0.5.5.jar",
+			"group": "latest",
+			"downloads": 157004455,
+			"file": "curseforge-9045513-AI-Improvements-26.3-0.5.5.jar",
+			"sha1": "fdff6b720a7363bbf60ffbf29d5c53567bbcf792",
+			"source": {
+				"curseforge": {
+					"modId": 233019,
+					"fileId": 9045513
+				}
+			}
+		},
+		{
+			"name": "Building Gadgets BuildingGadgets2-1.4.6",
+			"group": "latest",
+			"downloads": 155725369,
+			"file": "curseforge-7964119-buildinggadgets2-1.4.6.jar",
+			"sha1": "a8b38a821a75e86953ef64232d92c5985b5cb4f1",
+			"source": {
+				"curseforge": {
+					"modId": 298187,
+					"fileId": 7964119
+				}
+			}
+		},
+		{
+			"name": "Macaw's Bridges v3.1.2 / mc26.3 - Fabric",
+			"group": "latest",
+			"downloads": 155833082,
+			"file": "curseforge-8959855-mcw-bridges-3.1.2-mc26.3fabric.jar",
+			"sha1": "d2fda3082f7484e35b538479cf67703519948879",
+			"source": {
+				"curseforge": {
+					"modId": 351725,
+					"fileId": 8959855
+				}
+			}
+		},
+		{
+			"name": "Aquaculture 2 Aquaculture-26.1.1-2.9.2.jar",
+			"group": "latest",
+			"downloads": 165573355,
+			"file": "curseforge-8192770-Aquaculture-26.1.1-2.9.2.jar",
+			"sha1": "d639697e3ae4967cff32d7217052b9533acc994b",
+			"source": {
+				"curseforge": {
+					"modId": 60028,
+					"fileId": 8192770
+				}
+			}
+		},
+		{
+			"name": "Industrial Foregoing industrial-foregoing-1.20.1-3.5.22.jar",
+			"group": "latest",
+			"downloads": 150997167,
+			"file": "curseforge-7949862-industrial-foregoing-1.20.1-3.5.22.jar",
+			"sha1": "2df8bbdbfa832ae1069e5173e58d3f2e0877d854",
+			"source": {
+				"curseforge": {
+					"modId": 266515,
+					"fileId": 7949862
+				}
+			}
+		},
+		{
+			"name": "Refined Storage v2.0.9",
+			"group": "latest",
+			"downloads": 156481783,
+			"file": "curseforge-8211701-refinedstorage-neoforge-2.0.9.jar",
+			"sha1": "bf05b983968e75b5466a270c68d1fdc7ba2a5e77",
+			"source": {
+				"curseforge": {
+					"modId": 243076,
+					"fileId": 8211701
+				}
+			}
+		},
+		{
+			"name": "Sound Physics Remastered [FORGE][26.3] Sound Physics Remastered 1.5.1+26.3",
+			"group": "latest",
+			"downloads": 150295733,
+			"file": "curseforge-8922974-sound-physics-remastered-forge-1.5.1+26.3.jar",
+			"sha1": "3623d4e2c08f5d762c17fada0a505edd8c7343bc",
+			"source": {
+				"curseforge": {
+					"modId": 535489,
+					"fileId": 8922974
+				}
+			}
+		},
+		{
+			"name": "Mystical Agriculture MysticalAgriculture-26.1.2-9.0.10.jar",
+			"group": "latest",
+			"downloads": 146765691,
+			"file": "curseforge-9042809-MysticalAgriculture-26.1.2-9.0.10.jar",
+			"sha1": "d5e4c10676e810d4fdd56d8c2e4cd4d6fcf09b73",
+			"source": {
+				"curseforge": {
+					"modId": 246640,
+					"fileId": 9042809
+				}
+			}
+		},
+		{
+			"name": "Artifacts artifacts-neoforge-15.1.3.jar",
+			"group": "latest",
+			"downloads": 146237830,
+			"file": "curseforge-8814240-artifacts-neoforge-15.1.3.jar",
+			"sha1": "efef666f3cde19c755b044873eb30d961748d7a9",
+			"source": {
+				"curseforge": {
+					"modId": 312353,
+					"fileId": 8814240
+				}
+			}
+		},
+		{
+			"name": "Thermal Expansion thermal_expansion-1.20.1-11.0.1.29.jar",
+			"group": "latest",
+			"downloads": 160531471,
+			"file": "curseforge-5372749-thermal_expansion-1.20.1-11.0.1.29.jar",
+			"sha1": "c79fe5b922653d109cdcee45f4bca24c86daf6c0",
+			"source": {
+				"curseforge": {
+					"modId": 69163,
+					"fileId": 5372749
+				}
+			}
+		},
+		{
+			"name": "Dark Utilities DarkUtilities-neoforge-MC26.3-26.3.0.1.jar",
+			"group": "latest",
+			"downloads": 143169035,
+			"file": "curseforge-8996285-DarkUtilities-neoforge-MC26.3-26.3.0.1.jar",
+			"sha1": "059d2227b0a133fd18b8c7be998ffba59420058d",
+			"source": {
+				"curseforge": {
+					"modId": 242195,
+					"fileId": 8996285
+				}
+			}
+		},
+		{
+			"name": "Mekanism Generators MekanismGenerators-1.21.1-10.7.19.85.jar",
+			"group": "latest",
+			"downloads": 156434259,
+			"file": "curseforge-7904061-MekanismGenerators-1.21.1-10.7.19.85.jar",
+			"sha1": "44c4d8006597580ff7e4101b5a22f7b426cdcaf6",
+			"source": {
+				"curseforge": {
+					"modId": 268566,
+					"fileId": 7904061
+				}
+			}
+		},
+		{
+			"name": "Caelus API caelus-neoforge-8.0.1+1.21.4.jar",
+			"group": "latest",
+			"downloads": 168072159,
+			"file": "curseforge-6801969-caelus-neoforge-8.0.1+1.21.4.jar",
+			"sha1": "763491de08158039fdbf2c23048081106db79662",
+			"source": {
+				"curseforge": {
+					"modId": 308989,
+					"fileId": 6801969
+				}
+			}
+		},
+		{
+			"name": "FastFurnace FastFurnace 26.1.2-10.0.0",
+			"group": "latest",
+			"downloads": 149643049,
+			"file": "curseforge-8262840-FastFurnace-26.1.2-10.0.0.jar",
+			"sha1": "4c7aa4d342aa18fdee72eb3ef701eb824846cf40",
+			"source": {
+				"curseforge": {
+					"modId": 299540,
+					"fileId": 8262840
+				}
+			}
+		},
+		{
+			"name": "CoroUtil coroutil-neoforge-1.21.8-1.3.8.jar",
+			"group": "latest",
+			"downloads": 142733289,
+			"file": "curseforge-8232108-coroutil-neoforge-1.21.8-1.3.8.jar",
+			"sha1": "409ae96a970dd6db1b7b5e0e6fcd3fb2143a57b4",
+			"source": {
+				"curseforge": {
+					"modId": 237749,
+					"fileId": 8232108
+				}
+			}
+		},
+		{
+			"name": "Framework Framework 0.13.27",
+			"group": "latest",
+			"downloads": 140720028,
+			"file": "curseforge-9054859-framework-neoforge-26.3-0.13.27.jar",
+			"sha1": "db8d58b22270809dad456a9930a52da797c15341",
+			"source": {
+				"curseforge": {
+					"modId": 549225,
+					"fileId": 9054859
+				}
+			}
+		},
+		{
+			"name": "Chisels & Bits - For Forge chisels-and-bits - 26.1.2.33 - release",
+			"group": "latest",
+			"downloads": 142696642,
+			"file": "curseforge-8087317-chisels-and-bits-neoforge-26.1.2.33.jar",
+			"sha1": "fe92fe750feafb531d0c147f6d5d52725b5591a8",
+			"source": {
+				"curseforge": {
+					"modId": 231095,
+					"fileId": 8087317
+				}
+			}
+		},
+		{
+			"name": "Custom Main Menu CustomMainMenu-MC1.12.2-2.0.9.1.jar",
+			"group": "latest",
+			"downloads": 137001568,
+			"file": "curseforge-2857869-CustomMainMenu-MC1.12.2-2.0.9.1.jar",
+			"sha1": "9aad10a13bed75b6061a33219ab4f2f39e0ccc12",
+			"source": {
+				"curseforge": {
+					"modId": 226406,
+					"fileId": 2857869
+				}
+			}
+		},
+		{
+			"name": "Apotheosis Apotheosis 26.1.2-9.1.0",
+			"group": "latest",
+			"downloads": 134545434,
+			"file": "curseforge-9054740-Apotheosis-26.1.2-9.1.0.jar",
+			"sha1": "dd7be541992306e21919408ca0c6ad52291c39f0",
+			"source": {
+				"curseforge": {
+					"modId": 313970,
+					"fileId": 9054740
+				}
+			}
+		},
+		{
+			"name": "Inventory Tweaks [1.12 only]  Inventory Tweaks 1.63",
+			"group": "latest",
+			"downloads": 143048225,
+			"file": "curseforge-2482481-InventoryTweaks-1.63.jar",
+			"sha1": "6e00827d1a009da39fa6db5afd2a3d6b024abfe9",
+			"source": {
+				"curseforge": {
+					"modId": 223094,
+					"fileId": 2482481
+				}
+			}
+		},
+		{
+			"name": "ForgeEndertech forgeendertech-26.2.0.3-fabric-build.0201.jar",
+			"group": "latest",
+			"downloads": 132891133,
+			"file": "curseforge-9048727-forgeendertech-26.2.0.3-fabric-build.0201.jar",
+			"sha1": "eb285fa3cb9f08eb7734b8800f13daf58618997b",
+			"source": {
+				"curseforge": {
+					"modId": 244844,
+					"fileId": 9048727
+				}
+			}
+		},
+		{
+			"name": "In Control! InControl - 1.20-9.5.0",
+			"group": "latest",
+			"downloads": 136335912,
+			"file": "curseforge-8790496-incontrol-1.20-9.5.0.jar",
+			"sha1": "d9de091a691c65bb24523036de66b13939427fde",
+			"source": {
+				"curseforge": {
+					"modId": 257356,
+					"fileId": 8790496
+				}
+			}
+		},
+		{
+			"name": "Corpse [NEOFORGE][26.3] Corpse 1.1.20+26.3",
+			"group": "latest",
+			"downloads": 133126584,
+			"file": "curseforge-9027270-corpse-neoforge-1.1.20+26.3.jar",
+			"sha1": "3d6be20d417f2adf2067e846de9b1768e9684028",
+			"source": {
+				"curseforge": {
+					"modId": 316582,
+					"fileId": 9027270
+				}
+			}
+		},
+		{
+			"name": "AmbientSounds 6 AmbientSounds_FABRIC_v6.3.9_mc1.21.1.jar",
+			"group": "latest",
+			"downloads": 130305204,
+			"file": "curseforge-9037188-AmbientSounds_FABRIC_v6.3.9_mc1.21.1.jar",
+			"sha1": "d0b63397730d6ec2879fe6fd533c252cd920662f",
+			"source": {
+				"curseforge": {
+					"modId": 254284,
+					"fileId": 9037188
+				}
+			}
+		},
+		{
+			"name": "iChunUtil [1.21.5 Fabric] v 1.0.7",
+			"group": "latest",
+			"downloads": 128368570,
+			"file": "curseforge-6514011-iChunUtil-1.21.5-Fabric-1.0.7.jar",
+			"sha1": "d1f007937d254b666832f2b876a9a5abefbf1b47",
+			"source": {
+				"curseforge": {
+					"modId": 229060,
+					"fileId": 6514011
+				}
+			}
+		},
+		{
+			"name": "Configured Configured 2.7.5",
+			"group": "latest",
+			"downloads": 129464199,
+			"file": "curseforge-8403595-configured-neoforge-26.2-2.7.5.jar",
+			"sha1": "acdb5bce930c10a6f272a9b5ce0ecd47b8386f2d",
+			"source": {
+				"curseforge": {
+					"modId": 457570,
+					"fileId": 8403595
+				}
+			}
+		},
+		{
+			"name": "FTB XMod Compat [NEOFORGE][1.21.1] FTB XMod Compat 21.1.12",
+			"group": "latest",
+			"downloads": 132266343,
+			"file": "curseforge-8909889-ftb-xmod-compat-neoforge-21.1.12.jar",
+			"sha1": "1f68bf714cf7ea3e07b23c6b8c1ebe516b325047",
+			"source": {
+				"curseforge": {
+					"modId": 889915,
+					"fileId": 8909889
+				}
+			}
+		},
+		{
+			"name": "Flux Networks Flux-Networks-1.21.1-8.0.0",
+			"group": "latest",
+			"downloads": 137907170,
+			"file": "curseforge-6089446-FluxNetworks-1.21.1-8.0.0.jar",
+			"sha1": "183342f454428084748f2784c8efd748664a9f9c",
+			"source": {
+				"curseforge": {
+					"modId": 248020,
+					"fileId": 6089446
+				}
+			}
+		},
+		{
+			"name": "FTB Chunks (NeoForge) [NEOFORGE][1.21.1] FTB Chunks 2101.1.22",
+			"group": "latest",
+			"downloads": 131553956,
+			"file": "curseforge-8791113-ftb-chunks-neoforge-2101.1.22.jar",
+			"sha1": "a53f1bb7965c6954a348d4f321f03d3971ad503f",
+			"source": {
+				"curseforge": {
+					"modId": 314906,
+					"fileId": 8791113
+				}
+			}
+		},
+		{
+			"name": "Ender IO Ender IO - 5.3.72",
+			"group": "latest",
+			"downloads": 128048646,
+			"file": "curseforge-4674244-EnderIO-1.12.2-5.3.72.jar",
+			"sha1": "60d62a0dab5b12c527fd8eda1d353888e3406175",
+			"source": {
+				"curseforge": {
+					"modId": 64578,
+					"fileId": 4674244
+				}
+			}
+		},
+		{
+			"name": "Shadowfacts' Forgelin Forgelin-1.8.4.jar",
+			"group": "latest",
+			"downloads": 130554519,
+			"file": "curseforge-2785465-Forgelin-1.8.4.jar",
+			"sha1": "7a87553fcb808a45d9c7e03f113b355ac7fd10d7",
+			"source": {
+				"curseforge": {
+					"modId": 248453,
+					"fileId": 2785465
+				}
+			}
+		},
+		{
+			"name": "Macaw's Doors v1.1.5 / mc26.3 - NeoForge",
+			"group": "latest",
+			"downloads": 127262652,
+			"file": "curseforge-9007650-mcw-doors-1.1.5-mc26.3neoforge.jar",
+			"sha1": "4f076eb7560f77f233a229ff3a73821f3b84bd13",
+			"source": {
+				"curseforge": {
+					"modId": 378646,
+					"fileId": 9007650
+				}
+			}
+		},
+		{
+			"name": "YetAnotherConfigLib 3.9.7 for fabric 26.2",
+			"group": "latest",
+			"downloads": 127365252,
+			"file": "curseforge-8935502-yet_another_config_lib_v3-3.9.7+26.2-fabric.jar",
+			"sha1": "79c8ee7f8a0e775190dfff59be1e505e2f432998",
+			"source": {
+				"curseforge": {
+					"modId": 667299,
+					"fileId": 8935502
+				}
+			}
+		},
+		{
+			"name": "Bad Wither No Cookie - Reloaded bwncr-neoforge-1.21.1-3.20.4.jar",
+			"group": "latest",
+			"downloads": 126687791,
+			"file": "curseforge-8135209-bwncr-neoforge-1.21.1-3.20.4.jar",
+			"sha1": "dd7920e114fbd066986ea1028aa201a5e0742875",
+			"source": {
+				"curseforge": {
+					"modId": 261251,
+					"fileId": 8135209
+				}
+			}
+		},
+		{
+			"name": "TrashSlot trashslot-neoforge-26.3-26.3.0.1.jar",
+			"group": "latest",
+			"downloads": 127026397,
+			"file": "curseforge-8893543-trashslot-neoforge-26.3-26.3.0.1.jar",
+			"sha1": "76dbd5ef76ba86e79c63170fa621c8f6ec74495b",
+			"source": {
+				"curseforge": {
+					"modId": 235577,
+					"fileId": 8893543
+				}
+			}
+		},
+		{
+			"name": "XNet XNet - 1.20-6.1.7",
+			"group": "latest",
+			"downloads": 127057036,
+			"file": "curseforge-8256197-xnet-1.20-6.1.7.jar",
+			"sha1": "588bf894199e7573af3f7258e1582774fa0cc8f4",
+			"source": {
+				"curseforge": {
+					"modId": 260912,
+					"fileId": 8256197
+				}
+			}
+		},
+		{
+			"name": "Structure Gel API Structure Gel 26.1.2-v2.22.0",
+			"group": "latest",
+			"downloads": 123696469,
+			"file": "curseforge-8852215-structure_gel-26.1.2-2.22.0.jar",
+			"sha1": "540cca620f127ad510100f1a94161e7453eb2ec0",
+			"source": {
+				"curseforge": {
+					"modId": 378802,
+					"fileId": 8852215
+				}
+			}
+		},
+		{
+			"name": "Simple Voice Chat [FABRIC][26.2] Simple Voice Chat 2.6.22+26.2",
+			"group": "latest",
+			"downloads": 123277648,
+			"file": "curseforge-8601566-voicechat-fabric-2.6.22+26.2.jar",
+			"sha1": "f36fca7d4d091421e55f2a22d4e3cd0f462082b9",
+			"source": {
+				"curseforge": {
+					"modId": 416089,
+					"fileId": 8601566
+				}
+			}
+		},
+		{
+			"name": "Neat Neat-26.1.2-48-NEOFORGE.jar",
+			"group": "latest",
+			"downloads": 121696567,
+			"file": "curseforge-8281757-Neat-26.1.2-48-NEOFORGE.jar",
+			"sha1": "b49c06511ddd7a20d39a78f4c88a93f1c54184b7",
+			"source": {
+				"curseforge": {
+					"modId": 238372,
+					"fileId": 8281757
+				}
+			}
+		},
+		{
+			"name": "Resource Loader ResourceLoader-MC1.12.1-1.5.3.jar",
+			"group": "latest",
+			"downloads": 121604119,
+			"file": "curseforge-2477566-ResourceLoader-MC1.12.1-1.5.3.jar",
+			"sha1": "d8c10e6e29df5f9bc51e468642d9b3cae5f2f8e4",
+			"source": {
+				"curseforge": {
+					"modId": 226447,
+					"fileId": 2477566
+				}
+			}
+		},
+		{
+			"name": "KleeSlabs kleeslabs-fabric-26.3-26.3.0.2.jar",
+			"group": "latest",
+			"downloads": 121708611,
+			"file": "curseforge-8969717-kleeslabs-fabric-26.3-26.3.0.2.jar",
+			"sha1": "7e57c0167d325ba815a0765025d19bda9ea8f5cd",
+			"source": {
+				"curseforge": {
+					"modId": 241895,
+					"fileId": 8969717
+				}
+			}
+		},
+		{
+			"name": "MrCrayfish's Furniture Mod (Legacy) Furniture Mod 6.3.2",
+			"group": "latest",
+			"downloads": 121520358,
+			"file": "curseforge-3865259-furniture-6.3.2-1.12.2.jar",
+			"sha1": "3214f030651e7585a076bd96ba3863e2fa1b6676",
+			"source": {
+				"curseforge": {
+					"modId": 55438,
+					"fileId": 3865259
+				}
+			}
+		},
+		{
+			"name": "Morpheus Morpheus-1.16.5-4.2.70.jar",
+			"group": "latest",
+			"downloads": 127037940,
+			"file": "curseforge-3215383-Morpheus-1.16.5-4.2.70.jar",
+			"sha1": "8f956961e4994c98aab06765355875f91631bb43",
+			"source": {
+				"curseforge": {
+					"modId": 69118,
+					"fileId": 3215383
+				}
+			}
+		},
+		{
+			"name": "Mouse Tweaks [1.12.2] Mouse Tweaks 2.10",
+			"group": "1.12.2",
+			"downloads": 479966688,
+			"file": "curseforge-2671937-MouseTweaks-2.10-mc1.12.2.jar",
+			"sha1": "0d3b0589021905b2eab8ba93805e9fdef463288e",
+			"source": {
+				"curseforge": {
+					"modId": 60089,
+					"fileId": 2671937
+				}
+			}
+		},
+		{
+			"name": "Controlling Controlling-3.0.12.4.jar",
+			"group": "1.12.2",
+			"downloads": 396233114,
+			"file": "curseforge-5408385-Controlling-3.0.12.4.jar",
+			"sha1": "d588b1fefb912c1080d397834b6300e59409183c",
+			"source": {
+				"curseforge": {
+					"modId": 250398,
+					"fileId": 5408385
+				}
+			}
+		},
+		{
+			"name": "Waystones Waystones_1.12.2-4.1.0.jar",
+			"group": "1.12.2",
+			"downloads": 321712445,
+			"file": "curseforge-2859589-Waystones_1.12.2-4.1.0.jar",
+			"sha1": "877a5cd3ed8e3f29e900b74c8c5400ee6e43c3bf",
+			"source": {
+				"curseforge": {
+					"modId": 245755,
+					"fileId": 2859589
+				}
+			}
+		},
+		{
+			"name": "Placebo Placebo-1.12.2-1.6.1.jar",
+			"group": "1.12.2",
+			"downloads": 334820852,
+			"file": "curseforge-4629597-Placebo-1.12.2-1.6.1.jar",
+			"sha1": "d2142220e0944a8ad9d76ad7f50a5aa8d4e5fd80",
+			"source": {
+				"curseforge": {
+					"modId": 283644,
+					"fileId": 4629597
+				}
+			}
+		},
+		{
+			"name": "Jade 🔍 Jade-0.1.0.jar",
+			"group": "1.12.2",
+			"downloads": 274822899,
+			"file": "curseforge-2735905-Jade-0.1.0.jar",
+			"sha1": "6876a7399c604169d7acb06d441743eaac5dd615",
+			"source": {
+				"curseforge": {
+					"modId": 324717,
+					"fileId": 2735905
+				}
+			}
+		},
+		{
+			"name": "Collective collective-1.12.2-3.0.jar",
+			"group": "1.12.2",
+			"downloads": 266694788,
+			"file": "curseforge-3533131-collective-1.12.2-3.0.jar",
+			"sha1": "c4c9a362baf6404024d44cd63e673eb7a44494ba",
+			"source": {
+				"curseforge": {
+					"modId": 342584,
+					"fileId": 3533131
+				}
+			}
+		},
+		{
+			"name": "Just Enough Resources (JER) JustEnoughResources-1.12.2-0.9.2.60",
+			"group": "1.12.2",
+			"downloads": 242994807,
+			"file": "curseforge-2728585-JustEnoughResources-1.12.2-0.9.2.60.jar",
+			"sha1": "3d4c9b8bb4ad948c7e26b7becd1c836f8cb34d07",
+			"source": {
+				"curseforge": {
+					"modId": 240630,
+					"fileId": 2728585
+				}
+			}
+		},
+		{
+			"name": "Storage Drawers Storage Drawers-1.12-5.5.3",
+			"group": "1.12.2",
+			"downloads": 240347398,
+			"file": "curseforge-5981297-StorageDrawers-1.12.2-5.5.3.jar",
+			"sha1": "8be312005dc837372bfbe2dfb8db77822d326062",
+			"source": {
+				"curseforge": {
+					"modId": 223852,
+					"fileId": 5981297
+				}
+			}
+		},
+		{
+			"name": "Applied Energistics 2 appliedenergistics2-rv6-stable-7.jar",
+			"group": "1.12.2",
+			"downloads": 227699960,
+			"file": "curseforge-2747063-appliedenergistics2-rv6-stable-7.jar",
+			"sha1": "e5c3c11eafc5daf73652a2dabe855e3759caa8b5",
+			"source": {
+				"curseforge": {
+					"modId": 223794,
+					"fileId": 2747063
+				}
+			}
+		},
+		{
+			"name": "Mantle Mantle-1.12-1.3.3.55.jar",
+			"group": "1.12.2",
+			"downloads": 227132833,
+			"file": "curseforge-2713386-Mantle-1.12-1.3.3.55.jar",
+			"sha1": "a1e5d5c197dae3e92637cafb8cd996185191165b",
+			"source": {
+				"curseforge": {
+					"modId": 74924,
+					"fileId": 2713386
+				}
+			}
+		},
+		{
+			"name": "CreativeCore CreativeCore_v1.10.71_mc1.12.2.jar",
+			"group": "1.12.2",
+			"downloads": 224997072,
+			"file": "curseforge-4722163-CreativeCore_v1.10.71_mc1.12.2.jar",
+			"sha1": "2c60a20ae9c9431a3b215a331c2b2af7fa3a060c",
+			"source": {
+				"curseforge": {
+					"modId": 257814,
+					"fileId": 4722163
+				}
+			}
+		},
+		{
+			"name": "CraftTweaker CraftTweaker2-1.12-4.1.20.715.jar",
+			"group": "1.12.2",
+			"downloads": 228213454,
+			"file": "curseforge-8051578-CraftTweaker2-1.12-4.1.20.715.jar",
+			"sha1": "cdfbe5389ce16dc6e6bf9d95367d80a7d7305ac9",
+			"source": {
+				"curseforge": {
+					"modId": 239197,
+					"fileId": 8051578
+				}
+			}
+		},
+		{
+			"name": "FTB Quests (NeoForge) FTBQuests-1202.9.0.15.jar",
+			"group": "1.12.2",
+			"downloads": 225373682,
+			"file": "curseforge-3156637-FTBQuests-1202.9.0.15.jar",
+			"sha1": "03413411b820e0fb91f36013aa5954dde3bc85e9",
+			"source": {
+				"curseforge": {
+					"modId": 289412,
+					"fileId": 3156637
+				}
+			}
+		},
+		{
+			"name": "Iron Chests ironchest-1.12.2-7.0.72.847.jar",
+			"group": "1.12.2",
+			"downloads": 220298682,
+			"file": "curseforge-2747935-ironchest-1.12.2-7.0.72.847.jar",
+			"sha1": "adc4c785a484c5d5a4ab9a29e1937faeed4312dd",
+			"source": {
+				"curseforge": {
+					"modId": 228756,
+					"fileId": 2747935
+				}
+			}
+		},
+		{
+			"name": "AutoRegLib AutoRegLib-1.3-32.jar",
+			"group": "1.12.2",
+			"downloads": 239758430,
+			"file": "curseforge-2746011-AutoRegLib-1.3-32.jar",
+			"sha1": "267269ca7f1a71fb3bb35bdb8e61702a4da6263e",
+			"source": {
+				"curseforge": {
+					"modId": 250363,
+					"fileId": 2746011
+				}
+			}
+		},
+		{
+			"name": "spark 1.6.3 (Forge 1.12.2)",
+			"group": "1.12.2",
+			"downloads": 214133946,
+			"file": "curseforge-3542217-spark-forge.jar",
+			"sha1": "1b0f0591b5eb4e688ebb3f0ecf41858688b033fb",
+			"source": {
+				"curseforge": {
+					"modId": 361579,
+					"fileId": 3542217
+				}
+			}
+		},
+		{
+			"name": "The Twilight Forest Twilight Forest - MC 1.12.2 - 3.11.1021",
+			"group": "1.12.2",
+			"downloads": 208826324,
+			"file": "curseforge-3051450-twilightforest-1.12.2-3.11.1021-universal.jar",
+			"sha1": "a4c2d01f98350fe41374666db8e1419f770a1609",
+			"source": {
+				"curseforge": {
+					"modId": 227639,
+					"fileId": 3051450
+				}
+			}
+		},
+		{
+			"name": "ConnectedTexturesMod CTM - MC1.12.2-1.0.2.31",
+			"group": "1.12.2",
+			"downloads": 205101250,
+			"file": "curseforge-2915363-CTM-MC1.12.2-1.0.2.31.jar",
+			"sha1": "892e0788531269bfa2f356e4e12825e19d4e5412",
+			"source": {
+				"curseforge": {
+					"modId": 267602,
+					"fileId": 2915363
+				}
+			}
+		},
+		{
+			"name": "Cosmetic Armor Reworked CosmeticArmorReworked-1.12.2-v5a.jar",
+			"group": "1.12.2",
+			"downloads": 201491095,
+			"file": "curseforge-2937869-CosmeticArmorReworked-1.12.2-v5a.jar",
+			"sha1": "dae97e0a1539702b07ffa5e48410e57c470e3bd0",
+			"source": {
+				"curseforge": {
+					"modId": 237307,
+					"fileId": 2937869
+				}
+			}
+		},
+		{
+			"name": "Cooking for Blockheads CookingForBlockheads_1.12.2-6.5.0.jar",
+			"group": "1.12.2",
+			"downloads": 198189158,
+			"file": "curseforge-2862651-CookingForBlockheads_1.12.2-6.5.0.jar",
+			"sha1": "8e7b73b39c0bdae84a4be445027747c9bae935c4",
+			"source": {
+				"curseforge": {
+					"modId": 231484,
+					"fileId": 2862651
+				}
+			}
+		},
+		{
+			"name": "Tinkers Construct TConstruct-1.12.2-2.13.0.183.jar",
+			"group": "1.12.2",
+			"downloads": 194719410,
+			"file": "curseforge-2902483-TConstruct-1.12.2-2.13.0.183.jar",
+			"sha1": "e37e1f05ad0eaf567497ce655bc877dc1778bd0f",
+			"source": {
+				"curseforge": {
+					"modId": 74072,
+					"fileId": 2902483
+				}
+			}
+		},
+		{
+			"name": "CodeChicken Lib 1.8.+ CodeChicken Lib 1.12.2-3.2.3.358-universal",
+			"group": "1.12.2",
+			"downloads": 197051077,
+			"file": "curseforge-2779848-CodeChickenLib-1.12.2-3.2.3.358-universal.jar",
+			"sha1": "b6a7e3b889c354216059a3bfad298e30a1e46a2d",
+			"source": {
+				"curseforge": {
+					"modId": 242818,
+					"fileId": 2779848
+				}
+			}
+		},
+		{
+			"name": "Fast Leaf Decay FastLeafDecay-v14.jar",
+			"group": "1.12.2",
+			"downloads": 191886671,
+			"file": "curseforge-2463272-FastLeafDecay-v14.jar",
+			"sha1": "635bd0338a5b1e3b67b50f5a4c7311e1a6b579f6",
+			"source": {
+				"curseforge": {
+					"modId": 230976,
+					"fileId": 2463272
+				}
+			}
+		},
+		{
+			"name": "CoFH Core CoFHCore-1.12.2-4.6.6.1-universal.jar",
+			"group": "1.12.2",
+			"downloads": 210727978,
+			"file": "curseforge-2920433-CoFHCore-1.12.2-4.6.6.1-universal.jar",
+			"sha1": "4dd5aa3ff30d7966ae253556f79bb3f13bc5576e",
+			"source": {
+				"curseforge": {
+					"modId": 69162,
+					"fileId": 2920433
+				}
+			}
+		},
+		{
+			"name": "Toast Control Toast Control-1.12.2-1.8.1.jar",
+			"group": "1.12.2",
+			"downloads": 192906909,
+			"file": "curseforge-2707353-Toast-Control-1.12.2-1.8.1.jar",
+			"sha1": "7365b5415d5f1a39997fe142ccc42ae732e31c01",
+			"source": {
+				"curseforge": {
+					"modId": 271740,
+					"fileId": 2707353
+				}
+			}
+		},
+		{
+			"name": "Item Filters ItemFilters-1.0.4.2.jar",
+			"group": "1.12.2",
+			"downloads": 188910282,
+			"file": "curseforge-3003364-ItemFilters-1.0.4.2.jar",
+			"sha1": "6b6560aea35c6e0e8a550ea7044501412b0fb335",
+			"source": {
+				"curseforge": {
+					"modId": 309674,
+					"fileId": 3003364
+				}
+			}
+		},
+		{
+			"name": "McJtyLib McJtyLib - 1.12-3.5.4",
+			"group": "1.12.2",
+			"downloads": 186375238,
+			"file": "curseforge-2745846-mcjtylib-1.12-3.5.4.jar",
+			"sha1": "8f3e381c4aea651f55ed1cd35fd69613fcd7f9da",
+			"source": {
+				"curseforge": {
+					"modId": 233105,
+					"fileId": 2745846
+				}
+			}
+		},
+		{
+			"name": "OpenBlocks Elevator ElevatorMod-1.12.2-1.3.14.jar",
+			"group": "1.12.2",
+			"downloads": 179421747,
+			"file": "curseforge-2845365-ElevatorMod-1.12.2-1.3.14.jar",
+			"sha1": "7701eb987d8102a345e46725f4f2c6b9fc83005c",
+			"source": {
+				"curseforge": {
+					"modId": 250832,
+					"fileId": 2845365
+				}
+			}
+		},
+		{
+			"name": "Crafting Tweaks CraftingTweaks_1.12.2-8.1.9.jar",
+			"group": "1.12.2",
+			"downloads": 177133758,
+			"file": "curseforge-2562139-CraftingTweaks_1.12.2-8.1.9.jar",
+			"sha1": "be42bf244d4864f6832890ef2a2ade59f44a3f8b",
+			"source": {
+				"curseforge": {
+					"modId": 233071,
+					"fileId": 2562139
+				}
+			}
+		},
+		{
+			"name": "FastWorkbench FastWorkbench-1.12.2-1.7.4.jar",
+			"group": "1.12.2",
+			"downloads": 184834327,
+			"file": "curseforge-4030366-FastWorkbench-1.12.2-1.7.4.jar",
+			"sha1": "cb783cacf4a367dc462af0e2b28a7e6306067bcb",
+			"source": {
+				"curseforge": {
+					"modId": 288885,
+					"fileId": 4030366
+				}
+			}
+		},
+		{
+			"name": "Cucumber Library Cucumber-1.12.2-1.1.3.jar",
+			"group": "1.12.2",
+			"downloads": 174874642,
+			"file": "curseforge-2645867-Cucumber-1.12.2-1.1.3.jar",
+			"sha1": "8be30f1977cd9df566dfbae2977793335e576591",
+			"source": {
+				"curseforge": {
+					"modId": 272335,
+					"fileId": 2645867
+				}
+			}
+		},
+		{
+			"name": "Default Options DefaultOptions_1.12.2-9.2.8.jar",
+			"group": "1.12.2",
+			"downloads": 175096331,
+			"file": "curseforge-2624732-DefaultOptions_1.12.2-9.2.8.jar",
+			"sha1": "e3197fc44aa2f59897713a8889a5a56c0f8ccbf3",
+			"source": {
+				"curseforge": {
+					"modId": 232131,
+					"fileId": 2624732
+				}
+			}
+		},
+		{
+			"name": "Botania Botania r1.10-364.4.jar",
+			"group": "1.12.2",
+			"downloads": 170699869,
+			"file": "curseforge-3330934-Botania-r1.10-364.4.jar",
+			"sha1": "7ad38e809f785c18fbc17c5beac2650342ae4a96",
+			"source": {
+				"curseforge": {
+					"modId": 225643,
+					"fileId": 3330934
+				}
+			}
+		},
+		{
+			"name": "YUNG's Better Mineshafts (Forge/NeoForge) [1.12.2] YUNG's Better Mineshafts v2.2.1",
+			"group": "1.12.2",
+			"downloads": 167426473,
+			"file": "curseforge-3247154-BetterMineshaftsForge-1.12.2-2.2.1.jar",
+			"sha1": "590de926876fb792f48b120a3483970e8fff3aa3",
+			"source": {
+				"curseforge": {
+					"modId": 389665,
+					"fileId": 3247154
+				}
+			}
+		},
+		{
+			"name": "Torchmaster torchmaster_1.12.2-1.8.5.0.jar",
+			"group": "1.12.2",
+			"downloads": 166230739,
+			"file": "curseforge-3529742-torchmaster_1.12.2-1.8.5.0.jar",
+			"sha1": "8bc4bae76967b025746768473462d446ee09f505",
+			"source": {
+				"curseforge": {
+					"modId": 254268,
+					"fileId": 3529742
+				}
+			}
+		},
+		{
+			"name": "MmmMmmMmmMmm (Target Dummy) MmmMmmMmmMmm-1.12-2.0.7.jar",
+			"group": "1.12.2",
+			"downloads": 166517962,
+			"file": "curseforge-8514387-MmmMmmMmmMmm-1.12-2.0.7.jar",
+			"sha1": "f489d246765b7a9a6735f82677fdb41d5c6f265f",
+			"source": {
+				"curseforge": {
+					"modId": 225738,
+					"fileId": 8514387
+				}
+			}
+		},
+		{
+			"name": "Mouse Tweaks MouseTweaks-2.4.4-mc1.7.10.jar",
+			"group": "1.7.10",
+			"downloads": 479966688,
+			"file": "curseforge-2209265-MouseTweaks-2.4.4-mc1.7.10.jar",
+			"sha1": "1fef53ebcd48f003fa0799de51e86ad113e3af7c",
+			"source": {
+				"curseforge": {
+					"modId": 60089,
+					"fileId": 2209265
+				}
+			}
+		},
+		{
+			"name": "Controlling Controlling-1.7.10-1.0.0.8.jar",
+			"group": "1.7.10",
+			"downloads": 396233114,
+			"file": "curseforge-5507281-Controlling-1.7.10-1.0.0.8.jar",
+			"sha1": "1eef5fbbf40b022529854106be2d3bfd20c990b5",
+			"source": {
+				"curseforge": {
+					"modId": 250398,
+					"fileId": 5507281
+				}
+			}
+		},
+		{
+			"name": "Waystones Waystones-mc1.7.10-1.0.12.jar",
+			"group": "1.7.10",
+			"downloads": 321712445,
+			"file": "curseforge-2559125-Waystones-mc1.7.10-1.0.12.jar",
+			"sha1": "84f33bdf36c749623b5f38d21a20bc92fbb6522d",
+			"source": {
+				"curseforge": {
+					"modId": 245755,
+					"fileId": 2559125
+				}
+			}
+		},
+		{
+			"name": "Storage Drawers StorageDrawers-1.7.10-1.10.9.jar",
+			"group": "1.7.10",
+			"downloads": 240347398,
+			"file": "curseforge-2469586-StorageDrawers-1.7.10-1.10.9.jar",
+			"sha1": "5bdf2f085625ed799789a89e163297444f014940",
+			"source": {
+				"curseforge": {
+					"modId": 223852,
+					"fileId": 2469586
+				}
+			}
+		},
+		{
+			"name": "Applied Energistics 2 appliedenergistics2-rv2-stable-10.jar",
+			"group": "1.7.10",
+			"downloads": 227699960,
+			"file": "curseforge-2245762-appliedenergistics2-rv2-stable-10.jar",
+			"sha1": "7cebee1d108a571b79704c179368d63cadf3a8cc",
+			"source": {
+				"curseforge": {
+					"modId": 223794,
+					"fileId": 2245762
+				}
+			}
+		},
+		{
+			"name": "Mantle Mantle-1.7.10-0.3.2b.jar",
+			"group": "1.7.10",
+			"downloads": 227132833,
+			"file": "curseforge-2264244-Mantle-1.7.10-0.3.2b.jar",
+			"sha1": "56552968dc8df9a3ad0f909024d086f3748844dc",
+			"source": {
+				"curseforge": {
+					"modId": 74924,
+					"fileId": 2264244
+				}
+			}
+		},
+		{
+			"name": "CreativeCore CreativeCore v1.3.24 mc1.7.10.jar",
+			"group": "1.7.10",
+			"downloads": 224997072,
+			"file": "curseforge-2462369-CreativeCore-v1.3.24-mc1.7.10.jar",
+			"sha1": "5671ec8cc0d164262c34863bfeb2a4de2f60f4bc",
+			"source": {
+				"curseforge": {
+					"modId": 257814,
+					"fileId": 2462369
+				}
+			}
+		},
+		{
+			"name": "Iron Chests ironchest-1.7.10-6.0.62.742-universal.jar",
+			"group": "1.7.10",
+			"downloads": 220298682,
+			"file": "curseforge-2230908-ironchest-1.7.10-6.0.62.742-universal.jar",
+			"sha1": "2888052ca2727a875ac13fa266e74b53e90cfab4",
+			"source": {
+				"curseforge": {
+					"modId": 228756,
+					"fileId": 2230908
+				}
+			}
+		},
+		{
+			"name": "spark 1.10.19 (Forge 1.7.10)",
+			"group": "1.7.10",
+			"downloads": 214133946,
+			"file": "curseforge-4271867-spark-1.10.19-forge1710.jar",
+			"sha1": "b0a0242d5ae13a035b9f57c394c146a500881cd6",
+			"source": {
+				"curseforge": {
+					"modId": 361579,
+					"fileId": 4271867
+				}
+			}
+		},
+		{
+			"name": "The Twilight Forest Twilight Forest - MC 1.7.10 - 2.4.3",
+			"group": "1.7.10",
+			"downloads": 208826324,
+			"file": "curseforge-4629338-TwilightForest-2.4.3.jar",
+			"sha1": "d4dd0f4e833ba2aa42f573ea662f6edaedb6d7f6",
+			"source": {
+				"curseforge": {
+					"modId": 227639,
+					"fileId": 4629338
+				}
+			}
+		},
+		{
+			"name": "Cosmetic Armor Reworked CosmeticArmorReworked-1.7.10-v7.jar",
+			"group": "1.7.10",
+			"downloads": 201491095,
+			"file": "curseforge-3763564-CosmeticArmorReworked-1.7.10-v7.jar",
+			"sha1": "36941d2b9e55c869af867059adf5d8cd093a4fc1",
+			"source": {
+				"curseforge": {
+					"modId": 237307,
+					"fileId": 3763564
+				}
+			}
+		},
+		{
+			"name": "Cooking for Blockheads cookingbook-mc1.7.10-1.0.140.jar",
+			"group": "1.7.10",
+			"downloads": 198189158,
+			"file": "curseforge-2299135-cookingbook-mc1.7.10-1.0.140.jar",
+			"sha1": "15b2a48512d475359451334ff505c912adcef73a",
+			"source": {
+				"curseforge": {
+					"modId": 231484,
+					"fileId": 2299135
+				}
+			}
+		},
+		{
+			"name": "Tinkers Construct TConstruct-1.7.10-1.8.8.jar",
+			"group": "1.7.10",
+			"downloads": 194719410,
+			"file": "curseforge-2264246-TConstruct-1.7.10-1.8.8.jar",
+			"sha1": "f41c91344ad8ed5de74b3bbba8c055594887785a",
+			"source": {
+				"curseforge": {
+					"modId": 74072,
+					"fileId": 2264246
+				}
+			}
+		},
+		{
+			"name": "Fast Leaf Decay FastLeafDecay-1.7.10-1.4.jar",
+			"group": "1.7.10",
+			"downloads": 191886671,
+			"file": "curseforge-2272838-FastLeafDecay-1.7.10-1.4.jar",
+			"sha1": "d82f7a1f7573f35a4f1dace410a7fbb88bb4b522",
+			"source": {
+				"curseforge": {
+					"modId": 230976,
+					"fileId": 2272838
+				}
+			}
+		},
+		{
+			"name": "CoFH Core CoFHCore-[1.7.10]3.1.4-329.jar",
+			"group": "1.7.10",
+			"downloads": 210727978,
+			"file": "curseforge-2388750-CoFHCore--1.7.10-3.1.4-329.jar",
+			"sha1": "b7d66be19a6898232f5498a50ac0207109a3b2e6",
+			"source": {
+				"curseforge": {
+					"modId": 69162,
+					"fileId": 2388750
+				}
+			}
+		},
+		{
+			"name": "McJtyLib mcjtylib-1.8.1.jar",
+			"group": "1.7.10",
+			"downloads": 186375238,
+			"file": "curseforge-2272449-mcjtylib-1.8.1.jar",
+			"sha1": "ade40bb060ac948c60d44e17a2d8dd27771aeed1",
+			"source": {
+				"curseforge": {
+					"modId": 233105,
+					"fileId": 2272449
+				}
+			}
+		},
+		{
+			"name": "Crafting Tweaks craftingtweaks-mc1.7.10-1.0.88.jar",
+			"group": "1.7.10",
+			"downloads": 177133758,
+			"file": "curseforge-2457094-craftingtweaks-mc1.7.10-1.0.88.jar",
+			"sha1": "9b4ff8b2c59cc78ba45c1d648cbd23ad01c53d45",
+			"source": {
+				"curseforge": {
+					"modId": 233071,
+					"fileId": 2457094
+				}
+			}
+		},
+		{
+			"name": "Default Options defaultkeys-mc1.7.10-1.0.28.jar",
+			"group": "1.7.10",
+			"downloads": 175096331,
+			"file": "curseforge-2277197-defaultkeys-mc1.7.10-1.0.28.jar",
+			"sha1": "f0fc1ed633ab16e8d2bd48c8724c88afa0d704a9",
+			"source": {
+				"curseforge": {
+					"modId": 232131,
+					"fileId": 2277197
+				}
+			}
+		},
+		{
+			"name": "Chisel Chisel - 2.9.5.11",
+			"group": "1.7.10",
+			"downloads": 167429127,
+			"file": "curseforge-2287442-Chisel-2.9.5.11.jar",
+			"sha1": "d9e4b54913bbd38543ab873043145e3b4992bf95",
+			"source": {
+				"curseforge": {
+					"modId": 235279,
+					"fileId": 2287442
+				}
+			}
+		},
+		{
+			"name": "MmmMmmMmmMmm (Target Dummy) MmmMmmMmmMmm-1.7.10-1.9.jar",
+			"group": "1.7.10",
+			"downloads": 166517962,
+			"file": "curseforge-2265493-MmmMmmMmmMmm-1.7.10-1.9.jar",
+			"sha1": "8d61af07af91064c115a4ea2c57deba44a936d13",
+			"source": {
+				"curseforge": {
+					"modId": 225738,
+					"fileId": 2265493
+				}
+			}
+		},
+		{
+			"name": "NetherPortalFix netherportalfix-mc1.7.10-1.1.0.jar",
+			"group": "1.7.10",
+			"downloads": 164257036,
+			"file": "curseforge-2279400-netherportalfix-mc1.7.10-1.1.0.jar",
+			"sha1": "c812e8edc89718fd1ecc5d6bdb0855a0ac4f62f1",
+			"source": {
+				"curseforge": {
+					"modId": 241160,
+					"fileId": 2279400
+				}
+			}
+		},
+		{
+			"name": "Observable 4.4.1 (forge)",
+			"group": "mid-tail",
+			"downloads": 49881193,
+			"file": "curseforge-5080064-observable-4.4.1.jar",
+			"sha1": "bd44f1fd4eab0e58fd5e05a2e2b23071f132edd0",
+			"source": {
+				"curseforge": {
+					"modId": 509575,
+					"fileId": 5080064
+				}
+			}
+		},
+		{
+			"name": "MPUtils MPUtils v1.5.7 (MC1.12)",
+			"group": "mid-tail",
+			"downloads": 45963326,
+			"file": "curseforge-2685162-MPUtils-1.12.2-1.5.7.jar",
+			"sha1": "5c034b16d420af6d8b935f3416608f1cd1378ea9",
+			"source": {
+				"curseforge": {
+					"modId": 244940,
+					"fileId": 2685162
+				}
+			}
+		},
+		{
+			"name": "Cardinal Components API cardinal-components-api-7.3.2.jar",
+			"group": "mid-tail",
+			"downloads": 36756205,
+			"file": "curseforge-8378072-cardinal-components-api-7.3.2.jar",
+			"sha1": "824bbaaae302bd3a09ccd65146cb93037db55c81",
+			"source": {
+				"curseforge": {
+					"modId": 318449,
+					"fileId": 8378072
+				}
+			}
+		},
+		{
+			"name": "Smooth Boot (Reloaded) Smooth Boot (Reloaded) 0.0.4 for MC 1.20.1",
+			"group": "mid-tail",
+			"downloads": 51338951,
+			"file": "curseforge-5016280-smoothboot-reloaded--mc1.20.1-0.0.4.jar",
+			"sha1": "3fd79132dba444bd109b5de4ad75dee06a48e130",
+			"source": {
+				"curseforge": {
+					"modId": 633412,
+					"fileId": 5016280
+				}
+			}
+		},
+		{
+			"name": "Dynamic Lights DynamicLights 26.3.2NF",
+			"group": "mid-tail",
+			"downloads": 29127751,
+			"file": "curseforge-9007922-dynamiclights-26.3.2NF.jar",
+			"sha1": "9d46d3e3801967b7b51e1233028cc1fb85423b0d",
+			"source": {
+				"curseforge": {
+					"modId": 227874,
+					"fileId": 9007922
+				}
+			}
+		},
+		{
+			"name": "AstikorCarts [Horse Carts] AstikorCarts 1.1.2 for Minecraft 1.19.2",
+			"group": "mid-tail",
+			"downloads": 26013140,
+			"file": "curseforge-4367405-astikorcarts-1.19.2-1.1.2.jar",
+			"sha1": "1eb1f126bc0515f1fe96a1671045b05e73c11010",
+			"source": {
+				"curseforge": {
+					"modId": 273771,
+					"fileId": 4367405
+				}
+			}
+		},
+		{
+			"name": "Twerk Sim 2K16 TS2K16-1.2.10.jar",
+			"group": "mid-tail",
+			"downloads": 22443102,
+			"file": "curseforge-2659489-TS2K16-1.2.10.jar",
+			"sha1": "6e5cebcb3c2ace433f1abf5d9c9ceb619ae2df02",
+			"source": {
+				"curseforge": {
+					"modId": 251301,
+					"fileId": 2659489
+				}
+			}
+		},
+		{
+			"name": "StarbuncleMania starbunclemania-1.21.1-1.5.9.jar",
+			"group": "mid-tail",
+			"downloads": 20331912,
+			"file": "curseforge-8964554-starbunclemania-1.21.1-1.5.9.jar",
+			"sha1": "20c56011923ca409da8ad11e2fd9b284f28d8009",
+			"source": {
+				"curseforge": {
+					"modId": 746215,
+					"fileId": 8964554
+				}
+			}
+		},
+		{
+			"name": "Advanced Netherite (Fabric) [26.3] 2.4.4 - Advanced Netherite (Fabric)",
+			"group": "mid-tail",
+			"downloads": 18838449,
+			"file": "curseforge-9049372-advancednetherite-fabric-2.4.4-26.3.jar",
+			"sha1": "4b23c4cd3ebee5c2bed8ef10ac497eaa1e71d528",
+			"source": {
+				"curseforge": {
+					"modId": 547881,
+					"fileId": 9049372
+				}
+			}
+		},
+		{
+			"name": "Awesome Dungeon Nether edition - Forge Awesome dungeon nether 3.1.1 - Forge 1.21.9",
+			"group": "mid-tail",
+			"downloads": 18311269,
+			"file": "curseforge-7101640-awesomedungeonnether-forge-1.21.9-3.1.1.jar",
+			"sha1": "f90d02a515c8a34d825ff0608cff81a5db93e5d4",
+			"source": {
+				"curseforge": {
+					"modId": 566649,
+					"fileId": 7101640
+				}
+			}
+		},
+		{
+			"name": "Integrated NBT integratednbt-26.1.2-neoforge-1.6.4.jar",
+			"group": "mid-tail",
+			"downloads": 17123712,
+			"file": "curseforge-8918379-integratednbt-26.1.2-neoforge-1.6.4.jar",
+			"sha1": "11aedd323bb8bc17e9b112b5f3773ca0d63e76b6",
+			"source": {
+				"curseforge": {
+					"modId": 380998,
+					"fileId": 8918379
+				}
+			}
+		},
+		{
+			"name": "Modular Machinery ModularMachinery-1.12.2-1.11.1.jar",
+			"group": "mid-tail",
+			"downloads": 17563321,
+			"file": "curseforge-2761302-modularmachinery-1.12.2-1.11.1.jar",
+			"sha1": "fc3d0856dd99c29a0d8395d4bc26c7b2f581400e",
+			"source": {
+				"curseforge": {
+					"modId": 270790,
+					"fileId": 2761302
+				}
+			}
+		},
+		{
+			"name": "XyCraft: Machines XyCraft Machines 0.9.2",
+			"group": "mid-tail",
+			"downloads": 19521128,
+			"file": "curseforge-8201475-xycraft-machines-0.9.2.jar",
+			"sha1": "563ec64a732ea79eb65e3fead8b66099a584a6ae",
+			"source": {
+				"curseforge": {
+					"modId": 653791,
+					"fileId": 8201475
+				}
+			}
+		},
+		{
+			"name": "Guard Villagers (Fabric/Quilt) guardvillagers-2.1.3-26.2.jar",
+			"group": "mid-tail",
+			"downloads": 15359816,
+			"file": "curseforge-8271937-guardvillagers-2.1.3-26.2.jar",
+			"sha1": "e85a16f6e3a273df525662f2b98477c202b127b8",
+			"source": {
+				"curseforge": {
+					"modId": 571503,
+					"fileId": 8271937
+				}
+			}
+		},
+		{
+			"name": "Longer Chat History [Forge/NeoForge/Fabric] LongerChatHistory-neoforge-1.9.jar",
+			"group": "mid-tail",
+			"downloads": 14429776,
+			"file": "curseforge-8891280-LongerChatHistory-neoforge-1.9.jar",
+			"sha1": "46786d67d778ab30c299062affacdf396fa3fd78",
+			"source": {
+				"curseforge": {
+					"modId": 913234,
+					"fileId": 8891280
+				}
+			}
+		},
+		{
+			"name": "Tinkers' Addons Tinkers' Addons 1.0.7",
+			"group": "mid-tail",
+			"downloads": 9655793,
+			"file": "curseforge-2476626-Tinkers-Addons-1.12.1-1.0.7.jar",
+			"sha1": "a47604126f4eb8642f7d572fead28cfc008e602d",
+			"source": {
+				"curseforge": {
+					"modId": 245549,
+					"fileId": 2476626
+				}
+			}
+		},
+		{
+			"name": "EEEAB's Mobs eeeabsmobs-1.20.1-0.98.1.jar",
+			"group": "mid-tail",
+			"downloads": 10194649,
+			"file": "curseforge-8073814-eeeabsmobs-1.20.1-0.98.1.jar",
+			"sha1": "3cb84f3056d2adf5ddc3e8feb5f5e2aa108bb5e9",
+			"source": {
+				"curseforge": {
+					"modId": 921600,
+					"fileId": 8073814
+				}
+			}
+		},
+		{
+			"name": "Tooltip Overhaul [NEOFORGE] Tooltip Overhaul 2.0.6-1.21.1",
+			"group": "mid-tail",
+			"downloads": 8939530,
+			"file": "curseforge-8980608-tooltipoverhaul-neoforge-1.21.1-2.0.6.jar",
+			"sha1": "82f2732775ba103c8e6ba13d4114043f88cde919",
+			"source": {
+				"curseforge": {
+					"modId": 1327508,
+					"fileId": 8980608
+				}
+			}
+		},
+		{
+			"name": "Ancient Spellcraft AncientSpellcraft-1.12.2-1.8.3.jar",
+			"group": "mid-tail",
+			"downloads": 7874547,
+			"file": "curseforge-8555709-AncientSpellcraft-1.12.2-1.8.3.jar",
+			"sha1": "cfc4cf0cfa543831a4c7b3f5d2c4aadfa8235248",
+			"source": {
+				"curseforge": {
+					"modId": 358124,
+					"fileId": 8555709
+				}
+			}
+		},
+		{
+			"name": "Eldritch Mobs eldritch-mobs-1.23.0.jar",
+			"group": "mid-tail",
+			"downloads": 7457156,
+			"file": "curseforge-8008090-eldritch-mobs-1.23.0.jar",
+			"sha1": "dfbdf52f64176316bf29e9412878b5229d575d35",
+			"source": {
+				"curseforge": {
+					"modId": 392015,
+					"fileId": 8008090
+				}
+			}
+		},
+		{
+			"name": "Useful Hats neoforge-26.3-7.3.0.0",
+			"group": "mid-tail",
+			"downloads": 7126378,
+			"file": "curseforge-9038141-usefulhats-neoforge-26.3-7.3.0.0.jar",
+			"sha1": "e27d7515e0ed0f6bd9303a2e649e1dddd4fc89b1",
+			"source": {
+				"curseforge": {
+					"modId": 347337,
+					"fileId": 9038141
+				}
+			}
+		},
+		{
+			"name": "NBT Autocomplete NBTac-FABRIC-26.3-2.1.jar",
+			"group": "mid-tail",
+			"downloads": 6436548,
+			"file": "curseforge-8934800-NBTac-FABRIC-26.3-2.1.jar",
+			"sha1": "ebff83a1448232bad439c3303d7e2be3bd35a73b",
+			"source": {
+				"curseforge": {
+					"modId": 813557,
+					"fileId": 8934800
+				}
+			}
+		},
+		{
+			"name": "🔨 Frame API [1.19] Frame 0.26.2",
+			"group": "mid-tail",
+			"downloads": 6115635,
+			"file": "curseforge-4676254-frame-0.26.2+1.19-fabric.jar",
+			"sha1": "496cf7671e6bb9500abdb672519dd068cacd8111",
+			"source": {
+				"curseforge": {
+					"modId": 580137,
+					"fileId": 4676254
+				}
+			}
+		},
+		{
+			"name": "Quickstack quickstack-neoforge-1.21.1-1.jar",
+			"group": "mid-tail",
+			"downloads": 6319508,
+			"file": "curseforge-8244917-quickstack-neoforge-1.21.1-1.jar",
+			"sha1": "060911ba4df738efb56ecc4764d45c888dcc655a",
+			"source": {
+				"curseforge": {
+					"modId": 354522,
+					"fileId": 8244917
+				}
+			}
+		},
+		{
+			"name": "Disconnect Packet Fix Disconnect Packet Fix 2.3.0 for NeoForge",
+			"group": "mid-tail",
+			"downloads": 5822698,
+			"file": "curseforge-8909416-disconnect-packet-fix-neoforge-2.3.0.jar",
+			"sha1": "ae7cf183080692fa9695a09e8d8fa0422e26ca3b",
+			"source": {
+				"curseforge": {
+					"modId": 1173964,
+					"fileId": 8909416
+				}
+			}
+		},
+		{
+			"name": "More Shears moreshears-1.10.2-1.0.5-release.jar",
+			"group": "mid-tail",
+			"downloads": 5547021,
+			"file": "curseforge-2385075-moreshears-1.10.2-1.0.5-release.jar",
+			"sha1": "0f8895e9a5820f0ff16c6e9d571e33577944dc9a",
+			"source": {
+				"curseforge": {
+					"modId": 247321,
+					"fileId": 2385075
+				}
+			}
+		},
+		{
+			"name": "Orcinus's Caves orcinusscaves-1.3.jar",
+			"group": "mid-tail",
+			"downloads": 5839341,
+			"file": "curseforge-3436979-orcinusscaves-1.3.jar",
+			"sha1": "cc9e4ecf93ac9153764ad42fdf9ef884b6d92c00",
+			"source": {
+				"curseforge": {
+					"modId": 492376,
+					"fileId": 3436979
+				}
+			}
+		},
+		{
+			"name": "Farmer's Cutting: Oh The Biomes We've Gone [Fabric] FC: BWG 1.21.11-2.1",
+			"group": "mid-tail",
+			"downloads": 7354809,
+			"file": "curseforge-7449671-farmers-cutting-oh-the-biomes-weve-gone-1.21.11-2.1-fabric.jar",
+			"sha1": "9ef9d3da626e4a1eb5771b69d56570b597cc2a49",
+			"source": {
+				"curseforge": {
+					"modId": 1094819,
+					"fileId": 7449671
+				}
+			}
+		},
+		{
+			"name": "Towers Of The Wild towers_of_the_wild-1.16.4-2.0.1.jar",
+			"group": "mid-tail",
+			"downloads": 4484148,
+			"file": "curseforge-3103750-towers_of_the_wild-1.16.4-2.0.1.jar",
+			"sha1": "585e3a64b9de628e7dbd53e7c2f812ccdfd4f5a2",
+			"source": {
+				"curseforge": {
+					"modId": 386415,
+					"fileId": 3103750
+				}
+			}
+		},
+		{
+			"name": "Track API TrackAPI-1.21.1-forge-1.3",
+			"group": "mid-tail",
+			"downloads": 4269275,
+			"file": "curseforge-8246457-TrackAPI-1.21.1-forge-1.3.jar",
+			"sha1": "7b96254938f19f08c55eb5503380c538a1325b06",
+			"source": {
+				"curseforge": {
+					"modId": 282613,
+					"fileId": 8246457
+				}
+			}
+		},
+		{
+			"name": "Damage Tilt DamageTilt-1.19-forge-0.1.2.jar",
+			"group": "mid-tail",
+			"downloads": 4846895,
+			"file": "curseforge-3937119-DamageTilt-1.19-forge-0.1.2.jar",
+			"sha1": "e338b4baba11111c58e0ef887b6a8c97bfa9a4d6",
+			"source": {
+				"curseforge": {
+					"modId": 411705,
+					"fileId": 3937119
+				}
+			}
+		},
+		{
+			"name": "Create: Molten Vents Molten Vents 1.21.1-2.1.1",
+			"group": "mid-tail",
+			"downloads": 4012567,
+			"file": "curseforge-6803367-molten_vents-1.21.1-2.1.1.jar",
+			"sha1": "0d645330128d1d7dc0b330760f4517d3ff4a2a9d",
+			"source": {
+				"curseforge": {
+					"modId": 824654,
+					"fileId": 6803367
+				}
+			}
+		},
+		{
+			"name": "DarkQuesting - RPG Quests and Casino darkquesting-neoforge-26.1-1.3.4.jar",
+			"group": "mid-tail",
+			"downloads": 4073492,
+			"file": "curseforge-8003362-darkquesting-neoforge-26.1-1.3.4.jar",
+			"sha1": "adff8cc7c53f4fa4c2bcd7e2d895ed43bce1bf4f",
+			"source": {
+				"curseforge": {
+					"modId": 661661,
+					"fileId": 8003362
+				}
+			}
+		},
+		{
+			"name": "Palladium 🐿️ Palladium 4.5.9 for Fabric/Quilt 1.20.1",
+			"group": "mid-tail",
+			"downloads": 3697997,
+			"file": "curseforge-8716078-palladium-4.5.9+1.20.1-fabric.jar",
+			"sha1": "060f098e32100ed1d3d3dc1fb8b65c78e2a6042a",
+			"source": {
+				"curseforge": {
+					"modId": 963363,
+					"fileId": 8716078
+				}
+			}
+		},
+		{
+			"name": "Danger Close [NeoForge/Fabric] Danger Close - MC 26.1.2 - 3.2.1",
+			"group": "mid-tail",
+			"downloads": 3689293,
+			"file": "curseforge-8988945-danger_close-merged-26.1.2-3.2.1.jar",
+			"sha1": "3f665f443c2879a6329d78b87b9f14b40881c819",
+			"source": {
+				"curseforge": {
+					"modId": 858922,
+					"fileId": 8988945
+				}
+			}
+		},
+		{
+			"name": "Modular Golems modulargolems-2.7.4.jar",
+			"group": "mid-tail",
+			"downloads": 3364355,
+			"file": "curseforge-8864773-modulargolems-2.7.4.jar",
+			"sha1": "676abdf43a1037615167a2f2a9544f1712bbaf16",
+			"source": {
+				"curseforge": {
+					"modId": 690937,
+					"fileId": 8864773
+				}
+			}
+		},
+		{
+			"name": "True Herobrine TrueHerobrine_1.1+1.18.2.jar",
+			"group": "mid-tail",
+			"downloads": 3375155,
+			"file": "curseforge-4962514-TrueHerobrine_1.1+1.18.2.jar",
+			"sha1": "420b625e79ce03bf7e0e73988ed17113eaf7dfb2",
+			"source": {
+				"curseforge": {
+					"modId": 914926,
+					"fileId": 4962514
+				}
+			}
+		},
+		{
+			"name": "CapeJS CapeJS 1.1.1-1.21.1",
+			"group": "mid-tail",
+			"downloads": 3567905,
+			"file": "curseforge-8527614-capejs-1.1.1-1.21.jar",
+			"sha1": "972791ecd487d120cfe29655ddf8086d5788a2ef",
+			"source": {
+				"curseforge": {
+					"modId": 911145,
+					"fileId": 8527614
+				}
+			}
+		},
+		{
+			"name": "Extended Slabs + | Now on 1.20.1 Extended Slabs - 3.1.0 - 1.20.2",
+			"group": "mid-tail",
+			"downloads": 3303287,
+			"file": "curseforge-6267127-extendedslabs-1.20.2-3.1.0.jar",
+			"sha1": "960c82ff97497a0c75d94ba428797bcc8495339d",
+			"source": {
+				"curseforge": {
+					"modId": 374492,
+					"fileId": 6267127
+				}
+			}
+		},
+		{
+			"name": "Blighted Beasts blighted_beasts-1.19.2-1.6.5.jar",
+			"group": "mid-tail",
+			"downloads": 3126386,
+			"file": "curseforge-8383088-blighted_beasts-1.19.2-1.6.5.jar",
+			"sha1": "3b94a391decfb8dabcf9c6f7fad972ec3d0aed07",
+			"source": {
+				"curseforge": {
+					"modId": 1064685,
+					"fileId": 8383088
+				}
+			}
+		},
+		{
+			"name": "Botania Additions BotaniaAdditionsMC1.16.4-1.0.4",
+			"group": "mid-tail",
+			"downloads": 3017674,
+			"file": "curseforge-3139471-BotaniaAdditionsMC1.16.4-1.0.4.jar",
+			"sha1": "253ac6b590d35d7dcf88851aad43dae4902eb499",
+			"source": {
+				"curseforge": {
+					"modId": 359289,
+					"fileId": 3139471
+				}
+			}
+		},
+		{
+			"name": "Survival Instinct survival_instinct-1.0.2-forge-1.20.1.jar",
+			"group": "mid-tail",
+			"downloads": 2875167,
+			"file": "curseforge-7357198-survival_instinct-1.0.2-forge-1.20.1.jar",
+			"sha1": "a2dbab6aded299d7304ee93634ec38dd08df059b",
+			"source": {
+				"curseforge": {
+					"modId": 1242915,
+					"fileId": 7357198
+				}
+			}
+		},
+		{
+			"name": "Elemental Wizards (RPG Series Plus) 3.1.1+1.20.1-fabric",
+			"group": "mid-tail",
+			"downloads": 2889937,
+			"file": "curseforge-8933791-elemental_wizards_rpg-fabric-3.1.1+1.20.1.jar",
+			"sha1": "5fc307b785a1a4d7ba8ad2537a9c16fadec684f1",
+			"source": {
+				"curseforge": {
+					"modId": 1006892,
+					"fileId": 8933791
+				}
+			}
+		},
+		{
+			"name": "Terrarian Slimes Terrarian Slimes 1.3.1-BETA",
+			"group": "mid-tail",
+			"downloads": 2617252,
+			"file": "curseforge-4065460-terrarian-slimes-1.3.1-BETA+1.19.jar",
+			"sha1": "03526ddfddecf0ca4dcdbeb8aed009d1cfd635b6",
+			"source": {
+				"curseforge": {
+					"modId": 465336,
+					"fileId": 4065460
+				}
+			}
+		},
+		{
+			"name": "More Hitboxes 1.9.3 for Fabric 1.20.6",
+			"group": "mid-tail",
+			"downloads": 3087742,
+			"file": "curseforge-6996397-morehitboxes-fabric-1.20.6-1.9.3.jar",
+			"sha1": "2532517018f800d72b07ef21be7bc63de25e0c05",
+			"source": {
+				"curseforge": {
+					"modId": 1115989,
+					"fileId": 6996397
+				}
+			}
+		},
+		{
+			"name": "CameraOverhaul (Forge) cameraoverhaul-1.0-1.19.2.jar",
+			"group": "mid-tail",
+			"downloads": 2896591,
+			"file": "curseforge-4057605-cameraoverhaul-1.0-1.19.2.jar",
+			"sha1": "b86c828eb46754da3b4e7ca2220a74721d02c5cc",
+			"source": {
+				"curseforge": {
+					"modId": 443034,
+					"fileId": 4057605
+				}
+			}
+		},
+		{
+			"name": "Sky Compression Sky-Compression-1.2.2.5.jar",
+			"group": "mid-tail",
+			"downloads": 2432835,
+			"file": "curseforge-2707173-Sky-Compression-1.2.2.5.jar",
+			"sha1": "c5c8469eb3e94c2da9fb35a54903fc888a6c4b97",
+			"source": {
+				"curseforge": {
+					"modId": 271992,
+					"fileId": 2707173
+				}
+			}
+		},
+		{
+			"name": "Dungeons Content dungeons_1.19_mc1.21.1",
+			"group": "mid-tail",
+			"downloads": 2526774,
+			"file": "curseforge-7212076-dungeons_1.19_mc1.21.1.jar",
+			"sha1": "be213ca00321dd212de613f4b9fd48923bb470a1",
+			"source": {
+				"curseforge": {
+					"modId": 423533,
+					"fileId": 7212076
+				}
+			}
+		},
+		{
+			"name": "Iron's Rpg Tweaks irons_rpg_tweaks-26.1.2-2.3.0.jar",
+			"group": "mid-tail",
+			"downloads": 2502592,
+			"file": "curseforge-8262564-irons_rpg_tweaks-26.1.2-2.3.0.jar",
+			"sha1": "970a15104e6cece979ab84e5bb6fae78db5508c1",
+			"source": {
+				"curseforge": {
+					"modId": 871799,
+					"fileId": 8262564
+				}
+			}
+		},
+		{
+			"name": "Esoteric Reforging esotericreforging-1.20.1-1.0.1.jar",
+			"group": "mid-tail",
+			"downloads": 2724299,
+			"file": "curseforge-5989440-esotericreforging-1.20.1-1.0.1.jar",
+			"sha1": "3d6b9a12eaa2798b61c2a60297afec2e710f173e",
+			"source": {
+				"curseforge": {
+					"modId": 1150370,
+					"fileId": 5989440
+				}
+			}
+		},
+		{
+			"name": "Cobblemon: Extra Structures cobblemonextrastructures-1.21.1-1.3.0-neoforge.jar",
+			"group": "mid-tail",
+			"downloads": 2436693,
+			"file": "curseforge-8070687-cobblemonextrastructures-1.21.1-1.3.0-neoforge.jar",
+			"sha1": "c32f83f5405d11482a453aba7210f6a58e64526c",
+			"source": {
+				"curseforge": {
+					"modId": 1202622,
+					"fileId": 8070687
+				}
+			}
+		},
+		{
+			"name": "Animal Bikes AnimalBikes-1.16.5.20220521.jar",
+			"group": "mid-tail",
+			"downloads": 2337290,
+			"file": "curseforge-3800464-AnimalBikes-1.16.5.20220521.jar",
+			"sha1": "dc95382f72c3d4a711a70f9118770818f4a7e6c7",
+			"source": {
+				"curseforge": {
+					"modId": 222718,
+					"fileId": 3800464
+				}
+			}
+		},
+		{
+			"name": "Tool Leveling+ [Forge] toolleveling-forge-1.19.4-1.5.1.jar",
+			"group": "mid-tail",
+			"downloads": 2285925,
+			"file": "curseforge-8649621-toolleveling-forge-1.19.4-1.5.1.jar",
+			"sha1": "41827e928cbb32563570feb003d775c09d7d0525",
+			"source": {
+				"curseforge": {
+					"modId": 397255,
+					"fileId": 8649621
+				}
+			}
+		},
+		{
+			"name": "Random Shulker Colours [Fabric/Forge/Neo] 26.3.0-3.5 | Random Shulker Colours",
+			"group": "mid-tail",
+			"downloads": 2259533,
+			"file": "curseforge-9033127-randomshulkercolours-26.3.0-3.5.jar",
+			"sha1": "3009c4a224e8a9664a167a2ae9c8c73046daf733",
+			"source": {
+				"curseforge": {
+					"modId": 450589,
+					"fileId": 9033127
+				}
+			}
+		},
+		{
+			"name": "CraftTweaker Utils crafttweakerutils-0.7.jar",
+			"group": "mid-tail",
+			"downloads": 3129122,
+			"file": "curseforge-3084399-crafttweakerutils-0.7.jar",
+			"sha1": "8e766e3ae36bf0d3f8d28d0b2309c9a46ddc9a69",
+			"source": {
+				"curseforge": {
+					"modId": 303213,
+					"fileId": 3084399
+				}
+			}
+		},
+		{
+			"name": "Configurable Despawn Timer [Fabric/Forge/Neo] 26.3.0-4.7 | Configurable Despawn Timer",
+			"group": "mid-tail",
+			"downloads": 2049246,
+			"file": "curseforge-9034696-configurabledespawntimer-26.3.0-4.7.jar",
+			"sha1": "071446fecedd0d25622e26cc2469991adce56181",
+			"source": {
+				"curseforge": {
+					"modId": 347751,
+					"fileId": 9034696
+				}
+			}
+		}
+	]
+}

@@ -91,6 +91,52 @@ impl Cfg {
     }
 }
 
+impl Cfg {
+    /// For each block, whether normal control flow from its start can reach
+    /// an `athrow` or a return. Exception edges are left out, so a throw
+    /// only counts when the method raises it on that path. `edge` maps an
+    /// edge from one block to another onto the block it really continues
+    /// in, for jump threading. Paths through the `excluded` block are cut,
+    /// so it reaches nothing and nothing is reached through it.
+    pub fn reach(
+        &self,
+        instructions: &[Instruction],
+        edge: &dyn Fn(usize, usize) -> usize,
+        excluded: usize,
+    ) -> Vec<super::Reach> {
+        let mut reach: Vec<super::Reach> = self
+            .blocks
+            .iter()
+            .enumerate()
+            .map(|(b, block)| {
+                let opcode = instructions[block.end - 1].opcode;
+                super::Reach {
+                    throws: b != excluded && opcode == op::ATHROW,
+                    returns: b != excluded && matches!(opcode, op::IRETURN..=op::RETURN),
+                }
+            })
+            .collect();
+        let mut changed = true;
+        while changed {
+            changed = false;
+            for b in (0..self.blocks.len()).rev().filter(|&b| b != excluded) {
+                for &successor in &self.blocks[b].successors {
+                    let s = edge(b, successor);
+                    let next = super::Reach {
+                        throws: reach[b].throws || reach[s].throws,
+                        returns: reach[b].returns || reach[s].returns,
+                    };
+                    if next != reach[b] {
+                        reach[b] = next;
+                        changed = true;
+                    }
+                }
+            }
+        }
+        reach
+    }
+}
+
 fn branch_targets(ins: &Instruction) -> Vec<i64> {
     match &ins.operand {
         Operand::Branch(target) => vec![*target],

@@ -6,9 +6,12 @@ import io.netty.buffer.ByteBufInputStream;
 import java.io.ObjectInputFilter;
 import java.io.ObjectInputStream;
 
-/** ObjectInputFilter, which only exists from Java 9 on. */
+/**
+ * ObjectInputFilter, which only exists from Java 9 on.
+ */
 public class ObjectInputFilterVariants {
-    // EXPECT notice
+
+    // EXPECT notice setting
     public static Object filtered(ByteBuf buf) throws Exception {
         ObjectInputStream in = new ObjectInputStream(new ByteBufInputStream(buf));
         in.setObjectInputFilter(ObjectInputFilter.Config.createFilter("java.util.HashMap;!*"));

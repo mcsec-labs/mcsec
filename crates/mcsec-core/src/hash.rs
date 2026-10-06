@@ -18,6 +18,11 @@ pub struct FileHashes {
     pub curseforge_fingerprint: u32,
 }
 
+/// Lowercase hex SHA-1 of some bytes.
+pub fn sha1_hex(data: &[u8]) -> String {
+    hex::encode(Sha1::digest(data))
+}
+
 impl FileHashes {
     pub fn compute(data: &[u8]) -> Self {
         Self {

@@ -25,10 +25,11 @@ import net.minecraft.network.PacketBuffer;
  * cannot reach yet. The variants test counts those instead of failing on them.
  */
 public class ObjectInputStreamVariants implements Serializable {
+
     private ByteBuf storedBuffer;
     private transient List<Object> cache;
 
-    // EXPECT critical
+    // EXPECT critical network
     public static Object direct(ByteBuf buf) throws Exception {
         return new ObjectInputStream(new ByteBufInputStream(buf)).readObject();
     }
@@ -133,7 +134,7 @@ public class ObjectInputStreamVariants implements Serializable {
         }
     }
 
-    // EXPECT critical KNOWN-GAP
+    // EXPECT critical network
     public Object fromStoredField() throws Exception {
         return new ObjectInputStream(new ByteBufInputStream(storedBuffer)).readObject();
     }
@@ -148,25 +149,25 @@ public class ObjectInputStreamVariants implements Serializable {
         return new ByteBufInputStream(buf);
     }
 
-    // EXPECT warning
+    // EXPECT notice localFile
     public static Object fromFile(File file) throws Exception {
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(file))) {
             return in.readObject();
         }
     }
 
-    // EXPECT warning
+    // EXPECT notice caller
     public static Object fromAnyStream(InputStream in) throws Exception {
         return new ObjectInputStream(in).readObject();
     }
 
-    // EXPECT warning
+    // EXPECT notice caller
     public static Object networkPresentButNotUsed(ByteBuf buf, InputStream other) throws Exception {
         int size = buf.readInt();
         return size > 0 ? new ObjectInputStream(other).readObject() : null;
     }
 
-    // EXPECT notice
+    // EXPECT notice allowlist
     public static Object allowlistedSubclass(ByteBuf buf) throws Exception {
         return new AllowlistStream(new ByteBufInputStream(buf)).readObject();
     }

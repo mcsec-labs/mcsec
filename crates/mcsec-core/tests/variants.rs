@@ -1,7 +1,10 @@
-//! Measures how rules generalize, using the variant corpus: small Java
+//! Measures how rules generalize, using the variant corpus of small Java
 //! programs that write the same bug many different ways, plus safe code
 //! that must stay clean. Each method carries a marker comment such as
-//! `// EXPECT critical` or `// EXPECT none`.
+//! `// EXPECT critical` or `// EXPECT none`. Words after the severity name
+//! the finding's origin or safeguard as the report spells them, such as
+//! `// EXPECT notice localFile` or `// EXPECT notice allowlist`, and are
+//! checked when present.
 //!
 //! A marker ending in KNOWN-GAP records the right answer for a case the
 //! engine cannot reach yet. Those are counted and listed instead of failing,
@@ -20,15 +23,32 @@ use mcsec_core::{ScanLimits, scan_bytes};
 
 struct Expectation {
     severity: String,
+    /// Origin and safeguard names the finding must carry.
+    basis: Vec<String>,
     known_gap: bool,
+}
+
+impl Expectation {
+    fn describe(&self) -> String {
+        std::iter::once(&self.severity)
+            .chain(&self.basis)
+            .cloned()
+            .collect::<Vec<_>>()
+            .join(" ")
+    }
+
+    fn matches(&self, got: &[String]) -> bool {
+        got.first() == Some(&self.severity) && self.basis.iter().all(|word| got.contains(word))
+    }
 }
 
 /// Expectations by (internal class name, method name), from source markers,
 /// with the Java release each class requires.
 struct SourceFile {
-    class: String,
     requires: u32,
-    expectations: BTreeMap<String, Expectation>,
+    /// Expectations by (internal class name, method name). Methods of nested
+    /// classes belong to names such as `Outer$Inner`.
+    expectations: BTreeMap<(String, String), Expectation>,
 }
 
 fn java_files(dir: &Path, out: &mut Vec<PathBuf>) {
@@ -55,25 +75,56 @@ fn parse_source(path: &Path) -> SourceFile {
         .find_map(|line| line.strip_prefix("package "))
         .map(|p| p.trim_end_matches(';').replace('.', "/"))
         .unwrap_or_default();
-    let class = format!("{package}/{}", path.file_stem().unwrap().to_string_lossy());
+    let outer = format!("{package}/{}", path.file_stem().unwrap().to_string_lossy());
 
     let mut expectations = BTreeMap::new();
     let mut pending: Option<Expectation> = None;
+    // Nested classes open so far, each with the brace depth inside it.
+    let mut nesting: Vec<(String, usize)> = Vec::new();
+    let mut depth = 0usize;
     for line in text.lines().map(str::trim) {
+        let words: Vec<&str> = line.split_whitespace().collect();
+        let declared = words
+            .windows(2)
+            .find(|pair| matches!(pair[0], "class" | "interface" | "enum"))
+            .map(|pair| pair[1].trim_end_matches('{').to_owned());
+        let opens = line.matches('{').count();
+        let closes = line.matches('}').count();
+        if let Some(name) = declared.filter(|_| !line.starts_with("//") && !line.starts_with('*')) {
+            // The top level class is the file's own, and only classes
+            // inside it get a nested name.
+            if depth > 0 {
+                nesting.push((name, depth + opens));
+            }
+        }
+        depth = (depth + opens).saturating_sub(closes);
+        while nesting.last().is_some_and(|(_, inside)| depth < *inside) {
+            nesting.pop();
+        }
+        let class = std::iter::once(outer.as_str())
+            .chain(nesting.iter().map(|(name, _)| name.as_str()))
+            .collect::<Vec<_>>()
+            .join("$");
+
         if let Some(marker) = line.strip_prefix("// EXPECT ") {
-            let mut words = marker.split_whitespace();
+            let mut words: Vec<String> = marker.split_whitespace().map(str::to_owned).collect();
+            let known_gap = words.last().is_some_and(|w| w == "KNOWN-GAP");
+            if known_gap {
+                words.pop();
+            }
+            let severity = words.remove(0);
             pending = Some(Expectation {
-                severity: words.next().unwrap().to_owned(),
-                known_gap: words.next() == Some("KNOWN-GAP"),
+                severity,
+                basis: words,
+                known_gap,
             });
         } else if pending.is_some() && line.contains('(') && !line.starts_with('@') {
             let before = &line[..line.find('(').unwrap()];
             let method = before.split_whitespace().last().unwrap().to_owned();
-            expectations.insert(method, pending.take().unwrap());
+            expectations.insert((class, method), pending.take().unwrap());
         }
     }
     SourceFile {
-        class,
         requires,
         expectations,
     }
@@ -139,7 +190,8 @@ fn variants_match_expectations() {
             .collect();
         let report = scan_bytes(&common::jar(&refs), &ScanLimits::default()).unwrap();
 
-        let mut actual: BTreeMap<(String, String), String> = BTreeMap::new();
+        // Severity first, then the origin and safeguard when present.
+        let mut actual: BTreeMap<(String, String), Vec<String>> = BTreeMap::new();
         for finding in &report.findings {
             let class = finding.location.class_name.clone().unwrap_or_default();
             let method = finding
@@ -148,38 +200,43 @@ fn variants_match_expectations() {
                 .as_ref()
                 .map(|m| m.name.clone())
                 .unwrap_or_default();
-            let severity = serde_json::to_value(finding.severity)
-                .unwrap()
-                .as_str()
-                .unwrap()
-                .to_owned();
-            actual.insert((class, method), severity);
+            let name = |value: serde_json::Value| value.as_str().map(str::to_owned);
+            let words = [
+                name(serde_json::to_value(finding.severity).unwrap()),
+                finding
+                    .origin
+                    .and_then(|o| name(serde_json::to_value(o).unwrap())),
+                finding
+                    .safeguard
+                    .and_then(|s| name(serde_json::to_value(s).unwrap())),
+            ];
+            actual.insert((class, method), words.into_iter().flatten().collect());
         }
 
         let (mut ok, mut gaps, mut fixed_gaps) = (0, Vec::new(), Vec::new());
         for source in sources.iter().filter(|s| s.requires <= release) {
-            for (method, expected) in &source.expectations {
-                let key = (source.class.clone(), method.clone());
-                let got = actual.remove(&key).unwrap_or_else(|| "none".to_owned());
-                let label = format!("{}.{method}", source.class);
-                match (got == expected.severity, expected.known_gap) {
+            for ((class, method), expected) in &source.expectations {
+                let key = (class.clone(), method.clone());
+                let got = actual
+                    .remove(&key)
+                    .unwrap_or_else(|| vec!["none".to_owned()]);
+                let label = format!("{class}.{method}");
+                let (wanted, found) = (expected.describe(), got.join(" "));
+                match (expected.matches(&got), expected.known_gap) {
                     (true, false) => ok += 1,
                     (true, true) => fixed_gaps.push(label),
-                    (false, true) => gaps.push(format!(
-                        "{label}: expected {}, got {got}",
-                        expected.severity
-                    )),
+                    (false, true) => gaps.push(format!("{label}: expected {wanted}, got {found}")),
                     (false, false) => failures.push(format!(
-                        "release {release}: {label}: expected {}, got {got}",
-                        expected.severity
+                        "release {release}: {label}: expected {wanted}, got {found}"
                     )),
                 }
             }
         }
-        for ((class, method), severity) in actual {
+        for ((class, method), words) in actual {
             if class.starts_with("variants/") {
                 failures.push(format!(
-                    "release {release}: {class}.{method}: unexpected {severity} finding, or a method without an EXPECT marker"
+                    "release {release}: {class}.{method}: unexpected {} finding, or a method without an EXPECT marker",
+                    words.join(" ")
                 ));
             }
         }
